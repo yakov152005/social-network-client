@@ -72,7 +72,7 @@ export default function Login({ onLogin , onLogout}) {
             }
         } catch (error) {
             console.error("Error verifying code", error);
-            setErrorMessage("Failed to verify code.");
+            setErrorMessage("Failed to verify code. Please try again later.");
         }
     };
 
@@ -145,7 +145,7 @@ export default function Login({ onLogin , onLogout}) {
                             />
                         </div>
 
-                        {errorMessage && <div className="error">{errorMessage}</div>}
+                        {errorMessage && <div className="error-message" >{errorMessage}</div>}
 
                         <div className={"create-user"}>
                             <button
@@ -168,98 +168,3 @@ export default function Login({ onLogin , onLogout}) {
     );
 }
 
-
-/*
-import {useState} from "react";
-import { URL_SERVER_SIDE} from "../Utils/Constants";
-import axios from "axios";
-
-export default function Login() {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [isLogin, setIsLogin] = useState(false);
-
-    const handleChange = (event) => {
-        const {id, value} = event.target;
-        switch (id) {
-            case 'username':
-                setUsername(value);
-                break;
-            case 'password':
-                setPassword(value);
-                break;
-            case 'isLogin':
-                setIsLogin(true);
-                break;
-            default:
-                break;
-        }
-    }
-
-    const loginUser = async () => {
-
-        try {
-            const response =
-                await
-                    axios
-                        .get(URL_SERVER_SIDE + `/loginUser`, {
-                            params: {
-                                username: username,
-                                password: password
-                            },
-                        });
-            if (response.data) {
-                setIsLogin(true);
-                console.log("success", response.data)
-            } else {
-                console.log("the username or password is incorrect.", response.data)
-            }
-        } catch (error) {
-            console.log("Error: Filed to load data");
-        }
-    }
-
-
-    return (
-        <div className={"create-user-div"}>
-            {!isLogin ? (
-                <div>
-                    <h4>Login</h4>
-                    <div className={"create-user"}>
-                        <strong>Username:</strong>
-                        <input placeholder={"enter username"}
-                               onChange={handleChange}
-                               id={'username'}
-                               value={username}
-                        />
-                    </div>
-
-                    <div className={"create-user"}>
-                        <strong>Password:</strong>
-                        <input placeholder={"enter password"}
-                               type={"password"}
-                               onChange={handleChange}
-                               id={'password'}
-                               value={password}
-                        />
-                    </div>
-
-
-                    <div className={"create-user"}>
-                        <button
-                            className={"btn btn-primary"}
-                            type={"button"}
-                            onClick={loginUser}
-                        >Login
-                        </button>
-                    </div>
-                </div>
-            ) : (
-                <div>
-                    {isLogin}
-                </div>
-            )}
-        </div>
-    );
-}
- */

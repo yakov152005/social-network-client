@@ -37,6 +37,14 @@
   }
 }
 
+.nav-link[aria-disabled="true"] {
+  pointer-events: none;
+  cursor: default;
+  opacity: 1;
+}
+
+
+
 .create-user{
   text-align: center;
   font-size: calc(10px + 2vmin);
@@ -82,4 +90,9 @@
   align-items: center;
   border: none;
   box-shadow: none;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
 }
