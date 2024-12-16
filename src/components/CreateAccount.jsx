@@ -11,6 +11,7 @@ export default function CreateAccount() {
         email: "",
         age: 0,
     });
+    const [errorMessage, setErrorMessage] = useState("");
 
 
 
@@ -23,7 +24,7 @@ export default function CreateAccount() {
         const { username, password, phoneNumber,email, age } = formData;
 
         if (!username || !password || !phoneNumber || !email || age <= 0) {
-            alert("Please fill all fields.");
+            setErrorMessage("Please fill all fields.");
             return;
         }
 
@@ -35,25 +36,54 @@ export default function CreateAccount() {
                 email,
                 age: parseInt(age, 10),
             });
-            alert(response.data);
-            console.log(response.data);
-            setFormData({
-                username: "",
-                password: "",
-                phoneNumber: "",
-                email: "",
-                age: 0,
-            });
+            if (response.data.success){
+                alert(response.data.error);
+                setErrorMessage("")
+                setFormData({
+                    username: "",
+                    password: "",
+                    phoneNumber: "",
+                    email: "",
+                    age: 0,
+                });
+            }else {
+                const errorCode = response.data.errorCode;
+                const fieldToClear = switchError(errorCode);
+
+                setFormData((prevFormData) => ({
+                    ...prevFormData,
+                    [fieldToClear]: "",
+                }));
+                setErrorMessage(response.data.error);
+
+            }
+
+            console.log(`{success: ${response.data.success}, error:{ ${response.data.error} }}`);
         } catch (error) {
             console.log("Error creating user", error);
-            alert("Failed to create user. Please try again later.");
+            setErrorMessage("Failed to create user. Please try again later.");
+        }
+    };
+
+    const switchError = (errorCode) => {
+        switch (errorCode) {
+            case 2:
+                return "username";
+            case 3:
+                return "password";
+            case 4:
+                return "phoneNumber";
+            case 5:
+                return "email";
+            default:
+                return null;
         }
     };
 
     return (
-        <div className={"create-user-div"}>
+        <div className={"user-style-div"}>
             <h3>Create Account</h3>
-            <div className={"create-user"}>
+            <div className={"user-style"}>
                 <strong>User:</strong>
                 <input
                     placeholder="enter username"
@@ -63,7 +93,7 @@ export default function CreateAccount() {
                 />
             </div>
 
-            <div className={"create-user"}>
+            <div className={"user-style"}>
                 <strong>Password:</strong>
                 <input
                     placeholder="enter password"
@@ -74,7 +104,7 @@ export default function CreateAccount() {
                 />
             </div>
 
-            <div className={"create-user"}>
+            <div className={"user-style"}>
                 <strong>PhoneNumber:</strong>
                 <input
                     placeholder="enter phone number"
@@ -84,17 +114,18 @@ export default function CreateAccount() {
                 />
             </div>
 
-            <div className={"create-user"}>
+            <div className={"user-style"}>
                 <strong>Email:</strong>
                 <input
                     placeholder="enter email"
                     onChange={handleChange}
                     id="email"
+                    type={"email"}
                     value={formData.email}
                 />
             </div>
 
-            <div className={"create-user"}>
+            <div className={"user-style"}>
                 <strong>Age:</strong>
                 <input
                     placeholder="enter age"
@@ -105,7 +136,9 @@ export default function CreateAccount() {
                 />
             </div>
 
-            <div className={"create-user"}>
+            {errorMessage && <div style={{color: "red", padding:"10px" ,font:"bold"}} onChange={handleChange}><strong>{errorMessage}</strong></div>}
+
+            <div className={"user-style"}>
                 <button
                     className={"btn btn-primary"}
                     type="button"

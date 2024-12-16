@@ -95,12 +95,12 @@ export default function Login({ onLogin , onLogout}) {
     }
 
     return (
-        <div className={"create-user-div"}>
+        <div className={"user-style-div"}>
             {!isLogin ? (
                 !isVerification ? (
                     <div>
                         <h4>Login</h4>
-                        <div className={"create-user"}>
+                        <div className={"user-style"}>
                             <strong>Username:</strong>
                             <input
                                 placeholder="enter username"
@@ -110,7 +110,7 @@ export default function Login({ onLogin , onLogout}) {
                             />
                         </div>
 
-                        <div className={"create-user"}>
+                        <div className={"user-style"}>
                             <strong>Password:</strong>
                             <input
                                 placeholder="enter password"
@@ -123,7 +123,7 @@ export default function Login({ onLogin , onLogout}) {
 
                         {errorMessage && <div className="error">{errorMessage}</div>}
 
-                        <div className={"create-user"}>
+                        <div className={"user-style"}>
                             <button
                                 className={"btn btn-primary"}
                                 type="button"
@@ -136,7 +136,7 @@ export default function Login({ onLogin , onLogout}) {
                 ) : (
                     <div>
                         <h4>Enter Verification Code</h4>
-                        <div className={"create-user"}>
+                        <div className={"user-style"}>
                             <strong>Code:</strong>
                             <input
                                 placeholder="enter verification code"
@@ -147,7 +147,7 @@ export default function Login({ onLogin , onLogout}) {
 
                         {errorMessage && <div className="error-message" >{errorMessage}</div>}
 
-                        <div className={"create-user"}>
+                        <div className={"user-style"}>
                             <button
                                 className={"btn btn-primary"}
                                 type="button"

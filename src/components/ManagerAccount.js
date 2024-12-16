@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Routes, Route, NavLink, useNavigate} from "react-router-dom";
+import {Routes, Route, NavLink, useNavigate, Navigate} from "react-router-dom";
 import CreateAccount from "./CreateAccount";
 import Login from "./Login";
 import SettingsPage from "./SettingsPage";
@@ -64,6 +64,8 @@ export default function ManagerAccount() {
 
             <div className="tab-content" id="pills-tabContent">
                 <Routes>
+                    {/* ניווט ראשוני לLOGIN אשנה את זה בהמשך */}
+                    <Route path="/" element={<Navigate to="/login" />} />
                     <Route path="/createAccount" element={<CreateAccount/>}/>
                     <Route path="/login" element={<Login onLogin={handleLogin} onLogout={handleLogout}/>}/>
                     <Route path="/settingsPage" element={<SettingsPage/>}/>

@@ -43,9 +43,7 @@
   opacity: 1;
 }
 
-
-
-.create-user{
+.user-style{
   text-align: center;
   font-size: calc(10px + 2vmin);
   font-weight: bold;
@@ -54,7 +52,7 @@
   margin-top: calc(10px + 2vmin);
 }
 
-.create-user-div{
+.user-style-div{
   text-align: center;
   border: 4px solid black;
   border-radius: 20px;
