@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import {Routes, Route, NavLink, useNavigate, Navigate} from "react-router-dom";
 import CreateAccount from "../pages/CreateAccount";
 import Login from "../pages/Login";
-import SettingsPage from "./SettingsPage";
-import Creator from "./Creator";
+import SettingsPage from "../pages/SettingsPage";
+import Creator from "../pages/Creator";
+import DashboardPage from "../pages/DashboardPage";
 
 export default function ManagerAccount() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -11,7 +12,7 @@ export default function ManagerAccount() {
     const handleLogin = () => setIsLoggedIn(true);
     const handleLogout = () => {
         setIsLoggedIn(false);
-        navigate("/createAccount");
+        navigate("/login");
     };
 
     const navigate = useNavigate();
@@ -25,8 +26,8 @@ export default function ManagerAccount() {
                         {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                         <a
                             className="navbar-brand disabled" href="#"  aria-disabled="true">
-                            <img src="/image/logoNetWork.png" alt="NetWork" width="35" height="30" className="d-inline-block align-text-top"/>
-                            <strong>Social-Network</strong>
+                            <img src="/image/logoNetWork.png" alt="NetWork" width="35" height="30" className="d-inline-block align-text-top rounded"/>
+                            <strong>ocial-Network</strong>
                         </a>
                     </div>
                 </nav>
@@ -77,12 +78,13 @@ export default function ManagerAccount() {
 
             <div className="tab-content" id="pills-tabContent">
                 <Routes>
-                    {/* ניווט ראשוני לLOGIN אשנה את זה בהמשך */}
                     <Route path="/" element={<Navigate to="/login"/>}/>
                     <Route path="/createAccount" element={<CreateAccount/>}/>
                     <Route path="/login" element={<Login onLogin={handleLogin} onLogout={handleLogout}/>}/>
                     <Route path="/settingsPage" element={<SettingsPage/>}/>
                     <Route path="/creator" element={<Creator/>}/>
+                    {/* צריך לשנות את הלוגיקה כך שינווט ישר לדשבורד אחרי לוגין מוצלח */}
+                    <Route path="/dashboard" element={<DashboardPage />}/>
                 </Routes>
             </div>
         </div>

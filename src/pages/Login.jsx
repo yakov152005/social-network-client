@@ -1,7 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
 import { URL_SERVER_SIDE } from "../Utils/Constants";
-import DashboardPage from "../components/DashboardPage";
+import DashboardPage from "./DashboardPage"
+
 
 
 
@@ -173,10 +174,8 @@ export default function Login({ onLogin , onLogout}) {
                     <div>
                         <DashboardPage onLogout={handleLogout} userName={formData.username}/>
                     </div>
-
                 )}
             </div>
         </div>
     );
 }
-
