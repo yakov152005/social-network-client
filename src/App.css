@@ -29,12 +29,6 @@ html, body {
   overflow: hidden;
 }
 
-.nav-link[aria-disabled="true"] {
-  pointer-events: none;
-  cursor: default;
-  opacity: 1;
-}
-
 /*
 לנאב בר של האאיקון למעלה
  */

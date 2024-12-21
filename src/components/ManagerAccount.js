@@ -1,90 +1,61 @@
-import React, { useState } from "react";
-import {Routes, Route, NavLink, useNavigate, Navigate} from "react-router-dom";
+import React from "react";
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import CreateAccount from "../pages/CreateAccount";
 import Login from "../pages/Login";
 import SettingsPage from "../pages/SettingsPage";
 import Creator from "../pages/Creator";
 import DashboardPage from "../pages/DashboardPage";
+import Cookies from "universal-cookie";
+import {
+    NAV_CREATE_ACCOUNT,
+    NAV_CREATOR,
+    NAV_DASHBOARD,
+    NAV_LOGIN,
+    NAV_PROFILE,
+    NAV_SETTINGS,
+    PATH
+} from "../Utils/Constants";
+import NotFoundPage from "../pages/NotFoundPage";
+import NavBar from "./NavBar";
+import Profile from "../pages/Profile";
 
 export default function ManagerAccount() {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-    const handleLogin = () => setIsLoggedIn(true);
-    const handleLogout = () => {
-        setIsLoggedIn(false);
-        navigate("/login");
-    };
-
+    const cookies = new Cookies();
+    const token = cookies.get("token");
     const navigate = useNavigate();
-    const handleDisabledClick = (e) => {e.preventDefault();};
+    console.log("home page token check", token);
+
+    const handleLogout = () => {
+        cookies.remove("token", { path: PATH });
+        navigate(NAV_LOGIN);
+    };
 
     return (
         <div className="App container mt-4">
-            <div>
-                <nav className="navbar bg-body-tertiary">
-                    <div className="container-fluid">
-                        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                        <a
-                            className="navbar-brand disabled" href="#"  aria-disabled="true">
-                            <img src="/image/logoNetWork.png" alt="NetWork" width="35" height="30" className="d-inline-block align-text-top rounded"/>
-                            <strong>ocial-Network</strong>
-                        </a>
-                    </div>
-                </nav>
-            </div>
-
-            <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                <li className="nav-item" role="presentation">
-                    <NavLink
-                        className={({isActive}) => `nav-link ${isActive ? "active" : ""}`}
-                        to="/createAccount"
-                        onClick={isLoggedIn ? handleDisabledClick : undefined}
-                        aria-disabled={isLoggedIn ? "true" : "false"}
-                    >
-                        <strong>Create Account</strong>
-                    </NavLink>
-                </li>
-                <li className="nav-item" role="presentation">
-                    <NavLink
-                        className={({isActive}) => `nav-link ${isActive ? "active" : ""}`}
-                        to="/login"
-                        onClick={isLoggedIn ? handleDisabledClick : undefined}
-                        aria-disabled={isLoggedIn ? "true" : "false"}
-                    >
-                        <strong>Login</strong>
-                    </NavLink>
-                </li>
-                <li className="nav-item" role="presentation">
-                    <NavLink
-                        className={({isActive}) => `nav-link ${isActive ? "active" : ""}`}
-                        to="/settingsPage"
-                        onClick={isLoggedIn ? handleDisabledClick : undefined}
-                        aria-disabled={isLoggedIn ? "true" : "false"}
-                    >
-                        <strong>Settings Page</strong>
-                    </NavLink>
-                </li>
-                <li className="nav-item" role="presentation">
-                    <NavLink
-                        className={({isActive}) => `nav-link ${isActive ? "active" : ""}`}
-                        to="/creator"
-                        onClick={isLoggedIn ? handleDisabledClick : undefined}
-                        aria-disabled={isLoggedIn ? "true" : "false"}
-                    >
-                        <strong>Creator</strong>
-                    </NavLink>
-                </li>
-            </ul>
+            {/* שימוש ב-NavBar דינמי */}
+            <NavBar isLoggedIn={!!token} onLogout={handleLogout} />
 
             <div className="tab-content" id="pills-tabContent">
                 <Routes>
-                    <Route path="/" element={<Navigate to="/login"/>}/>
-                    <Route path="/createAccount" element={<CreateAccount/>}/>
-                    <Route path="/login" element={<Login onLogin={handleLogin} onLogout={handleLogout}/>}/>
-                    <Route path="/settingsPage" element={<SettingsPage/>}/>
-                    <Route path="/creator" element={<Creator/>}/>
-                    {/* צריך לשנות את הלוגיקה כך שינווט ישר לדשבורד אחרי לוגין מוצלח */}
-                    <Route path="/dashboard" element={<DashboardPage />}/>
+                    {/* אם אין טוקן, המשתמש יכול לגשת רק לעמודי Login, CreateAccount, וכו' */}
+                    {!token && (
+                        <>
+                            <Route path="/" element={<Navigate to={NAV_LOGIN}/>}/>
+                            <Route path={NAV_CREATE_ACCOUNT} element={<CreateAccount />} />
+                            <Route path={NAV_LOGIN} element={<Login onLogin={() => navigate(NAV_DASHBOARD)} />} />
+                            <Route path={NAV_SETTINGS} element={<SettingsPage />} />
+                            <Route path={NAV_CREATOR} element={<Creator />} />
+                            <Route path="*" element={<NotFoundPage />} />
+                        </>
+                    )}
+                    {/* אם יש טוקן, המשתמש מועבר ל-Dashboard */}
+                    {token && (
+                        <>
+                            <Route path={NAV_DASHBOARD} element={<DashboardPage/>} />
+                            <Route path={NAV_PROFILE} element={<Profile />} />
+                            <Route path="*" element={<NotFoundPage />} />
+                        </>
+                    )}
                 </Routes>
             </div>
         </div>

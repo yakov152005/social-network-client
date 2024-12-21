@@ -22,7 +22,7 @@ export default function App() {
     return (
         <div >
             <BrowserRouter>
-                <ManagerAccount/>
+                    <ManagerAccount/>
             </BrowserRouter>
         </div>
     )

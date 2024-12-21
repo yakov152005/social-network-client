@@ -1,21 +1,20 @@
 import { useState } from "react";
 import axios from "axios";
-import { URL_SERVER_SIDE } from "../Utils/Constants";
-import DashboardPage from "./DashboardPage"
+import {URL_LOGIN_USER, URL_SERVER_SIDE, URL_VERIFY} from "../Utils/Constants";
+import Cookies from "universal-cookie";
 
 
 
-
-export default function Login({ onLogin , onLogout}) {
+export default function Login({ onLogin }) {
     const [formData, setFormData] = useState({
         username: "",
         password: "",
     });
     const [errorMessage, setErrorMessage] = useState("");
-    const [isLogin, setIsLogin] = useState(false);
     const [isVerification, setIsVerification] = useState(false);
     const [verificationCode, setVerificationCode] = useState("");
 
+    const cookies = new Cookies();
 
     const handleChange = (event) => {
         const { id, value } = event.target;
@@ -26,16 +25,14 @@ export default function Login({ onLogin , onLogout}) {
         setVerificationCode(event.target.value);
     };
 
-
     const loginUser = async () => {
         if (!formData.username || !formData.password) {
             setErrorMessage("Please fill all fields.");
             return;
         }
 
-
         try {
-            const response = await axios.post(URL_SERVER_SIDE + "/loginUser", {
+            const response = await axios.post(URL_SERVER_SIDE + URL_LOGIN_USER, {
                 username: formData.username,
                 password: formData.password,
             });
@@ -49,7 +46,7 @@ export default function Login({ onLogin , onLogout}) {
             }
         } catch (error) {
             console.error("Error logging in user", error);
-            setErrorMessage("Failed to log in.");
+            setErrorMessage("The username or password is incorrect.");
         }
     };
 
@@ -60,18 +57,20 @@ export default function Login({ onLogin , onLogout}) {
         }
 
         try {
-            const response = await axios.post(URL_SERVER_SIDE + "/verifyCode", {
+            const response = await axios.post(URL_SERVER_SIDE + URL_VERIFY, {
                 username: formData.username,
                 code: verificationCode,
             });
+            //, maxAge: 3600
 
-            if (response.data) {
-                setIsLogin(true);
+            if (response.data && response.data.token) {
+                cookies.set("token", response.data.token, { path: "/"});
+                console.log("Token:", response.data.token);
                 onLogin();
-                setTimeout(()=> { alert("Verification successful!")},1000)
-                console.log("Verification successful!");
+                alert("Verification successful!");
             } else {
                 setErrorMessage("Invalid verification code.");
+                console.log("Token not found")
             }
         } catch (error) {
             console.error("Error verifying code", error);
@@ -79,100 +78,69 @@ export default function Login({ onLogin , onLogout}) {
         }
     };
 
-    const handleLogout = () => {
-        reset();
-    }
-
-    const reset = () => {
-        setIsLogin(false);
-        onLogin();
-        onLogout();
-        setIsVerification(false)
-        setVerificationCode("")
-        setFormData(
-            {
-                username: "",
-                password: ""
-            }
-        )
-    }
-
     return (
         <div className="auth-container">
             <div className="floating-form">
-
-                {!isLogin ? (
-                    !isVerification ? (
-                        <div>
-                            <h3 className="form-title">Login</h3>
-
-                            <div className="form-floating mb-3">
-                                <input
-                                    type={"text"}
-                                    className="form-control"
-                                    id="username"
-                                    placeholder="Username"
-                                    value={formData.username}
-                                    onChange={handleChange}
-                                />
-                                <label htmlFor="username">Username</label>
-                            </div>
-
-                            <div className="form-floating mb-3">
-                                <input
-                                    type="password"
-                                    className="form-control"
-                                    id="password"
-                                    placeholder="Password"
-                                    value={formData.password}
-                                    onChange={handleChange}
-                                />
-                                <label htmlFor="password">Password</label>
-                            </div>
-
-                            {errorMessage && <div className="error-message"><strong>{errorMessage}</strong></div>}
-
-                            <div className="d-grid">
-                                <button
-                                    className={"btn btn-primary"}
-                                    type="button"
-                                    onClick={loginUser}
-                                >
-                                    Login
-                                </button>
-                            </div>
+                {!isVerification ? (
+                    <div>
+                        <h3 className="form-title">Login</h3>
+                        <div className="form-floating mb-3">
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="username"
+                                placeholder="Username"
+                                value={formData.username}
+                                onChange={handleChange}
+                            />
+                            <label htmlFor="username">Username</label>
                         </div>
-                    ) : (
-                        <div>
-                            <h4>Enter Verification Code</h4>
-                            <div className="form-floating mb-3">
-                                <input
-                                    type={"text"}
-                                    className="form-control"
-                                    id="verification"
-                                    placeholder="enter verification code"
-                                    value={verificationCode}
-                                    onChange={handleVerificationChange}
-                                />
-                                <label htmlFor="verification">Verification Code</label>
-                            </div>
-
-                            {errorMessage && <div className="error-message"><strong>{errorMessage}</strong></div>}
-
-                            <div className="d-grid">
-                                <button
-                                    className={"btn btn-primary"}
-                                    type="button"
-                                    onClick={verifyCode}
-                                >
-                                    Verify Code
-                                </button>
-                            </div>
+                        <div className="form-floating mb-3">
+                            <input
+                                type="password"
+                                className="form-control"
+                                id="password"
+                                placeholder="Password"
+                                value={formData.password}
+                                onChange={handleChange}
+                            />
+                            <label htmlFor="password">Password</label>
                         </div>
-                    )
+                        {errorMessage && (
+                            <div className="error-message">
+                                <strong>{errorMessage}</strong>
+                            </div>
+                        )}
+                        <div className="d-grid">
+                            <button className="btn btn-primary" type="button" onClick={loginUser}>
+                                Login
+                            </button>
+                        </div>
+                    </div>
                 ) : (
                     <div>
-                        <DashboardPage onLogout={handleLogout} userName={formData.username}/>
+                        <h4>Enter Verification Code</h4>
+                        <div className="form-floating mb-3">
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="verification"
+                                placeholder="Verification Code"
+                                value={verificationCode}
+                                onChange={handleVerificationChange}
+                            />
+                            <label htmlFor="verification">Verification Code</label>
+                        </div>
+                        {errorMessage && (
+                            <div className="error-message">
+                                <strong>{errorMessage}</strong>
+                            </div>
+                        )}
+                        <div className="d-grid">
+                            <button className="btn btn-primary" type="button" onClick={verifyCode}>
+                                Verify Code
+                            </button>
+                        </div>
                     </div>
                 )}
             </div>
