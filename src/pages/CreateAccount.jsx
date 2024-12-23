@@ -1,11 +1,12 @@
 import React, {useState} from "react";
 import axios from "axios";
-import {URL_SERVER_SIDE} from "../Utils/Constants";
-import "./LoginAndCreate.css";
-import {Navigate, Route, Routes} from "react-router-dom";
+import {NAV_CREATE_ACCOUNT, NAV_LOGIN, URL_CREATE_USER, URL_SERVER_SIDE} from "../utils/Constants";
+import "../css/LoginAndCreate.css";
+import {Navigate, Route, Routes, useNavigate} from "react-router-dom";
 
 
 export default function CreateAccount() {
+    const navigate = useNavigate();
     const [errorMessage, setErrorMessage] = useState("");
     const [isCreate, setIsCreate] = useState(false);
     const [formData, setFormData] = useState({
@@ -32,7 +33,7 @@ export default function CreateAccount() {
         }
 
         try {
-            const response = await axios.post(URL_SERVER_SIDE + "/addUser", {
+            const response = await axios.post(URL_SERVER_SIDE + URL_CREATE_USER, {
                 username,
                 password,
                 phoneNumber,
@@ -164,12 +165,24 @@ export default function CreateAccount() {
                                 Create Account
                             </button>
                         </div>
+
+                        <br></br>
+
+                        <div style={{color: "blue"}}>
+                             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Already have an account? &nbsp;
+                            <a className="icon-link"
+                               onClick={() => navigate(NAV_LOGIN)}
+                               style={{cursor: "pointer", textDecoration: "underline", color: "blue"}}>
+                                <strong> Sign in →</strong>
+                            </a>
+                        </div>
+
                     </div>
                 ) : (
                     <div>
-                       <Routes>
-                           <Route path="/" element={<Navigate to="/login"/>}/>
-                       </Routes>
+                        <Routes>
+                            <Route path="/" element={<Navigate to="/login"/>}/>
+                        </Routes>
                     </div>
                 )}
             </div>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import {URL_GET_ALL_USER, URL_SERVER_SIDE} from "../Utils/Constants";
+import {URL_GET_ALL_USER, URL_SERVER_SIDE} from "../utils/Constants";
 import Cookies from "universal-cookie";
 import UsernameAPI from "../api/UsernameAPI";
 

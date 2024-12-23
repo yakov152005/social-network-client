@@ -1,6 +1,6 @@
 import axios from "axios";
 import Cookies from "universal-cookie";
-import { URL_GET_USER, URL_SERVER_SIDE } from "../Utils/Constants";
+import { URL_GET_USER, URL_SERVER_SIDE } from "../utils/Constants";
 
 export default class UsernameAPI {
     async fetchUserDetails(setUsername) {

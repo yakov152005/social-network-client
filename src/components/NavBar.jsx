@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import {NAV_CREATE_ACCOUNT, NAV_LOGIN, NAV_DASHBOARD, NAV_PROFILE, NAV_SETTINGS, NAV_CREATOR} from "../Utils/Constants";
+import {NAV_CREATE_ACCOUNT, NAV_LOGIN, NAV_DASHBOARD, NAV_PROFILE, NAV_SETTINGS, NAV_CREATOR} from "../utils/Constants";
 
 export default function NavBar({ isLoggedIn, onLogout }) {
     return (

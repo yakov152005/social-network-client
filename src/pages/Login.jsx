@@ -1,7 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
-import {URL_LOGIN_USER, URL_SERVER_SIDE, URL_VERIFY} from "../Utils/Constants";
+import {NAV_CREATE_ACCOUNT, NAV_FORGET_PASSWORD, URL_LOGIN_USER, URL_SERVER_SIDE, URL_VERIFY} from "../utils/Constants";
 import Cookies from "universal-cookie";
+import {useNavigate} from "react-router-dom";
 
 
 
@@ -13,6 +14,7 @@ export default function Login({ onLogin }) {
     const [errorMessage, setErrorMessage] = useState("");
     const [isVerification, setIsVerification] = useState(false);
     const [verificationCode, setVerificationCode] = useState("");
+    const navigate = useNavigate();
 
     const cookies = new Cookies();
 
@@ -115,6 +117,25 @@ export default function Login({ onLogin }) {
                             <button className="btn btn-primary" type="button" onClick={loginUser}>
                                 Login
                             </button>
+                        </div>
+
+                        <br></br>
+                        <div style={{color: "blue"}}>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;New to Social-Network? &nbsp;
+                            <a className="icon-link"
+                               onClick={() => navigate(NAV_CREATE_ACCOUNT)}
+                               style={{cursor: "pointer", textDecoration: "underline", color: "blue"}}>
+                                <strong> Sign Up!</strong>
+                            </a>
+                        </div>
+
+                        <div style={{color: "red"}}>
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            <a className="icon-link"
+                               onClick={() => navigate(NAV_FORGET_PASSWORD)}
+                               style={{cursor: "pointer", textDecoration: "underline", color: "red"}}>
+                                <strong>Forgot password?</strong>
+                            </a>
                         </div>
                     </div>
                 ) : (

@@ -9,15 +9,17 @@ import Cookies from "universal-cookie";
 import {
     NAV_CREATE_ACCOUNT,
     NAV_CREATOR,
-    NAV_DASHBOARD,
+    NAV_DASHBOARD, NAV_DEFAULT,
+    NAV_ERROR, NAV_FORGET_PASSWORD,
     NAV_LOGIN,
     NAV_PROFILE,
     NAV_SETTINGS,
     PATH
-} from "../Utils/Constants";
+} from "../utils/Constants";
 import NotFoundPage from "../pages/NotFoundPage";
 import NavBar from "./NavBar";
 import Profile from "../pages/Profile";
+import ForgetPassword from "../pages/ForgetPassword";
 
 export default function ManagerAccount() {
     const cookies = new Cookies();
@@ -32,28 +34,26 @@ export default function ManagerAccount() {
 
     return (
         <div className="App container mt-4">
-            {/* שימוש ב-NavBar דינמי */}
             <NavBar isLoggedIn={!!token} onLogout={handleLogout} />
 
             <div className="tab-content" id="pills-tabContent">
                 <Routes>
-                    {/* אם אין טוקן, המשתמש יכול לגשת רק לעמודי Login, CreateAccount, וכו' */}
                     {!token && (
                         <>
-                            <Route path="/" element={<Navigate to={NAV_LOGIN}/>}/>
+                            <Route path={NAV_DEFAULT} element={<Navigate to={NAV_LOGIN}/>}/>
                             <Route path={NAV_CREATE_ACCOUNT} element={<CreateAccount />} />
                             <Route path={NAV_LOGIN} element={<Login onLogin={() => navigate(NAV_DASHBOARD)} />} />
                             <Route path={NAV_SETTINGS} element={<SettingsPage />} />
                             <Route path={NAV_CREATOR} element={<Creator />} />
-                            <Route path="*" element={<NotFoundPage />} />
+                            <Route path={NAV_FORGET_PASSWORD} element={<ForgetPassword/>} />
+                            <Route path={NAV_ERROR} element={<NotFoundPage />} />
                         </>
                     )}
-                    {/* אם יש טוקן, המשתמש מועבר ל-Dashboard */}
                     {token && (
                         <>
                             <Route path={NAV_DASHBOARD} element={<DashboardPage/>} />
                             <Route path={NAV_PROFILE} element={<Profile />} />
-                            <Route path="*" element={<NotFoundPage />} />
+                            <Route path={NAV_ERROR} element={<NotFoundPage />} />
                         </>
                     )}
                 </Routes>
