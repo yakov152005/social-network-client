@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import axios from "axios";
-import {NAV_CREATE_ACCOUNT, NAV_LOGIN, URL_CREATE_USER, URL_SERVER_SIDE} from "../utils/Constants";
+import { NAV_LOGIN, URL_CREATE_USER, URL_SERVER_SIDE} from "../utils/Constants";
 import "../css/LoginAndCreate.css";
 import {Navigate, Route, Routes, useNavigate} from "react-router-dom";
 
