@@ -8,6 +8,8 @@ const URL_RESET_PASSWORD = "/reset-password";
 const URL_ADD_POST = "/add-post";
 const URL_GET_POST_PROFILE = "/get-post-by-username";
 const URL_GET_POST_HOME_FEED = "/home-feed-post";
+const URL_ADD_PROFILE_PIC = "/add-profile-pic";
+const URL_GET_PROFILE_PIC = "/get-profile-pic";
 
 
 const NAV_LOGIN = "/login";
@@ -32,6 +34,8 @@ export {
     URL_ADD_POST,
     URL_GET_POST_PROFILE,
     URL_GET_POST_HOME_FEED,
+    URL_ADD_PROFILE_PIC,
+    URL_GET_PROFILE_PIC,
     NAV_LOGIN,
     PATH,
     NAV_CREATE_ACCOUNT,

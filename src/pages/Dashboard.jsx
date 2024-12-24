@@ -24,10 +24,9 @@ export default function Dashboard() {
        try {
            const response = await axios.get(URL_SERVER_SIDE + URL_GET_POST_HOME_FEED + `/${username}`);
            if (response.data.success) {
-               alert(response.data.error);
-               const posts = await response.data.postList;
-               setPosts(posts);
-               setLoading(false)
+               const postsR = response.data.postList;
+               setPosts((prevPosts) => [...prevPosts, ...postsR]);
+               setLoading(false);
            }
        }catch (error){
            console.error("Failed: error to fetch home feed posts",error);
@@ -39,19 +38,37 @@ export default function Dashboard() {
     }, []);
 
     useEffect(() => {
-        if (username) {
-            fetchHomeFeedPosts();
-        }
-    }, [username]);
+            if (username) {
+                fetchHomeFeedPosts();
+            }
+        },
+        [username]);
 
+
+    if (loading) {
+        return (
+            <div>
+                <strong style={{color: "blue"}}>Loading...</strong>
+                <div className="spinner-border text-primary" role="status"></div>
+            </div>
+        );
+    }
+
+    /*
+     if (error) {
+        return <p style={{color: "red"}}>{error}</p>;
+     }
+     */
 
 
     return (
         <div className="feed-container">
-            <h1>Welcome to your Home Feed, {username || "Guest"}!</h1>
-            {loading ? (
-                <p>Loading posts...</p>
-            ) : (
+            <div className="alert alert-link" role="alert">
+                <h1 style={{color: "blue", fontFamily: 'Brush Script MT'}}><strong>
+                    Welcome to your Home Feed, {username || "Guest"}!
+                </strong></h1>
+            </div>
+            {
                 <div className="posts-grid">
                     {posts && posts.length > 0 ? (
                         posts.map((post, index) => (
@@ -59,7 +76,7 @@ export default function Dashboard() {
                                 <div className="post-header">
                                     <div className="post-user-info">
                                         <img
-                                            src={post.userProfilePicture || "/image/logoNetWork.png"}
+                                            src={post.profilePicture || "/image/logoNetWork.png"}
                                             alt="User Profile"
                                             className="post-profile-picture"
                                         />
@@ -79,7 +96,7 @@ export default function Dashboard() {
                         <p>No posts available...</p>
                     )}
                 </div>
-            )}
+            }
         </div>
     );
 }
