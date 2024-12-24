@@ -71,7 +71,7 @@ export default function Profile() {
             const response = await axios.post(URL_SERVER_SIDE + URL_ADD_POST + `/${username}`,
                 newPost);
             if (response.data.success) {
-                alert("Post added successfully!");
+                console.log(response.data.error);
                 setNewPost({content: "", imageUrl: ""});
                 fetchPosts();
             } else {
@@ -147,8 +147,8 @@ export default function Profile() {
                 <div className="profile-info">
                     <h1><strong>{username ? username.toLocaleUpperCase() : "Loading..."}</strong></h1>
                     <p>posts <strong>{posts.length}</strong> &nbsp; &nbsp;  &nbsp; &nbsp;
-                        followers <strong>{/* לא לשכוח למלא פה עוקבים של המשתמש */}</strong> &nbsp; &nbsp;  &nbsp; &nbsp;
-                        following <strong>{/* לא לשכוח למלא פה נעקבים על ידי המשתמש */}</strong>
+                        followers <strong>{0}{/* לא לשכוח למלא פה עוקבים של המשתמש */}</strong> &nbsp; &nbsp;  &nbsp; &nbsp;
+                        following <strong>{0}{/* לא לשכוח למלא פה נעקבים על ידי המשתמש */}</strong>
                     </p>
                 </div>
             </div>
