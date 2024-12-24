@@ -20,6 +20,9 @@ export default function ForgetPassword() {
                 alert("Password reset successful. Check your email.");
                 console.log(`{success: ${response.data.success}, error:{ ${response.data.error} }}`);
                 navigate(NAV_LOGIN);
+            }else {
+                alert(response.data.error);
+                console.log(`{success: ${response.data.success}, error:{ ${response.data.error} }}`);
             }
         }catch (error){
             console.error("Error get request Email",error);

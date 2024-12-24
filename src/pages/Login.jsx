@@ -39,16 +39,16 @@ export default function Login({ onLogin }) {
                 password: formData.password,
             });
 
-            if (response.data) {
+            if (response.data.success) {
                 setIsVerification(true);
-                setErrorMessage("");
+                setErrorMessage(response.data.error);
                 console.log("SMS sent with verification code.");
             } else {
                 setErrorMessage("The username or password is incorrect.");
             }
         } catch (error) {
             console.error("Error logging in user", error);
-            setErrorMessage("The username or password is incorrect.");
+            setErrorMessage("Error logging in user");
         }
     };
 
