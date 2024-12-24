@@ -1,10 +1,14 @@
-const URL_SERVER_SIDE = "http://localhost:8080/users";
+const URL_SERVER_SIDE = "http://localhost:8080/social-network";
 const URL_CREATE_USER = "/add-user";
 const URL_LOGIN_USER = "/login-user";
 const URL_VERIFY = "/verify-code";
 const URL_GET_USER = "/get-user-details";
 const URL_GET_ALL_USER = "/get-all-user-names";
 const URL_RESET_PASSWORD = "/reset-password";
+const URL_ADD_POST = "/add-post";
+const URL_GET_POST_PROFILE = "/get-post-by-username";
+const URL_GET_POST_HOME_FEED = "/home-feed-post";
+
 
 const NAV_LOGIN = "/login";
 const NAV_CREATE_ACCOUNT = "/createAccount";
@@ -25,6 +29,9 @@ export {
     URL_GET_USER,
     URL_GET_ALL_USER,
     URL_RESET_PASSWORD,
+    URL_ADD_POST,
+    URL_GET_POST_PROFILE,
+    URL_GET_POST_HOME_FEED,
     NAV_LOGIN,
     PATH,
     NAV_CREATE_ACCOUNT,

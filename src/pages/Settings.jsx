@@ -1,4 +1,4 @@
-export default function SettingsPage() {
+export default function Settings() {
     const spinners = [...Array(29).keys()];
 
     return (

@@ -6,9 +6,11 @@
 .App{
   background-color: rgba(241, 229, 255, 0.28);
   width: 100vw;
-  height: 100vh;
+  height: auto;
   display: flex;
   flex-direction: column;
+  border-radius: 10px;
+{/* overflow-y: auto; גלגלת פנימית */}
 }
 
 @media (max-width: 768px) {
@@ -36,4 +38,7 @@ html, body {
   pointer-events: none;
   color: gray;
   cursor: not-allowed;
+  border: 5px solid cornflowerblue;
+  border-radius: 20px;
+  background-color: dodgerblue;
 }

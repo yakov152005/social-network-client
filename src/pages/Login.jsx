@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import {NAV_CREATE_ACCOUNT, NAV_FORGET_PASSWORD, URL_LOGIN_USER, URL_SERVER_SIDE, URL_VERIFY} from "../utils/Constants";
 import Cookies from "universal-cookie";
-import {useNavigate} from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 
 
 
@@ -42,9 +42,9 @@ export default function Login({ onLogin }) {
             if (response.data.success) {
                 setIsVerification(true);
                 setErrorMessage(response.data.error);
-                console.log("SMS sent with verification code.");
+                console.log(response.data.error);
             } else {
-                setErrorMessage("The username or password is incorrect.");
+                setErrorMessage(response.data.error);
             }
         } catch (error) {
             console.error("Error logging in user", error);
