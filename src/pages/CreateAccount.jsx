@@ -177,77 +177,94 @@ export default function CreateAccount() {
                         <div className="form-floating mb-3">
                             <input
                                 type="text"
-                                className="form-control"
+                                className={`form-control ${ formData.username === "" ? "" : validation.username ? 'is-valid' : 'is-invalid'}`}
                                 id="username"
                                 placeholder="Username"
                                 value={formData.username}
                                 onChange={handleChange}/>
                             <label htmlFor="username">Username</label>
-                            {validation.username && <span className="validation-success">looking good✅</span>}
+                            <div className="valid-feedback">Looks good!</div>
+                            <div className="invalid-feedback">Username must be at least 3 characters.</div>
                         </div>
 
 
                         <div className="form-floating mb-3">
                             <input
                                 type="password"
-                                className="form-control"
+                                className={`form-control ${formData.password === "" ? "" : validation.password ? 'is-valid' : 'is-invalid'}`}
                                 id="password"
                                 placeholder="Password"
                                 value={formData.password}
                                 onChange={handleChange}/>
                             <label htmlFor="password">Password</label>
-                            {validation.password && <span className="validation-success">looking good✅</span>}
+                            <div className="valid-feedback">Looks good!</div>
+                            <div className="invalid-feedback">
+                                Password must be at least 8 characters and contain a mix of letters, numbers, and special characters.
+                            </div>
+                            {/*{validation.password && <span className="validation-success">looking good✅</span>} plan b for remark*/}
                         </div>
 
                         <div className="form-floating mb-3">
                             <input
                                 type="password"
-                                className="form-control"
+                                className={`form-control ${formData.passwordConfirm === "" ? "" : validation.passwordConfirm ? 'is-valid' : 'is-invalid'}`}
                                 id="passwordConfirm"
                                 placeholder="Password Confirm"
                                 value={formData.passwordConfirm}
                                 onChange={handleChange}/>
                             <label htmlFor="passwordConfirm">Password Confirm</label>
-                            {validation.passwordConfirm && <span className="validation-success">looking good✅</span>}
+                            <div className="valid-feedback">Looks good!</div>
+                            <div className="invalid-feedback">
+                                The confirmation password you entered does not match the original.
+                            </div>
                         </div>
 
 
                         <div className="form-floating mb-3">
                             <input
                                 type="tel"
-                                className="form-control"
+                                className={`form-control ${formData.phoneNumber === "" ? "" : validation.phoneNumber ? 'is-valid' : 'is-invalid'}`}
                                 id="phoneNumber"
                                 placeholder="Phone Number"
                                 value={formData.phoneNumber}
                                 onChange={handleChange}/>
                             <label htmlFor="phoneNumber">Phone Number</label>
-                            {validation.phoneNumber && (<span className="validation-success">looking good✅</span>)}
+                            <div className="valid-feedback">Looks good!</div>
+                            <div className="invalid-feedback">
+                                The phone number must be exactly 10 digits, must start with the prefix 05.
+                            </div>
                         </div>
 
 
                         <div className="form-floating mb-3">
                             <input
                                 type="email"
-                                className="form-control"
+                                className={`form-control ${formData.email === "" ? "" : validation.email ? 'is-valid' : 'is-invalid'}`}
                                 id="email"
                                 placeholder="Email"
                                 value={formData.email}
                                 onChange={handleChange}/>
                             <label htmlFor="email">Email</label>
-                            {validation.email && <span className="validation-success">looking good✅</span>}
+                            <div className="valid-feedback">Looks good!</div>
+                            <div className="invalid-feedback">
+                                The email must end with the extension @example.com / .co.il
+                            </div>
                         </div>
 
 
                         <div className="form-floating mb-3">
                             <input
                                 type="number"
-                                className="form-control"
+                                className={`form-control ${formData.age === 0 ? "" : validation.age ? 'is-valid' : 'is-invalid'}`}
                                 id="age"
                                 placeholder="Age"
                                 value={formData.age}
                                 onChange={handleChange}/>
                             <label htmlFor="age">Age</label>
-                            {validation.age && <span className="validation-success">looking good✅</span>}
+                            <div className="valid-feedback">Looks good!</div>
+                            <div className="invalid-feedback">
+                                The age need to be 1-120.
+                            </div>
                         </div>
 
                         {errorMessage && (

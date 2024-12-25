@@ -45,8 +45,14 @@
 }
 
 
-.validation-success {
-    color: #c3b4b4;
+.valid-feedback{
+    color: green;
+    margin-left: 10px;
+    font-size: 0.8rem;
+}
+
+.invalid-feedback{
+    color: red;
     margin-left: 10px;
     font-size: 0.8rem;
 }
