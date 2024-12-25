@@ -1,16 +1,16 @@
-.auth-container {
+.settings-container {
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100vh;
     margin: 0;
     padding: 0;
-    background: linear-gradient(to left, #002f4b, #ffffff);
+    background: linear-gradient(-moz-mac-accentdarkestshadow, #34424a, #ffffff);
     border-radius: 20px;
     overflow: hidden;
 }
 
-.floating-form {
+.settings-floating-form{
     background-color: rgba(255, 255, 255, 0.95);
     padding: 20px;
     border-radius: 15px;
@@ -20,7 +20,7 @@
     box-sizing: border-box;
 }
 
-.form-title {
+.settings-form-title {
     text-align: center;
     margin-bottom: 20px;
     font-size: 1.5em;
@@ -33,13 +33,3 @@
     margin-top: 10px;
     text-align: center;
 }
-
-a:hover svg {
-    transform: translateX(8px);
-}
-
-.icon-link:hover svg {
-    transform: translateY(-8px);
-}
-
-

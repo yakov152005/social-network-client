@@ -1,25 +1,122 @@
+import {useState} from "react";
+import "../css/SettingsStyle.css"
+import axios from "axios";
+import {URL_CHANGE_PASSWORD, URL_SERVER_SIDE} from "../utils/Constants";
+
 export default function Settings() {
-    const spinners = [...Array(29).keys()];
+    const [formData, setFormData] = useState({
+        username: "",
+        currentPassword:"",
+        newPassword: "",
+        confirmPassword: "",
+    });
+
+    const handleChange = (event) => {
+        const { id, value } = event.target;
+        setFormData({ ...formData, [id]: value });
+    };
+
+    const changePassword = async () =>{
+        if (formData.newPassword !== formData.confirmPassword){
+            alert("The new password and its confirmation do not match, try again.")
+            return;
+        }
+        try {
+            const response = await axios.post(URL_SERVER_SIDE + URL_CHANGE_PASSWORD,{
+                username: formData.username,
+                currentPassword: formData.currentPassword,
+                newPassword: formData.newPassword,
+            });
+
+            if (response.data.success){
+                alert(response.data.error);
+                setFormData({
+                    username: "",
+                    currentPassword:"",
+                    newPassword: "",
+                    confirmPassword: "",
+                });
+            }else {
+                alert(response.data.error);
+                setFormData({
+                    username: formData.username,
+                    currentPassword:"",
+                    newPassword: formData.newPassword,
+                    confirmPassword: formData.confirmPassword,
+                });
+            }
+        }catch (error){
+            console.log("Error to fetch change password");
+        }
+    };
 
     return (
-        <div>
-            {spinners.map((index) => (
-                <div key={index} className="spinner-grow text-warning" role="status"></div>
-            ))}
+        <div className="settings-container">
+            <div className="settings-floating-form">
+                <div>
+                    <div className="p-3 mb-2 bg-success text-white">
+                        <strong>
+                            Change Password
+                        </strong>
+                    </div>
 
-            <div className="p-3 mb-2 bg-warning text-white">
-                <strong>
-                    Building here!
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                         className="bi bi-cone-striped" viewBox="0 0 16 16">
-                        <path d="m9.97 4.88.953 3.811C10.159 8.878 9.14 9 8 9s-2.158-.122-2.923-.309L6.03 4.88C6.635 4.957 7.3 5 8 5s1.365-.043 1.97-.12m-.245-.978L8.97.88C8.718-.13 7.282-.13 7.03.88L6.275 3.9C6.8 3.965 7.382 4 8 4s1.2-.036 1.725-.098m4.396 8.613a.5.5 0 0 1 .037.96l-6 2a.5.5 0 0 1-.316 0l-6-2a.5.5 0 0 1 .037-.96l2.391-.598.565-2.257c.862.212 1.964.339 3.165.339s2.303-.127 3.165-.339l.565 2.257z"/>
-                    </svg>
-                </strong>
+                    <div>
+                        <h3 className="settings-form-title">Change Password</h3>
+                        <div className="form-floating mb-3">
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="username"
+                                placeholder="Username"
+                                value={formData.username}
+                                onChange={handleChange}
+                            />
+                            <label htmlFor="username">Username</label>
+                        </div>
+                        <div className="form-floating mb-3">
+                            <input
+                                type="password"
+                                className="form-control"
+                                id="currentPassword"
+                                placeholder="Current Password"
+                                value={formData.currentPassword}
+                                onChange={handleChange}
+                            />
+                            <label htmlFor="currentPassword">Current Password</label>
+                        </div>
+                        <div className="form-floating mb-3">
+                            <input
+                                type="password"
+                                className="form-control"
+                                id="newPassword"
+                                placeholder="New Password"
+                                value={formData.newPassword}
+                                onChange={handleChange}
+                            />
+                            <label htmlFor="newPassword">New Password</label>
+                        </div>
+                        <div className="form-floating mb-3">
+                            <input
+                                type="password"
+                                className="form-control"
+                                id="confirmPassword"
+                                placeholder="Confirm New Password"
+                                value={formData.confirmPassword}
+                                onChange={handleChange}
+                            />
+                            <label htmlFor="confirmPassword">Confirm New Password</label>
+                        </div>
+
+
+                        <div className="d-grid">
+                            <button className="btn btn-success" type="button" onClick={changePassword}>
+                                Change Password
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
             </div>
-
-            {spinners.map((index) => (
-                <div key={`bottom-${index}`} className="spinner-grow text-warning" role="status"></div>
-            ))}
-        </div>
+                </div>
     );
 }

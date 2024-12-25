@@ -124,8 +124,23 @@ export default function Login({ onLogin }) {
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;New to Social-Network? &nbsp;
                             <a className="icon-link"
                                onClick={() => navigate(NAV_CREATE_ACCOUNT)}
-                               style={{cursor: "pointer", textDecoration: "underline", color: "blue"}}>
-                                <strong> Sign Up!</strong>
+                               style={{cursor: "pointer", textDecoration: "underline", color: "blue", display: "inline-flex", alignItems: "center",}}>
+                                <strong> Sign Up
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="16"
+                                        height="16"
+                                        fill="currentColor"
+                                        className="bi bi-exclamation-lg"
+                                        viewBox="0 0 16 16"
+                                        style={{
+                                            transition: "transform 0.3s ease",
+                                        }}
+                                    >
+                                        <path
+                                            d="M7.005 3.1a1 1 0 1 1 1.99 0l-.388 6.35a.61.61 0 0 1-1.214 0zM7 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0"/>
+                                    </svg>
+                                </strong>
                             </a>
                         </div>
 
