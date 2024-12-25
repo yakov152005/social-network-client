@@ -114,7 +114,11 @@ export default function Login({ onLogin }) {
                             </div>
                         )}
                         <div className="d-grid">
-                            <button className="btn btn-primary" type="button" onClick={loginUser}>
+                            <button className="btn btn-primary"
+                                    type="button"
+                                    disabled={!(formData.username && formData.password)}
+                                    onClick={loginUser}
+                            >
                                 Login
                             </button>
                         </div>

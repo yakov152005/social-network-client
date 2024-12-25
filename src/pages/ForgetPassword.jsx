@@ -52,7 +52,10 @@ export default function ForgetPassword() {
                         </div>
                     )} */}
                     <div className="d-grid">
-                        <button className="btn btn-primary" type="button" onClick={handleClick} >
+                        <button className="btn btn-primary"
+                                type="button"
+                                disabled={!(emailForReset)}
+                                onClick={handleClick} >
                             Reset password
                         </button>
                     </div>

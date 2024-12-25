@@ -260,7 +260,9 @@ export default function CreateAccount() {
                             <button
                                 className="btn btn-primary"
                                 type="button"
-                                onClick={createAccount}>
+                                onClick={createAccount}
+                                disabled={(!(formData.username && formData.password && formData.passwordConfirm && formData.email && formData.age))}
+                            >
                                 Create Account
                             </button>
                         </div>
