@@ -19,6 +19,9 @@ export default function Settings() {
     const changePassword = async () =>{
         if (formData.newPassword !== formData.confirmPassword){
             alert("The new password and its confirmation do not match, try again.")
+            setFormData(prevState => ({
+                ...prevState, newPassword: "", confirmPassword: "",
+            }))
             return;
         }
         try {
@@ -40,9 +43,9 @@ export default function Settings() {
                 alert(response.data.error);
                 setFormData({
                     username: formData.username,
-                    currentPassword:"",
-                    newPassword: formData.newPassword,
-                    confirmPassword: formData.confirmPassword,
+                    currentPassword: "",
+                    newPassword: "",
+                    confirmPassword: "",
                 });
             }
         }catch (error){

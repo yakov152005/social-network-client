@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import axios, {get} from "axios";
+import axios from "axios";
 import {
     URL_ADD_POST,
     URL_ADD_PROFILE_PIC,
@@ -40,7 +40,7 @@ export default function Profile() {
                 console.log(response.data.postList)
                 setPosts(response.data.postList || []);
             } else {
-                alert(response.data.error);
+                console.error(response.data.error);
             }
         } catch (error) {
             console.error("Failed to load posts", error);
@@ -75,7 +75,7 @@ export default function Profile() {
                 setNewPost({content: "", imageUrl: ""});
                 fetchPosts();
             } else {
-                alert(response.data.error);
+                console.error(response.data.error);
             }
         } catch (error) {
             console.error("Failed to add post", error);

@@ -34,12 +34,21 @@
     text-align: center;
 }
 
-a:hover svg {
-    transform: translateX(8px);
+.custom-link:hover .custom-arrow-icon {
+    transform: translateX(20px);
+    fill: red;
 }
 
 .icon-link:hover svg {
     transform: translateY(-8px);
+    fill: red;
+}
+
+
+.validation-success {
+    color: #c3b4b4;
+    margin-left: 10px;
+    font-size: 0.8rem;
 }
 
 

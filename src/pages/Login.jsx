@@ -120,7 +120,7 @@ export default function Login({ onLogin }) {
                         </div>
 
                         <br></br>
-                        <div style={{color: "blue"}}>
+                        <div className={"leftRight"} style={{color: "blue"}}>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;New to Social-Network? &nbsp;
                             <a className="icon-link"
                                onClick={() => navigate(NAV_CREATE_ACCOUNT)}
