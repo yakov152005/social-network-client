@@ -34,27 +34,51 @@
     text-align: center;
 }
 
+.custom-arrow-icon {
+    display: inline-block;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
 .custom-link:hover .custom-arrow-icon {
     transform: translateX(20px);
-    fill: red;
+    color: #1233dd;
 }
 
-.icon-link:hover svg {
+.icon-link i {
+    display: inline-block;
+}
+.icon-link:hover i {
     transform: translateY(-8px);
-    fill: red;
+    transition: transform 0.3s ease, color 0.3s ease;
 }
-
 
 .valid-feedback{
     color: green;
     margin-left: 10px;
-    font-size: 0.8rem;
+    font-size: 0.7rem;
 }
 
 .invalid-feedback{
     color: red;
     margin-left: 10px;
-    font-size: 0.8rem;
+    font-size: 0.7rem;
+}
+
+.input:focus + label.label-user{
+    transform: translateY(-1rem);
+    font-size: 0.85rem;
+    color: #6c757d;
+}
+
+.icon-container {
+    position: absolute;
+    left: 0.8rem;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    z-index: 2;
 }
 
 

@@ -3,12 +3,18 @@ import axios from "axios";
 import {NAV_LOGIN, URL_CREATE_USER, URL_SERVER_SIDE} from "../utils/Constants";
 import "../css/LoginAndCreate.css";
 import {Navigate, Route, Routes, useNavigate} from "react-router-dom";
+import {IconLockCheck, IconDeviceMobileFilled, IconMailFilled, IconBalloonFilled} from '@tabler/icons-react';
 
 
 export default function CreateAccount() {
     const navigate = useNavigate();
+
     const [errorMessage, setErrorMessage] = useState("");
     const [isCreate, setIsCreate] = useState(false);
+
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
     const [formData, setFormData] = useState({
         username: "",
         password: "",
@@ -26,7 +32,6 @@ export default function CreateAccount() {
         email: false,
         age: false,
     });
-
 
     const handleChange = (event) => {
         const { id, value } = event.target;
@@ -167,6 +172,25 @@ export default function CreateAccount() {
         }
     };
 
+    const styleIcon ={
+        left: "0.8rem",
+        top: "50%",
+        transform: "translateY(-50%)",
+        pointerEvents: "none",
+        display: "flex",
+        alignItems: "center",
+    };
+    const styleI = {fontSize: "1.2rem", color: "#6c757d"};
+    const styleFinal = {
+        left: "2.5rem",
+        top: "50%",
+        transform: "translateY(-50%)",
+        height: "1.5rem",
+        width: "1px",
+        backgroundColor: "#ddd",}
+
+
+
     return (
         <div className="auth-container">
             <div className="floating-form">
@@ -174,45 +198,62 @@ export default function CreateAccount() {
                 {!isCreate ? (
                     <div>
                         <h3 className="form-title">Create Account</h3>
-                        <div className="form-floating mb-3">
+
+                        <div className="form-floating mb-3 position-relative">
                             <input
                                 type="text"
-                                className={`form-control ${ formData.username === "" ? "" : validation.username ? 'is-valid' : 'is-invalid'}`}
+                                className={`form-control ${formData.username === "" ? "" : validation.username ? 'is-valid' : 'is-invalid'}`}
                                 id="username"
                                 placeholder="Username"
                                 value={formData.username}
-                                onChange={handleChange}/>
-                            <label htmlFor="username">Username</label>
+                                onChange={handleChange}
+                                style={{paddingLeft: "3.5rem"}}
+                            />
+                            <label htmlFor="username" className="label-user" style={{paddingLeft: "3.5rem"}}>Username</label>
+                            <div className="position-absolute icon-container" style={styleIcon}><i className="fa-solid fa-user" style={styleI}></i></div>
+                            <div className="position-absolute" style={styleFinal}></div>
                             <div className="valid-feedback">Looks good!</div>
                             <div className="invalid-feedback">Username must be at least 3 characters.</div>
                         </div>
 
 
-                        <div className="form-floating mb-3">
+                        <div className="form-floating mb-3 position-relative">
                             <input
                                 type="password"
                                 className={`form-control ${formData.password === "" ? "" : validation.password ? 'is-valid' : 'is-invalid'}`}
                                 id="password"
                                 placeholder="Password"
                                 value={formData.password}
-                                onChange={handleChange}/>
-                            <label htmlFor="password">Password</label>
+                                onChange={handleChange}
+                                style={{paddingLeft: "3.5rem"}}
+                            />
+                            <label htmlFor="password" className="label-user" style={{paddingLeft: "3.5rem"}}>Password</label>
+                            <div className="position-absolute icon-container" style={styleIcon}>
+                                <i className="fa-sharp-duotone fa-solid fa-lock" style={styleI}></i>
+                            </div>
+                            <div className="position-absolute" style={styleFinal}></div>
                             <div className="valid-feedback">Looks good!</div>
                             <div className="invalid-feedback">
-                                Password must be at least 8 characters and contain a mix of letters, numbers, and special characters.
+                                Password must be at least 8 characters and contain a mix of letters, numbers, and
+                                special characters.
                             </div>
-                            {/*{validation.password && <span className="validation-success">looking good✅</span>} plan b for remark*/}
                         </div>
 
-                        <div className="form-floating mb-3">
+                        <div className="form-floating mb-3 position-relative">
                             <input
                                 type="password"
                                 className={`form-control ${formData.passwordConfirm === "" ? "" : validation.passwordConfirm ? 'is-valid' : 'is-invalid'}`}
                                 id="passwordConfirm"
                                 placeholder="Password Confirm"
                                 value={formData.passwordConfirm}
-                                onChange={handleChange}/>
-                            <label htmlFor="passwordConfirm">Password Confirm</label>
+                                onChange={handleChange}
+                                style={{paddingLeft: "3.5rem"}}
+                            />
+                            <label htmlFor="passwordConfirm" className="label-user" style={{paddingLeft: "3.5rem"}} >Password Confirm</label>
+                            <div className="position-absolute icon-container" style={styleIcon}>
+                                <IconLockCheck stroke={2} style={styleI} />
+                            </div>
+                            <div className="position-absolute" style={styleFinal}></div>
                             <div className="valid-feedback">Looks good!</div>
                             <div className="invalid-feedback">
                                 The confirmation password you entered does not match the original.
@@ -220,31 +261,43 @@ export default function CreateAccount() {
                         </div>
 
 
-                        <div className="form-floating mb-3">
+                        <div className="form-floating mb-3 position-relative">
                             <input
                                 type="tel"
                                 className={`form-control ${formData.phoneNumber === "" ? "" : validation.phoneNumber ? 'is-valid' : 'is-invalid'}`}
                                 id="phoneNumber"
                                 placeholder="Phone Number"
                                 value={formData.phoneNumber}
-                                onChange={handleChange}/>
-                            <label htmlFor="phoneNumber">Phone Number</label>
+                                onChange={handleChange}
+                                style={{paddingLeft: "3.5rem"}}
+                            />
+                            <label htmlFor="phoneNumber" className="label-user" style={{paddingLeft: "3.5rem"}}>Phone Number</label>
+                            <div className="position-absolute icon-container" style={styleIcon}>
+                                <IconDeviceMobileFilled style={styleI}/>
+                            </div>
+                            <div className="position-absolute" style={styleFinal}></div>
                             <div className="valid-feedback">Looks good!</div>
                             <div className="invalid-feedback">
                                 The phone number must be exactly 10 digits, must start with the prefix 05.
-                            </div>
+                                </div>
                         </div>
 
 
-                        <div className="form-floating mb-3">
+                        <div className="form-floating mb-3 position-relative">
                             <input
                                 type="email"
                                 className={`form-control ${formData.email === "" ? "" : validation.email ? 'is-valid' : 'is-invalid'}`}
                                 id="email"
                                 placeholder="Email"
                                 value={formData.email}
-                                onChange={handleChange}/>
-                            <label htmlFor="email">Email</label>
+                                onChange={handleChange}
+                                style={{paddingLeft: "3.5rem"}}
+                            />
+                            <label htmlFor="email" className="label-user" style={{paddingLeft: "3.5rem"}}>Email</label>
+                            <div className="position-absolute icon-container" style={styleIcon}>
+                                <IconMailFilled stroke={2} style={styleI}/>
+                            </div>
+                            <div className="position-absolute" style={styleFinal}></div>
                             <div className="valid-feedback">Looks good!</div>
                             <div className="invalid-feedback">
                                 The email must end with the extension @example.com / .co.il
@@ -252,15 +305,21 @@ export default function CreateAccount() {
                         </div>
 
 
-                        <div className="form-floating mb-3">
+                        <div className="form-floating mb-3 position-relative">
                             <input
                                 type="number"
                                 className={`form-control ${formData.age === 0 ? "" : validation.age ? 'is-valid' : 'is-invalid'}`}
                                 id="age"
                                 placeholder="Age"
                                 value={formData.age}
-                                onChange={handleChange}/>
-                            <label htmlFor="age">Age</label>
+                                onChange={handleChange}
+                                style={{paddingLeft: "3.5rem"}}
+                            />
+                            <label htmlFor="age" className="label-user" style={{paddingLeft: "3.5rem"}}>Age</label>
+                            <div className="position-absolute icon-container" style={styleIcon}>
+                                <IconBalloonFilled style={styleI}/>
+                            </div>
+                            <div className="position-absolute" style={styleFinal}></div>
                             <div className="valid-feedback">Looks good!</div>
                             <div className="invalid-feedback">
                                 The age need to be 1-120.
@@ -274,51 +333,40 @@ export default function CreateAccount() {
                         )}
 
                         <div className="d-grid">
-                            <button
-                                className="btn btn-primary"
-                                type="button"
-                                onClick={createAccount}
-                                disabled={(!(formData.username && formData.password && formData.passwordConfirm && formData.email && formData.age))}
-                            >
-                                Create Account
-                            </button>
+                                <button
+                                    className="btn btn-primary"
+                                    type="button"
+                                    onClick={createAccount}
+                                    disabled={(!(formData.username && formData.password && formData.passwordConfirm && formData.email && formData.age))}
+                                >
+                                    Create Account
+                                </button>
+                            </div>
+
+                            <br></br>
+
+                            <div style={{color: "blue"}}>
+                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Already have an account? &nbsp;
+                                <a onClick={() => navigate(NAV_LOGIN)}
+                                   className="custom-link"
+                                   style={{
+                                       cursor: "pointer",
+                                       textDecoration: "underline",
+                                       color: "blue",
+                                       display: "inline-flex",
+                                       alignItems: "center",
+                                   }}>
+                                    <strong>
+                                        Sign in&nbsp;
+                                        <i className="bi bi-arrow-right custom-arrow-icon"></i>
+                                    </strong>
+                                </a>
+                            </div>
+
+
                         </div>
-
-                        <br></br>
-
-                        <div  style={{color: "blue"}}>
-                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Already have an account? &nbsp;
-                            <a onClick={() => navigate(NAV_LOGIN)}
-                               className="custom-link"
-                               style={{
-                                   cursor: "pointer",
-                                   textDecoration: "underline",
-                                   color: "blue",
-                                   display: "inline-flex",
-                                   alignItems: "center",
-                               }}>
-                                <strong>
-                                    Sign in&nbsp;
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="16"
-                                        height="16"
-                                        fill="currentColor"
-                                        className="custom-arrow-icon"
-                                        viewBox="0 0 16 16"
-                                        style={{transition: "transform 0.3s ease"}}
-                                    >
-                                        <path fillRule="evenodd"
-                                              d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
-                                    </svg>
-                                </strong>
-                            </a>
-                        </div>
-
-
-                    </div>
-                ) : (
-                    <div>
+                        ) : (
+                        <div>
                         <Routes>
                             <Route path="/" element={<Navigate to="/login"/>}/>
                         </Routes>

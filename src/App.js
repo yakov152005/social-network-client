@@ -1,13 +1,14 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import 'bootstrap-icons/font/bootstrap-icons.css';
 import ManagerAccount from "./components/ManagerAccount";
 import {BrowserRouter} from "react-router-dom";
 
 
 export default function App() {
+
     /*
-    רקע למסך
     const backgroundStyle = {
         backgroundImage: "url('/image/img_7.png')",
         backgroundSize: "cover",
@@ -17,12 +18,14 @@ export default function App() {
         width: "100%",
     };
     style={backgroundStyle}
-     */
+    */
+
+
 
     return (
-        <div >
+        <div>
             <BrowserRouter>
-                    <ManagerAccount/>
+                    <ManagerAccount />
             </BrowserRouter>
         </div>
     )
