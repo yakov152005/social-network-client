@@ -1,4 +1,4 @@
-.auth-container {
+{/* .auth-container {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -8,6 +8,43 @@
     background: linear-gradient(to left, #002f4b, #ffffff);
     border-radius: 20px;
     overflow: hidden;
+}*/}
+.auth-container {
+    display: flex;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to left, #002f4b, #ffffff);
+}
+
+.left-section, .right-section {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    border-radius: 4px;
+    align-items: center;
+    flex-direction: column;
+}
+
+.left-section {
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.right-section {
+    background: linear-gradient(to bottom right, #1d3557, #457b9d);
+    color: white;
+    text-align: center;
+}
+
+.logo {
+    max-width: 200px;
+    margin-bottom: 20px;
+}
+
+.site-info {
+    font-size: 1.2em;
+    max-width: 80%;
+    line-height: 1.6;
 }
 
 .floating-form {

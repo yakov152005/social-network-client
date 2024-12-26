@@ -3,13 +3,13 @@ import axios from "axios";
 import {
     NAV_CREATE_ACCOUNT,
     NAV_FORGET_PASSWORD,
-    NAV_LOGIN,
     URL_LOGIN_USER,
     URL_SERVER_SIDE,
     URL_VERIFY
 } from "../utils/Constants";
 import Cookies from "universal-cookie";
 import { useNavigate} from "react-router-dom";
+import logo from '../assets/image/iconSocialNetWorkTheOriginalOne.png';
 
 
 
@@ -89,110 +89,118 @@ export default function Login({ onLogin }) {
 
     return (
         <div className="auth-container">
-            <div className="floating-form">
-                {!isVerification ? (
-                    <div>
-                        <h3 className="form-title">Login</h3>
-                        <div className="form-floating mb-3">
-                            <input
-                                type="text"
-                                className="form-control"
-                                id="username"
-                                placeholder="Username"
-                                value={formData.username}
-                                onChange={handleChange}
-                            />
-                            <label htmlFor="username">Username</label>
-                        </div>
-                        <div className="form-floating mb-3">
-                            <input
-                                type="password"
-                                className="form-control"
-                                id="password"
-                                placeholder="Password"
-                                value={formData.password}
-                                onChange={handleChange}
-                            />
-                            <label htmlFor="password">Password</label>
-                        </div>
-                        {errorMessage && (
-                            <div className="error-message">
-                                <strong>{errorMessage}</strong>
+            <div className="left-section">
+                <div className="floating-form">
+                    {!isVerification ? (
+                        <div>
+                            <h3 className="form-title">Login</h3>
+                            <div className="form-floating mb-3">
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    id="username"
+                                    placeholder="Username"
+                                    value={formData.username}
+                                    onChange={handleChange}
+                                />
+                                <label htmlFor="username">Username</label>
                             </div>
-                        )}
-                        <div className="d-grid">
-                            <button className="btn btn-primary"
-                                    type="button"
-                                    disabled={!(formData.username && formData.password)}
-                                    onClick={loginUser}
-                            >
-                                Login
-                            </button>
-                        </div>
-
-                        <br></br>
-                        <div style={{color: "blue"}}>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;New to Social-Network? &nbsp;
-                            <a className="icon-link"
-                               onClick={() => navigate(NAV_CREATE_ACCOUNT)}
-                               style={{
-                                   cursor: "pointer",
-                                   textDecoration: "underline",
-                                   color: "blue",
-                                   display: "inline-flex",
-                                   alignItems: "center",
-                               }}>
-                                <strong> Sign Up
-                                    <i className="bi bi-exclamation-lg"></i>
-                                </strong>
-                            </a>
-                        </div>
-
-                        <div  style={{color: "red"}}>
-                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                            <a  onClick={() => navigate(NAV_FORGET_PASSWORD)}
-                                className="icon-link"
-                               style={{
-                                   cursor: "pointer",
-                                   textDecoration: "underline",
-                                   color: "red",
-                                   display: "inline-flex",
-                                   alignItems: "center",
-                               }}>
-                                <strong>
-                                    Forgot password&nbsp;
-                                    <i className="bi bi-question"></i>
-                                </strong>
-                            </a>
-                        </div>
-
-                    </div>
-                ) : (
-                    <div>
-                        <h4>Enter Verification Code</h4>
-                        <div className="form-floating mb-3">
-                            <input
-                                type="text"
-                                className="form-control"
-                                id="verification"
-                                placeholder="Verification Code"
-                                value={verificationCode}
-                                onChange={handleVerificationChange}
-                            />
-                            <label htmlFor="verification">Verification Code</label>
-                        </div>
-                        {errorMessage && (
-                            <div className="error-message">
-                                <strong>{errorMessage}</strong>
+                            <div className="form-floating mb-3">
+                                <input
+                                    type="password"
+                                    className="form-control"
+                                    id="password"
+                                    placeholder="Password"
+                                    value={formData.password}
+                                    onChange={handleChange}
+                                />
+                                <label htmlFor="password">Password</label>
                             </div>
-                        )}
-                        <div className="d-grid">
-                            <button className="btn btn-primary" type="button" onClick={verifyCode}>
-                                Verify Code
-                            </button>
+                            {errorMessage && (
+                                <div className="error-message">
+                                    <strong>{errorMessage}</strong>
+                                </div>
+                            )}
+                            <div className="d-grid">
+                                <button className="btn btn-primary"
+                                        type="button"
+                                        disabled={!(formData.username && formData.password)}
+                                        onClick={loginUser}
+                                >
+                                    Login
+                                </button>
+                            </div>
+
+                            <br></br>
+                            <div style={{color: "blue"}}>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;New to Social-Network? &nbsp;
+                                <a className="icon-link"
+                                   onClick={() => navigate(NAV_CREATE_ACCOUNT)}
+                                   style={{
+                                       cursor: "pointer",
+                                       textDecoration: "underline",
+                                       color: "blue",
+                                       display: "inline-flex",
+                                       alignItems: "center",
+                                   }}>
+                                    <strong> Sign Up
+                                        <i className="bi bi-exclamation-lg"></i>
+                                    </strong>
+                                </a>
+                            </div>
+
+                            <div style={{color: "red"}}>
+                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                <a onClick={() => navigate(NAV_FORGET_PASSWORD)}
+                                   className="icon-link"
+                                   style={{
+                                       cursor: "pointer",
+                                       textDecoration: "underline",
+                                       color: "red",
+                                       display: "inline-flex",
+                                       alignItems: "center",
+                                   }}>
+                                    <strong>
+                                        Forgot password&nbsp;
+                                        <i className="bi bi-question"></i>
+                                    </strong>
+                                </a>
+                            </div>
+
                         </div>
-                    </div>
-                )}
+                    ) : (
+                        <div>
+                            <h4>Enter Verification Code</h4>
+                            <div className="form-floating mb-3">
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    id="verification"
+                                    placeholder="Verification Code"
+                                    value={verificationCode}
+                                    onChange={handleVerificationChange}
+                                />
+                                <label htmlFor="verification">Verification Code</label>
+                            </div>
+                            {errorMessage && (
+                                <div className="error-message">
+                                    <strong>{errorMessage}</strong>
+                                </div>
+                            )}
+                            <div className="d-grid">
+                                <button className="btn btn-primary" type="button" onClick={verifyCode}>
+                                    Verify Code
+                                </button>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            </div>
+            <div className="right-section">
+                <img src={logo} alt="Logo" className="logo"/>
+                <p className="site-info">
+                    Welcome back, log in to continue creating new experiences.
+                </p>
             </div>
         </div>
     );
