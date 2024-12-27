@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import {
     NAV_CREATE_ACCOUNT,
-    NAV_FORGET_PASSWORD,
+    NAV_FORGET_PASSWORD, NAV_LOGIN,
     URL_LOGIN_USER,
     URL_SERVER_SIDE,
     URL_VERIFY
@@ -132,9 +132,9 @@ export default function Login({ onLogin }) {
                             </div>
 
                             <br></br>
-                            <div style={{color: "blue"}}>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;New to Social-Network? &nbsp;
-                                <a className="icon-link"
+                            <div style={{color: "blue" , margin: "10px" ,marginLeft: "40px"}}>
+                                New to Social-Network?
+                                <a  className="custom-link"
                                    onClick={() => navigate(NAV_CREATE_ACCOUNT)}
                                    style={{
                                        cursor: "pointer",
@@ -142,15 +142,15 @@ export default function Login({ onLogin }) {
                                        color: "blue",
                                        display: "inline-flex",
                                        alignItems: "center",
+                                       marginLeft: "10px"
                                    }}>
                                     <strong> Sign Up
-                                        <i className="bi bi-exclamation-lg"></i>
+                                        <i className="bi bi-arrow-right custom-arrow-icon"></i>
                                     </strong>
                                 </a>
                             </div>
 
                             <div style={{color: "red"}}>
-                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                                 <a onClick={() => navigate(NAV_FORGET_PASSWORD)}
                                    className="icon-link"
                                    style={{
@@ -159,6 +159,7 @@ export default function Login({ onLogin }) {
                                        color: "red",
                                        display: "inline-flex",
                                        alignItems: "center",
+                                       marginLeft: "100px"
                                    }}>
                                     <strong>
                                         Forgot password&nbsp;
@@ -184,7 +185,7 @@ export default function Login({ onLogin }) {
                             </div>
                             {errorMessage && (
                                 <div className="error-message">
-                                    <strong>{errorMessage}</strong>
+                                <strong>{errorMessage}</strong>
                                 </div>
                             )}
                             <div className="d-grid">
@@ -198,7 +199,7 @@ export default function Login({ onLogin }) {
             </div>
             <div className="right-section">
                 <img src={logo} alt="Logo" className="logo"/>
-                <p className="site-info">
+                <p className="site-info" style={{color: "black", fontFamily:'Brush Script MT'}}>
                     Welcome back, log in to continue creating new experiences.
                 </p>
             </div>

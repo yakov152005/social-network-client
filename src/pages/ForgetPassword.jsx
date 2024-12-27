@@ -1,23 +1,28 @@
-import {useState} from "react";
+import React, {useState} from "react";
 import axios from "axios";
 import {NAV_LOGIN, URL_RESET_PASSWORD, URL_SERVER_SIDE} from "../utils/Constants";
 import {useNavigate} from "react-router-dom";
 
 
 export default function ForgetPassword() {
+    const [username,setUserName] = useState("");
     const [emailForReset, setEmailForReset] = useState("");
   //  const[errorMessage,setErrorMessage] = useState("");
   //  const[loading,setLoading] = useState(false);
     const navigate = useNavigate();
     //const [phoneForReset, setPhoneForReset] = useState("");
 
-    const handleChange = (event) => {
+    const handleChangeMail = (event) => {
         setEmailForReset(event.target.value);
+    };
+
+    const handleChangeUser = (event) =>{
+        setUserName(event.target.value);
     };
 
     const handleClick = async () =>{
         try {
-            const response = await axios.get(URL_SERVER_SIDE + URL_RESET_PASSWORD + `/${emailForReset}`);
+            const response = await axios.get(URL_SERVER_SIDE + URL_RESET_PASSWORD + `/${emailForReset}&${username}`);
             if (response.data.success){
               //  setTimeout(setLoading(!loading),2000);
                 alert("Password reset successful. Check your email.");
@@ -26,6 +31,8 @@ export default function ForgetPassword() {
             }else {
                 alert(response.data.error);
                 console.log(`{success: ${response.data.success}, error:{ ${response.data.error} }}`);
+                setUserName("");
+                setEmailForReset("");
             }
         }catch (error){
             console.error("Error get request Email",error);
@@ -52,8 +59,21 @@ export default function ForgetPassword() {
     }
    */
 
+    const styleContainer = {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '100vh',
+        margin: '0',
+        padding: '0',
+        background: 'linear-gradient(to left, #002f4b, #ffffff)',
+        borderRadius: '20px',
+        overflow: 'hidden',
+    };
+
+
     return (
-        <div className="auth-container">
+        <div style={styleContainer}>
             <div className="floating-form">
                 <div>
                     <h3 className="form-title">Reset Password</h3>
@@ -61,10 +81,21 @@ export default function ForgetPassword() {
                         <input
                             type="text"
                             className="form-control"
+                            id="username"
+                            placeholder="Username"
+                            value={username}
+                            onChange={handleChangeUser}
+                        />
+                        <label htmlFor="username">Username</label>
+                    </div>
+                    <div className="form-floating mb-3">
+                        <input
+                            type="text"
+                            className="form-control"
                             id="emailReset"
                             placeholder="Email"
                             value={emailForReset}
-                            onChange={handleChange}
+                            onChange={handleChangeMail}
                         />
                         <label htmlFor="emailReset">Email</label>
                     </div>
@@ -74,14 +105,33 @@ export default function ForgetPassword() {
                         </div>
                     )} */}
                     <div className="d-grid">
-                        <button className="btn btn-primary"
+                        <button className="btn btn-danger"
                                 type="button"
-                                disabled={!(emailForReset)}
+                                disabled={!(emailForReset && username)}
                                 onClick={handleClick}>
                             Reset password&nbsp;
                             <i className="bi bi-envelope-at"></i>
                         </button>
                     </div>
+
+                    <br/>
+                    <div style={{color: "blue" , margin: "5px" ,marginLeft: "123px"}}>
+                        <a onClick={() => navigate(NAV_LOGIN)}
+                           className="custom-link"
+                           style={{
+                               cursor: "pointer",
+                               textDecoration: "underline",
+                               color: "blue",
+                               display: "inline-flex",
+                               alignItems: "center",
+                           }}>
+                            <strong>
+                                Back to login&nbsp;
+                                <i className="bi bi-arrow-right custom-arrow-icon"></i>
+                            </strong>
+                        </a>
+                    </div>
+
                 </div>
             </div>
         </div>

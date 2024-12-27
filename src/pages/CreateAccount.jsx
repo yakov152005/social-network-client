@@ -352,8 +352,8 @@ export default function CreateAccount() {
 
                             <br></br>
 
-                            <div style={{color: "blue"}}>
-                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Already have an account? &nbsp;
+                            <div style={{color: "blue" , margin: "10px" ,marginLeft: "40px"}}>
+                                 Already have an account? &nbsp;
                                 <a onClick={() => navigate(NAV_LOGIN)}
                                    className="custom-link"
                                    style={{
@@ -383,7 +383,7 @@ export default function CreateAccount() {
             </div>
             <div className="right-section">
                 <img src={logo} alt="Logo" className="logo"/>
-                <p className="site-info">
+                <p className="site-info" style={{color: "black", fontFamily:'Brush Script MT'}}>
                     Welcome to our amazing social network platform! Connect, share, and grow with us.
                 </p>
             </div>

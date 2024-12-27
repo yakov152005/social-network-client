@@ -16,6 +16,7 @@ const URL_CHANGE_PASSWORD = "/change-password";
 const NAV_LOGIN = "/login";
 const NAV_CREATE_ACCOUNT = "/createAccount";
 const NAV_SETTINGS = "/settingsPage";
+const NAV_CHANGE_PASSWORD = "/changePassword";
 const NAV_CREATOR = "/creator";
 const NAV_DASHBOARD = "/dashboard";
 const NAV_PROFILE = "/profile";
@@ -48,4 +49,6 @@ export {
     NAV_ERROR,
     NAV_FORGET_PASSWORD,
     NAV_DEFAULT,
+    NAV_CHANGE_PASSWORD,
+
 };

@@ -6,6 +6,7 @@ import Creator from "../pages/Creator";
 import Dashboard from "../pages/Dashboard";
 import Cookies from "universal-cookie";
 import {
+    NAV_CHANGE_PASSWORD,
     NAV_CREATE_ACCOUNT,
     NAV_CREATOR,
     NAV_DASHBOARD, NAV_DEFAULT,
@@ -19,6 +20,7 @@ import NavBar from "./NavBar";
 import Profile from "../pages/Profile";
 import ForgetPassword from "../pages/ForgetPassword";
 import Settings from "../pages/Settings";
+import ChangePassword from "../pages/ChangePassword";
 
 export default function ManagerAccount() {
     const cookies = new Cookies();
@@ -52,6 +54,7 @@ export default function ManagerAccount() {
                             <Route path={NAV_DASHBOARD} element={<Dashboard/>} />
                             <Route path={NAV_PROFILE} element={<Profile />} />
                             <Route path={NAV_SETTINGS} element={<Settings />} />
+                            <Route path={NAV_CHANGE_PASSWORD} element={<ChangePassword />} />
                             <Route path={NAV_ERROR} element={<NotFoundPage />} />
                         </>
                     )}
