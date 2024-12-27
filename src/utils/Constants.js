@@ -3,7 +3,7 @@ const URL_CREATE_USER = "/add-user";
 const URL_LOGIN_USER = "/login-user";
 const URL_VERIFY = "/verify-code";
 const URL_GET_USER = "/get-user-details";
-const URL_GET_ALL_USER = "/get-all-user-names";
+const URL_GET_ALL_USER_NAMES = "/get-all-user-names";
 const URL_RESET_PASSWORD = "/reset-password";
 const URL_ADD_POST = "/add-post";
 const URL_GET_POST_PROFILE = "/get-post-by-username";
@@ -16,6 +16,7 @@ const URL_CHANGE_PASSWORD = "/change-password";
 const NAV_LOGIN = "/login";
 const NAV_CREATE_ACCOUNT = "/createAccount";
 const NAV_SETTINGS = "/settingsPage";
+const NAV_SEARCH = "/search";
 const NAV_CHANGE_PASSWORD = "/changePassword";
 const NAV_CREATOR = "/creator";
 const NAV_DASHBOARD = "/dashboard";
@@ -33,7 +34,7 @@ export {
     URL_LOGIN_USER,
     URL_VERIFY,
     URL_GET_USER,
-    URL_GET_ALL_USER,
+    URL_GET_ALL_USER_NAMES,
     URL_RESET_PASSWORD,
     URL_ADD_POST,
     URL_GET_POST_PROFILE,
@@ -41,10 +42,11 @@ export {
     URL_ADD_PROFILE_PIC,
     URL_GET_PROFILE_PIC,
     URL_CHANGE_PASSWORD,
-    NAV_LOGIN,
     PATH,
+    NAV_LOGIN,
     NAV_CREATE_ACCOUNT,
     NAV_SETTINGS,
+    NAV_SEARCH,
     NAV_CREATOR,
     NAV_DASHBOARD,
     NAV_PROFILE,
@@ -52,6 +54,6 @@ export {
     NAV_FORGET_PASSWORD,
     NAV_DEFAULT,
     NAV_CHANGE_PASSWORD,
-    MAX_SCROLL
+    MAX_SCROLL,
 
 };

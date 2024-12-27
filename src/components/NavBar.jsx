@@ -1,7 +1,16 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import logo from '../assets/image/iconSocialNetWorkTheOriginalOne.png';
-import {NAV_CREATE_ACCOUNT, NAV_LOGIN, NAV_DASHBOARD, NAV_PROFILE, NAV_SETTINGS, NAV_CREATOR} from "../utils/Constants";
+import {
+    NAV_CREATE_ACCOUNT,
+    NAV_LOGIN,
+    NAV_DASHBOARD,
+    NAV_PROFILE,
+    NAV_SETTINGS,
+    NAV_CREATOR,
+    NAV_SEARCH
+} from "../utils/Constants";
+import { IconSearch } from '@tabler/icons-react';
 
 export default function NavBar({ isLoggedIn, onLogout }) {
     return (
@@ -64,15 +73,23 @@ export default function NavBar({ isLoggedIn, onLogout }) {
                         <li className="nav-item">
                             <NavLink
                                 className={({isActive}) => `nav-link ${isActive ? "active" : ""}`}
+                                to={NAV_SEARCH}>
+                                <strong>Search</strong><br/>&nbsp; &nbsp; &nbsp;
+                                <IconSearch stroke={2} size={21} />
+                            </NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink
+                                className={({isActive}) => `nav-link ${isActive ? "active" : ""}`}
                                 to={NAV_SETTINGS}>
                                 <strong style={{color: "black"}}>Settings</strong><br/>&nbsp; &nbsp; &nbsp;
-                                <i className="bi bi-gear" style={{fontSize: "17px", color:"black"}}></i>
+                                <i className="bi bi-gear" style={{fontSize: "17px", color: "black"}}></i>
                             </NavLink>
                         </li>
                         <li className="nav-item">
                             <button className="btn btn-danger nav-link" onClick={onLogout}>
                                 <strong style={{color: "red"}}>Logout</strong><br/>&nbsp; &nbsp;&nbsp;
-                                <i className="bi bi-box-arrow-right" style={{fontSize: "17px",color:"red"}}></i>
+                                <i className="bi bi-box-arrow-right" style={{fontSize: "17px", color: "red"}}></i>
                             </button>
                         </li>
                     </>
