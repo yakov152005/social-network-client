@@ -25,6 +25,8 @@ const NAV_FORGET_PASSWORD = "/forgetPassword";
 const NAV_DEFAULT = "/";
 const PATH = "/";
 
+const MAX_SCROLL = 6;
+
 export {
     URL_SERVER_SIDE,
     URL_CREATE_USER,
@@ -50,5 +52,6 @@ export {
     NAV_FORGET_PASSWORD,
     NAV_DEFAULT,
     NAV_CHANGE_PASSWORD,
+    MAX_SCROLL
 
 };

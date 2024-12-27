@@ -83,6 +83,10 @@ export default function Profile() {
     };
 
     const addProfilePicture = async () => {
+        if (!profilePicture || profilePicture.length === 0 || !profilePicture.startsWith("http") ){
+            alert("Choose a profile pic");
+            return;
+        }
         try {
             const response= await axios.post(URL_SERVER_SIDE + URL_ADD_PROFILE_PIC,{
                 username: username,
@@ -165,7 +169,7 @@ export default function Profile() {
                 />
                 <br/><br/>
                 <button className={"btn btn-success"} onClick={addProfilePicture} disabled={!username}>
-                    Add Post
+                    Add Profile Picture
                 </button>
             </div>
             <br/><br/>
