@@ -106,3 +106,26 @@
     align-items: center;
     z-index: 2;
 }
+
+.toggle-password-icon {
+    position: absolute;
+    right: 30px;
+    top: 40%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.toggle-password-icon-loading {
+    position: absolute;
+    right: 30px;
+    top: 53%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    z-index: 10;
+}
+

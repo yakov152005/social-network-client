@@ -6,6 +6,8 @@ import "../css/LoadingStyle.css"
 import logo from '../assets/image/iconSocialNetWorkTheOriginalOne.png';
 import {useNavigate} from "react-router-dom";
 import {IconLockCheck, IconDeviceMobileFilled, IconMailFilled, IconBalloonFilled,IconMoodCheck } from '@tabler/icons-react';
+import showPass from "../assets/form/show_password.png"
+import hidePass from "../assets/form/hide_password.png"
 
 
 export default function CreateAccount() {
@@ -34,6 +36,15 @@ export default function CreateAccount() {
         email: false,
         age: false,
     });
+
+    const handleShowPassword = () => {
+        setShowPassword((prevState) => !prevState);
+    };
+
+    const handleShowConfirmPassword = () =>{
+        setShowConfirmPassword(prevState => !prevState);
+    }
+
 
     const handleChange = (event) => {
         const {id, value} = event.target;
@@ -246,13 +257,13 @@ export default function CreateAccount() {
 
                             <div className="form-floating mb-3 position-relative">
                                 <input
-                                    type="password"
+                                    style={{paddingLeft: "3.5rem"}}
+                                    type={!showPassword ? "password" : "text"}
                                     className={`form-control ${formData.password === "" ? "" : validation.password ? 'is-valid' : 'is-invalid'}`}
                                     id="password"
                                     placeholder="Password"
                                     value={formData.password}
                                     onChange={handleChange}
-                                    style={{paddingLeft: "3.5rem"}}
                                 />
                                 <label htmlFor="password" className="label-user"
                                        style={{paddingLeft: "3.5rem"}}>Password</label>
@@ -260,6 +271,16 @@ export default function CreateAccount() {
                                     <i className="fa-sharp-duotone fa-solid fa-lock" style={styleI}></i>
                                 </div>
                                 <div className="position-absolute" style={styleFinal}></div>
+
+                                {formData.password.length > 0 && (
+                                    <img
+                                        src={!showPassword ? showPass : hidePass}
+                                        alt="Toggle Password Visibility"
+                                        className="toggle-password-icon"
+                                        onClick={handleShowPassword}
+                                    />
+                                )}
+
                                 <div className="valid-feedback">Looks good!</div>
                                 <div className="invalid-feedback">
                                     Password must be at least 8 characters and contain a mix of letters, numbers,
@@ -269,7 +290,7 @@ export default function CreateAccount() {
 
                             <div className="form-floating mb-3 position-relative">
                                 <input
-                                    type="password"
+                                    type={!showConfirmPassword ? "password" : "text"}
                                     className={`form-control ${formData.passwordConfirm === "" ? "" : validation.passwordConfirm ? 'is-valid' : 'is-invalid'}`}
                                     id="passwordConfirm"
                                     placeholder="Password Confirm"
@@ -283,6 +304,16 @@ export default function CreateAccount() {
                                     <IconLockCheck stroke={2} style={styleI}/>
                                 </div>
                                 <div className="position-absolute" style={styleFinal}></div>
+
+                                {formData.passwordConfirm.length > 0 && (
+                                    <img
+                                        src={!showConfirmPassword ? showPass : hidePass}
+                                        alt={"Toggle Password Visibility"}
+                                        className="toggle-password-icon"
+                                        onClick={handleShowConfirmPassword}
+                                    />
+                                )}
+
                                 <div className="valid-feedback">Looks good!</div>
                                 <div className="invalid-feedback">
                                     The confirmation password you entered does not match the original.
