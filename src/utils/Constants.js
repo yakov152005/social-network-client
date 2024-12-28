@@ -3,7 +3,7 @@ const URL_CREATE_USER = "/add-user";
 const URL_LOGIN_USER = "/login-user";
 const URL_VERIFY = "/verify-code";
 const URL_GET_USER = "/get-user-details";
-const URL_GET_ALL_USER_NAMES = "/get-all-user-names";
+const URL_GET_ALL_USER_NAMES_AND_PIC = "/get-all-user-names-and-pic";
 const URL_RESET_PASSWORD = "/reset-password";
 const URL_ADD_POST = "/add-post";
 const URL_GET_POST_PROFILE = "/get-post-by-username";
@@ -34,7 +34,7 @@ export {
     URL_LOGIN_USER,
     URL_VERIFY,
     URL_GET_USER,
-    URL_GET_ALL_USER_NAMES,
+    URL_GET_ALL_USER_NAMES_AND_PIC,
     URL_RESET_PASSWORD,
     URL_ADD_POST,
     URL_GET_POST_PROFILE,

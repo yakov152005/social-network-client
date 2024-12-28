@@ -1,0 +1,59 @@
+form.d-flex {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+form.d-flex input.form-control {
+    width: 300px;
+    height: 40px;
+    border-radius: 10px;
+    padding: 5px 15px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.search-result {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #e0e0e0;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-radius: 10px;
+}
+
+.search-result:hover {
+    background-color: #f9f9f9;
+    border-radius: 10px;
+}
+
+.search-profile-picture {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+    object-fit: cover;
+}
+
+.search-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.search-username {
+    font-weight: bold;
+    font-size: 16px;
+    margin: 0;
+    color: #333;
+}
+
+.search-description {
+    font-size: 14px;
+    color: #888;
+    margin: 0;
+}
+
+

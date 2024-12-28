@@ -3,14 +3,18 @@
   font-feature-settings: 'liga' 1, 'calt' 1;
 }
 
-.App{
+.App {
   background-color: rgba(241, 229, 255, 0.28);
   width: 100vw;
-  height: auto;
+  min-height: 100vh; /* גובה מינימלי של כל המסך */
+
+  padding-bottom: 20px;
+  padding-top: 0.4px;
   display: flex;
   flex-direction: column;
   border-radius: 10px;
 }
+
 
 @media (max-width: 768px) {
   .floating-form {
@@ -41,5 +45,15 @@ html, body {
   border-radius: 20px;
   background-color: dodgerblue;
 }
+
+.navbar {
+  width:auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
+  border-radius: 10px;
+}
+
 
 
