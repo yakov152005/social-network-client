@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {
     URL_ADD_POST,
-    URL_ADD_PROFILE_PIC,
+    URL_ADD_PROFILE_PIC, URL_ALL_FOLLOW_NUM,
     URL_GET_POST_PROFILE,
     URL_GET_PROFILE_PIC,
     URL_SERVER_SIDE
@@ -19,7 +19,8 @@ export default function Profile() {
     const [loading, setLoading] = useState(false);
     const [profilePicture, setProfilePicture] = useState("");
     const [currentProfilePicture, setCurrentProfilePicture] = useState("");
-
+    const [followers, setFollowers] = useState(-1);
+    const [following, setFollowing] = useState(-1);
 
 
     const fetchDetails = async () => {
@@ -62,6 +63,22 @@ export default function Profile() {
 
         }catch (error){
             console.error("Failed to  fetch profile picture.",error);
+        }
+    }
+
+    const fetchFollowsNumber = async () => {
+        try {
+            const response = await axios.get(URL_SERVER_SIDE + URL_ALL_FOLLOW_NUM + `/${username}`);
+            if (response.data.success){
+                console.log(response.data.error);
+                setFollowers(response.data.followers);
+                setFollowing(response.data.following);
+            }else {
+                console.log(response.data.error);
+            }
+
+        }catch (error){
+            console.log("Error to fetching follows",error);
         }
     }
 
@@ -114,6 +131,7 @@ export default function Profile() {
         if (username) {
             fetchPosts();
             fetchProfilePicture();
+            fetchFollowsNumber();
         }
     }, [username]);
 
@@ -151,8 +169,8 @@ export default function Profile() {
                 <div className="profile-info">
                     <h1><strong>{username ? username.toLocaleUpperCase() : "Loading..."}</strong></h1>
                     <p>posts <strong>{posts.length}</strong> &nbsp; &nbsp;  &nbsp; &nbsp;
-                        followers <strong>{0}{/* לא לשכוח למלא פה עוקבים של המשתמש */}</strong> &nbsp; &nbsp;  &nbsp; &nbsp;
-                        following <strong>{0}{/* לא לשכוח למלא פה נעקבים על ידי המשתמש */}</strong>
+                        followers <strong>{followers}</strong> &nbsp; &nbsp;  &nbsp; &nbsp;
+                        following <strong>{following}</strong>
                     </p>
                 </div>
             </div>
@@ -202,13 +220,14 @@ export default function Profile() {
 
             <div>
             {
-                    posts.length > 0 ? (
-                        <Post posts={posts}/>
-                    ) : (
-                        <p>No posts available.</p>
-                    )
-                }
+                posts.length > 0 ? (
+                    <Post posts={posts}/>
+                ) : (
+                    <p>No posts available.</p>
+                )
+            }
             </div>
+
         </div>
     );
 }

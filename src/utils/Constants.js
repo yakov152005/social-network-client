@@ -1,3 +1,5 @@
+
+
 const URL_SERVER_SIDE = "http://localhost:8080/social-network";
 const URL_CREATE_USER = "/add-user";
 const URL_LOGIN_USER = "/login-user";
@@ -11,12 +13,17 @@ const URL_GET_POST_HOME_FEED = "/home-feed-post";
 const URL_ADD_PROFILE_PIC = "/add-profile-pic";
 const URL_GET_PROFILE_PIC = "/get-profile-pic";
 const URL_CHANGE_PASSWORD = "/change-password";
-
+const URL_ALL_FOLLOW_NUM = "/get-num-followers-following";
+const URL_GET_PROFILE_SEARCH = "/get-all-details-profile-search";
+const URL_FOLLOW = "/follow";
+const URL_UNFOLLOW = "/unfollow";
 
 const NAV_LOGIN = "/login";
 const NAV_CREATE_ACCOUNT = "/createAccount";
 const NAV_SETTINGS = "/settingsPage";
 const NAV_SEARCH = "/search";
+const NAV_PROFILE_SEARCH = "/profileSearch/:usernameSearch"
+const NAV_PROFILE_SEARCH_BASE = "/profileSearch";
 const NAV_CHANGE_PASSWORD = "/changePassword";
 const NAV_CREATOR = "/creator";
 const NAV_DASHBOARD = "/dashboard";
@@ -42,12 +49,18 @@ export {
     URL_GET_POST_HOME_FEED,
     URL_ADD_PROFILE_PIC,
     URL_GET_PROFILE_PIC,
+    URL_ALL_FOLLOW_NUM,
     URL_CHANGE_PASSWORD,
+    URL_GET_PROFILE_SEARCH,
+    URL_FOLLOW,
+    URL_UNFOLLOW,
     PATH,
     NAV_LOGIN,
     NAV_CREATE_ACCOUNT,
     NAV_SETTINGS,
     NAV_SEARCH,
+    NAV_PROFILE_SEARCH,
+    NAV_PROFILE_SEARCH_BASE,
     NAV_CREATOR,
     NAV_DASHBOARD,
     NAV_PROFILE,

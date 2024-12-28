@@ -1,10 +1,16 @@
 import React, {useCallback, useEffect, useState} from "react";
 import axios from "axios";
-import {URL_GET_ALL_USER_NAMES_AND_PIC, URL_SERVER_SIDE} from "../utils/Constants";
+import {
+    NAV_PROFILE_SEARCH,
+    NAV_PROFILE_SEARCH_BASE,
+    URL_GET_ALL_USER_NAMES_AND_PIC,
+    URL_SERVER_SIDE
+} from "../utils/Constants";
 import logo from "../assets/image/iconSocialNetWorkTheOriginalOne.png"
 import "../css/SearchStyle.css"
 import {IconMoodEmpty} from "@tabler/icons-react";
 import UsernameAPI from "../api/UsernameAPI";
+import {useNavigate} from "react-router-dom";
 
 
 export default function Search() {
@@ -12,6 +18,13 @@ export default function Search() {
     const [username, setUsername] = useState(null);
     const [userNamesAndPic, setUserNamesAndPic] = useState([]);
     const [filterByUsernames, setFilterByUsernames] = useState([]);
+
+    const navigate = useNavigate();
+
+    const handleUserClick = (usernameSearch) => {
+        navigate(NAV_PROFILE_SEARCH_BASE + `/${usernameSearch}`);
+    };
+
 
     const handleChange = (event) => {
         setValue(event.target.value);
@@ -94,11 +107,14 @@ export default function Search() {
                 filterByUsernames.length > 0 ? (
                     filterByUsernames.map((profile, index) => (
 
-                        <div className="search-result" key={index}>
+                        <div className="search-result" key={index}
+                             onClick={() => handleUserClick(profile.username)}
+                        >
                             <img
                                 src={profile.profilePicture || logo}
                                 alt={profile.username}
                                 className="search-profile-picture"
+                                onClick={() => handleUserClick(profile.username)}
                             />
                             <div className="search-details">
                                 <p className="search-username">{profile.username}</p>
