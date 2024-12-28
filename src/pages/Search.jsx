@@ -1,19 +1,31 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import axios from "axios";
 import {URL_GET_ALL_USER_NAMES_AND_PIC, URL_SERVER_SIDE} from "../utils/Constants";
 import logo from "../assets/image/iconSocialNetWorkTheOriginalOne.png"
 import "../css/SearchStyle.css"
 import {IconMoodEmpty} from "@tabler/icons-react";
+import UsernameAPI from "../api/UsernameAPI";
 
 
 export default function Search() {
     const [value, setValue] = useState("");
+    const [username, setUsername] = useState(null);
     const [userNamesAndPic, setUserNamesAndPic] = useState([]);
     const [filterByUsernames, setFilterByUsernames] = useState([]);
 
     const handleChange = (event) => {
         setValue(event.target.value);
     }
+
+    const fetchDetails = async () => {
+        try {
+            const api = new UsernameAPI();
+            await api.fetchUserDetails(setUsername);
+        } catch (error) {
+            console.error("Failed to load user details", error);
+        }
+    };
+
 
     const fetchUserNames = async () => {
         try {
@@ -28,18 +40,26 @@ export default function Search() {
         }
     };
 
-    const getProfileByValue = () => {
+    const getProfileByValue = useCallback(() => {
         if (value.trim() === "") {
             setFilterByUsernames([]);
             return;
         }
 
-        const filtered = userNamesAndPic.filter((person) =>
-            person.username.toLowerCase().startsWith(value.toLowerCase())
+        const filtered = userNamesAndPic.filter(
+            (person) =>
+                person.username.toLowerCase().startsWith(value.toLowerCase()) &&
+                person.username.toLowerCase() !== username.toLowerCase()
         );
-        setFilterByUsernames(filtered);
-    };
 
+        setFilterByUsernames(filtered);
+    }, [userNamesAndPic, value, username]);
+
+
+
+    useEffect(() => {
+        fetchDetails();
+    }, []);
 
     useEffect(() => {
         fetchUserNames();
@@ -49,10 +69,7 @@ export default function Search() {
 
     useEffect(() => {
         getProfileByValue();
-    }, [value]);
-
-
-
+    }, [getProfileByValue]);
 
 
 
@@ -76,6 +93,7 @@ export default function Search() {
             {
                 filterByUsernames.length > 0 ? (
                     filterByUsernames.map((profile, index) => (
+
                         <div className="search-result" key={index}>
                             <img
                                 src={profile.profilePicture || logo}

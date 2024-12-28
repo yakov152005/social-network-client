@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import "../css/SettingsStyle.css"
 import axios from "axios";
-import {NAV_LOGIN, NAV_SETTINGS, URL_CHANGE_PASSWORD, URL_SERVER_SIDE} from "../utils/Constants";
+import {NAV_SETTINGS, URL_CHANGE_PASSWORD, URL_SERVER_SIDE} from "../utils/Constants";
 import {useNavigate} from "react-router-dom";
 
 export default function ChangePassword() {
