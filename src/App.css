@@ -6,7 +6,7 @@
 .App {
   background-color: rgba(241, 229, 255, 0.28);
   width: 100vw;
-  min-height: 100vh; /* גובה מינימלי של כל המסך */
+  min-height: 100vh;
 
   padding-bottom: 20px;
   padding-top: 0.4px;

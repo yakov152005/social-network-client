@@ -26,6 +26,7 @@ const NAV_FORGET_PASSWORD = "/forgetPassword";
 const NAV_DEFAULT = "/";
 const PATH = "/";
 
+const TIME_LOADING = 2000;
 const MAX_SCROLL = 6;
 
 export {
@@ -55,5 +56,6 @@ export {
     NAV_DEFAULT,
     NAV_CHANGE_PASSWORD,
     MAX_SCROLL,
+    TIME_LOADING,
 
 };

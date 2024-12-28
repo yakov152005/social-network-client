@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import {
     NAV_CREATE_ACCOUNT,
-    NAV_FORGET_PASSWORD, NAV_LOGIN,
+    NAV_FORGET_PASSWORD,
+    TIME_LOADING,
     URL_LOGIN_USER,
     URL_SERVER_SIDE,
     URL_VERIFY
@@ -10,6 +11,11 @@ import {
 import Cookies from "universal-cookie";
 import { useNavigate} from "react-router-dom";
 import logo from '../assets/image/iconSocialNetWorkTheOriginalOne.png';
+import { IconMoodCheck } from '@tabler/icons-react';
+import "../css/LoginAndCreate.css"
+import "../css/LoadingStyle.css"
+
+
 
 
 
@@ -18,9 +24,12 @@ export default function Login({ onLogin }) {
         username: "",
         password: "",
     });
-    const [errorMessage, setErrorMessage] = useState("");
     const [isVerification, setIsVerification] = useState(false);
     const [verificationCode, setVerificationCode] = useState("");
+
+    const [loading,setLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
+
     const navigate = useNavigate();
 
     const cookies = new Cookies();
@@ -65,6 +74,8 @@ export default function Login({ onLogin }) {
             return;
         }
 
+        setLoading(true);
+
         try {
             const response = await axios.post(URL_SERVER_SIDE + URL_VERIFY, {
                 username: formData.username,
@@ -75,15 +86,21 @@ export default function Login({ onLogin }) {
             if (response.data && response.data.token) {
                 cookies.set("token", response.data.token, { path: "/"});
                 console.log("Token:", response.data.token);
-                onLogin();
-                alert("Verification successful!");
+
+                setTimeout(() => {
+                    setLoading(false);
+                    onLogin();
+                }, TIME_LOADING);
+
             } else {
                 setErrorMessage("Invalid verification code.");
                 console.log("Token not found")
+                setLoading(false);
             }
         } catch (error) {
             console.error("Error verifying code", error);
             setErrorMessage("Failed to verify code. Please try again later.");
+            setLoading(false);
         }
     };
 
@@ -91,118 +108,141 @@ export default function Login({ onLogin }) {
         <div className="auth-container">
             <div className="left-section">
                 <div className="floating-form">
-                    {!isVerification ? (
-                        <div>
-                            <h3 className="form-title">Login</h3>
-                            <div className="form-floating mb-3">
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    id="username"
-                                    placeholder="Username"
-                                    value={formData.username}
-                                    onChange={handleChange}
-                                />
-                                <label htmlFor="username">Username</label>
-                            </div>
-                            <div className="form-floating mb-3">
-                                <input
-                                    type="password"
-                                    className="form-control"
-                                    id="password"
-                                    placeholder="Password"
-                                    value={formData.password}
-                                    onChange={handleChange}
-                                />
-                                <label htmlFor="password">Password</label>
-                            </div>
-                            {errorMessage && (
-                                <div className="error-message">
-                                    <strong>{errorMessage}</strong>
-                                </div>
-                            )}
-                            <div className="d-grid">
-                                <button className="btn btn-primary"
-                                        type="button"
-                                        disabled={!(formData.username && formData.password)}
-                                        onClick={loginUser}
-                                >
-                                    Login
-                                </button>
-                            </div>
 
-                            <br></br>
-                            <div style={{color: "blue" , margin: "10px" ,marginLeft: "40px"}}>
-                                New to Social-Network?
-                                <a  className="custom-link"
-                                   onClick={() => navigate(NAV_CREATE_ACCOUNT)}
-                                   style={{
-                                       cursor: "pointer",
-                                       textDecoration: "underline",
-                                       color: "blue",
-                                       display: "inline-flex",
-                                       alignItems: "center",
-                                       marginLeft: "10px"
-                                   }}>
-                                    <strong> Sign Up
-                                        <i className="bi bi-arrow-right custom-arrow-icon"></i>
-                                    </strong>
-                                </a>
-                            </div>
-
-                            <div style={{color: "red"}}>
-                                <a onClick={() => navigate(NAV_FORGET_PASSWORD)}
-                                   className="icon-link"
-                                   style={{
-                                       cursor: "pointer",
-                                       textDecoration: "underline",
-                                       color: "red",
-                                       display: "inline-flex",
-                                       alignItems: "center",
-                                       marginLeft: "100px"
-                                   }}>
-                                    <strong>
-                                        Forgot password&nbsp;
-                                        <i className="bi bi-question"></i>
-                                    </strong>
-                                </a>
-                            </div>
-
-                        </div>
-                    ) : (
-                        <div>
-                            <h4>Enter Verification Code</h4>
-                            <div className="form-floating mb-3">
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    id="verification"
-                                    placeholder="Verification Code"
-                                    value={verificationCode}
-                                    onChange={handleVerificationChange}
-                                />
-                                <label htmlFor="verification">Verification Code</label>
-                            </div>
-                            {errorMessage && (
-                                <div className="error-message">
-                                <strong>{errorMessage}</strong>
-                                </div>
-                            )}
-                            <div className="d-grid">
-                                <button className="btn btn-primary" type="button" onClick={verifyCode}>
-                                    Verify Code
-                                </button>
+                    {loading && (
+                        <div className="loading-overlay">
+                            <div className="loading-box">
+                                <div className="spinner"></div>
+                                <p>Verification successful! Wait a few moments...
+                                    <IconMoodCheck stroke={2}/>
+                                </p>
                             </div>
                         </div>
                     )}
+
+                    {!loading && (
+                        <div>
+                            {!isVerification ? (
+                                <div>
+                                    <h3 className="form-title">Login</h3>
+                                    <div className="form-floating mb-3">
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            id="username"
+                                            placeholder="Username"
+                                            value={formData.username}
+                                            onChange={handleChange}
+                                        />
+                                        <label htmlFor="username">Username</label>
+                                    </div>
+                                    <div className="form-floating mb-3">
+                                        <input
+                                            type="password"
+                                            className="form-control"
+                                            id="password"
+                                            placeholder="Password"
+                                            value={formData.password}
+                                            onChange={handleChange}
+                                        />
+                                        <label htmlFor="password">Password</label>
+                                    </div>
+
+                                    {errorMessage && (
+                                        <div className="error-message">
+                                            <strong>{errorMessage}</strong>
+                                        </div>
+                                    )}
+
+                                    <div className="d-grid">
+                                        <button className="btn btn-primary"
+                                                type="button"
+                                                disabled={!(formData.username && formData.password)}
+                                                onClick={loginUser}
+                                        >
+                                            Login
+                                        </button>
+                                    </div>
+
+                                    <br></br>
+                                    <div style={{color: "blue" , margin: "10px" ,marginLeft: "40px"}}>
+                                        New to Social-Network?
+                                        <a  className="custom-link"
+                                            onClick={() => navigate(NAV_CREATE_ACCOUNT)}
+                                            style={{
+                                                cursor: "pointer",
+                                                textDecoration: "underline",
+                                                color: "blue",
+                                                display: "inline-flex",
+                                                alignItems: "center",
+                                                marginLeft: "10px"
+                                            }}>
+                                            <strong> Sign Up
+                                                <i className="bi bi-arrow-right custom-arrow-icon"></i>
+                                            </strong>
+                                        </a>
+                                    </div>
+
+                                    <div style={{color: "red"}}>
+                                        <a onClick={() => navigate(NAV_FORGET_PASSWORD)}
+                                           className="icon-link"
+                                           style={{
+                                               cursor: "pointer",
+                                               textDecoration: "underline",
+                                               color: "red",
+                                               display: "inline-flex",
+                                               alignItems: "center",
+                                               marginLeft: "100px"
+                                           }}>
+                                            <strong>
+                                                Forgot password&nbsp;
+                                                <i className="bi bi-question"></i>
+                                            </strong>
+                                        </a>
+                                    </div>
+
+                                </div>
+                            ) : (
+                                <div>
+                                    <h4>Enter Verification Code</h4>
+                                    <div className="form-floating mb-3">
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            id="verification"
+                                            placeholder="Verification Code"
+                                            value={verificationCode}
+                                            onChange={handleVerificationChange}
+                                        />
+                                        <label htmlFor="verification">Verification Code</label>
+                                    </div>
+
+                                    {errorMessage && (
+                                        <div className="error-message">
+                                            <strong>{errorMessage}</strong>
+                                        </div>
+                                    )}
+
+                                    <div className="d-grid">
+                                        <button className="btn btn-primary" type="button" onClick={verifyCode}>
+                                            Verify Code
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    )}
+
                 </div>
             </div>
+
             <div className="right-section">
                 <img src={logo} alt="Logo" className="logo"/>
                 <p className="site-info" style={{color: "black", fontFamily:'Brush Script MT'}}>
                     Welcome back, log in to continue creating new experiences.
                 </p>
             </div>
+
         </div>
     );
 }

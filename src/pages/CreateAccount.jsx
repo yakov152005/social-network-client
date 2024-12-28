@@ -1,16 +1,18 @@
 import React, {useState} from "react";
 import axios from "axios";
-import {NAV_LOGIN, URL_CREATE_USER, URL_SERVER_SIDE} from "../utils/Constants";
+import {NAV_LOGIN, TIME_LOADING, URL_CREATE_USER, URL_SERVER_SIDE} from "../utils/Constants";
 import "../css/LoginAndCreate.css";
-import {Navigate, Route, Routes, useNavigate} from "react-router-dom";
-import {IconLockCheck, IconDeviceMobileFilled, IconMailFilled, IconBalloonFilled} from '@tabler/icons-react';
+import "../css/LoadingStyle.css"
 import logo from '../assets/image/iconSocialNetWorkTheOriginalOne.png';
+import {useNavigate} from "react-router-dom";
+import {IconLockCheck, IconDeviceMobileFilled, IconMailFilled, IconBalloonFilled,IconMoodCheck } from '@tabler/icons-react';
+
 
 export default function CreateAccount() {
     const navigate = useNavigate();
 
     const [errorMessage, setErrorMessage] = useState("");
-    const [isCreate, setIsCreate] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -34,8 +36,8 @@ export default function CreateAccount() {
     });
 
     const handleChange = (event) => {
-        const { id, value } = event.target;
-        setFormData({ ...formData, [id]: value });
+        const {id, value} = event.target;
+        setFormData({...formData, [id]: value});
 
 
         switch (id) {
@@ -48,18 +50,18 @@ export default function CreateAccount() {
 
             case "password": {
                 const hasSpecialChar = /[!@#$%^&*()-+=_]/.test(value);
-                const letterUpper =  /[A-Z]/.test(value);
+                const letterUpper = /[A-Z]/.test(value);
                 const letterLower = /[a-z]/.test(value);
-                const numbers =/[0-9]/.test(value);
+                const numbers = /[0-9]/.test(value);
 
                 setValidation((prev) => ({
                     ...prev,
-                    password: value.length >= 8 && ((letterLower || letterUpper ) && hasSpecialChar && numbers),
+                    password: value.length >= 8 && ((letterLower || letterUpper) && hasSpecialChar && numbers),
                 }));
                 break;
             }
 
-            case "passwordConfirm":{
+            case "passwordConfirm": {
                 setValidation((prev) => ({
                     ...prev,
                     passwordConfirm: value === formData.password
@@ -110,12 +112,14 @@ export default function CreateAccount() {
 
 
     const createAccount = async () => {
-        const {username, password,passwordConfirm, phoneNumber, email, age} = formData;
+        const {username, password, passwordConfirm, phoneNumber, email, age} = formData;
 
         if (!username || !password || !passwordConfirm || !phoneNumber || !email || age <= 0) {
             setErrorMessage("Please fill all fields.");
             return;
         }
+
+        setLoading(true);
 
         try {
             const response = await axios.post(URL_SERVER_SIDE + URL_CREATE_USER, {
@@ -129,7 +133,6 @@ export default function CreateAccount() {
             if (response.data.success) {
                 setErrorMessage("Success to add user.")
                 console.log(`{success: ${response.data.success}, error:{ ${response.data.error} }`);
-                setIsCreate(true);
                 setFormData({
                     username: "",
                     password: "",
@@ -138,6 +141,12 @@ export default function CreateAccount() {
                     email: "",
                     age: 0,
                 });
+
+                setTimeout(() => {
+                    setLoading(false);
+                    navigate(NAV_LOGIN);
+                }, TIME_LOADING);
+
             } else {
                 const errorCode = response.data.errorCode;
                 const fieldToClear = switchError(errorCode);
@@ -148,10 +157,14 @@ export default function CreateAccount() {
                     ...prevFormData,
                     [fieldToClear]: "",
                 }));
+                setLoading(false);
+
             }
         } catch (error) {
             console.log("Error creating user", error);
             setErrorMessage("Failed to create user. Please try again later.");
+            setLoading(false);
+
         }
     };
 
@@ -172,7 +185,7 @@ export default function CreateAccount() {
         }
     };
 
-    const styleIcon ={
+    const styleIcon = {
         left: "0.8rem",
         top: "50%",
         transform: "translateY(-50%)",
@@ -187,8 +200,8 @@ export default function CreateAccount() {
         transform: "translateY(-50%)",
         height: "1.5rem",
         width: "1px",
-        backgroundColor: "#ddd",}
-
+        backgroundColor: "#ddd",
+    }
 
 
     return (
@@ -196,7 +209,18 @@ export default function CreateAccount() {
             <div className="left-section">
                 <div className="floating-form">
 
-                    {!isCreate ? (
+                    {loading && (
+                        <div className="loading-overlay">
+                            <div className="loading-box">
+                                <div className="spinner"></div>
+                                <p>Creating your account, please wait...
+                                    <IconMoodCheck stroke={2}/>
+                                </p>
+                            </div>
+                        </div>
+                    )}
+
+                    {!loading && (
                         <div>
                             <h3 className="form-title">Create Account</h3>
 
@@ -238,8 +262,8 @@ export default function CreateAccount() {
                                 <div className="position-absolute" style={styleFinal}></div>
                                 <div className="valid-feedback">Looks good!</div>
                                 <div className="invalid-feedback">
-                                    Password must be at least 8 characters and contain a mix of letters, numbers, and
-                                    special characters.
+                                    Password must be at least 8 characters and contain a mix of letters, numbers,
+                                    and special characters.
                                 </div>
                             </div>
 
@@ -253,8 +277,8 @@ export default function CreateAccount() {
                                     onChange={handleChange}
                                     style={{paddingLeft: "3.5rem"}}
                                 />
-                                <label htmlFor="passwordConfirm" className="label-user" style={{paddingLeft: "3.5rem"}}>Password
-                                    Confirm</label>
+                                <label htmlFor="passwordConfirm" className="label-user"
+                                       style={{paddingLeft: "3.5rem"}}>Password Confirm</label>
                                 <div className="position-absolute icon-container" style={styleIcon}>
                                     <IconLockCheck stroke={2} style={styleI}/>
                                 </div>
@@ -264,7 +288,6 @@ export default function CreateAccount() {
                                     The confirmation password you entered does not match the original.
                                 </div>
                             </div>
-
 
                             <div className="form-floating mb-3 position-relative">
                                 <input
@@ -322,7 +345,8 @@ export default function CreateAccount() {
                                     onChange={handleChange}
                                     style={{paddingLeft: "3.5rem"}}
                                 />
-                                <label htmlFor="age" className="label-user" style={{paddingLeft: "3.5rem"}}>Age</label>
+                                <label htmlFor="age" className="label-user"
+                                       style={{paddingLeft: "3.5rem"}}>Age</label>
                                 <div className="position-absolute icon-container" style={styleIcon}>
                                     <IconBalloonFilled style={styleI}/>
                                 </div>
@@ -352,8 +376,8 @@ export default function CreateAccount() {
 
                             <br></br>
 
-                            <div style={{color: "blue" , margin: "10px" ,marginLeft: "40px"}}>
-                                 Already have an account? &nbsp;
+                            <div style={{color: "blue", margin: "10px", marginLeft: "40px"}}>
+                                Already have an account? &nbsp;
                                 <a onClick={() => navigate(NAV_LOGIN)}
                                    className="custom-link"
                                    style={{
@@ -370,23 +394,19 @@ export default function CreateAccount() {
                                 </a>
                             </div>
 
-
-                        </div>
-                    ) : (
-                        <div>
-                            <Routes>
-                                <Route path="/" element={<Navigate to="/login"/>}/>
-                            </Routes>
                         </div>
                     )}
+
                 </div>
             </div>
+
             <div className="right-section">
                 <img src={logo} alt="Logo" className="logo"/>
-                <p className="site-info" style={{color: "black", fontFamily:'Brush Script MT'}}>
+                <p className="site-info" style={{color: "black", fontFamily: 'Brush Script MT'}}>
                     Welcome to our amazing social network platform! Connect, share, and grow with us.
                 </p>
             </div>
+
         </div>
     );
 }
