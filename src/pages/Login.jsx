@@ -18,6 +18,7 @@ import "../css/LoginAndCreate.css"
 import "../css/LoadingStyle.css"
 
 
+
 export default function Login({ onLogin }) {
     const [formData, setFormData] = useState({
         username: "",
@@ -201,41 +202,49 @@ export default function Login({ onLogin }) {
                                                 </button>
                                             </div>
 
-                                            <br></br>
-                                            <div style={{color: "blue" , margin: "10px" ,marginLeft: "40px"}}>
-                                                New to Social-Network?
-                                                <a  className="custom-link"
-                                                    onClick={() => navigate(NAV_CREATE_ACCOUNT)}
-                                                    style={{
-                                                        cursor: "pointer",
-                                                        textDecoration: "underline",
-                                                        color: "blue",
-                                                        display: "inline-flex",
-                                                        alignItems: "center",
-                                                        marginLeft: "10px"
-                                                    }}>
-                                                    <strong> Sign Up
-                                                        <i className="bi bi-arrow-right custom-arrow-icon"></i>
-                                                    </strong>
-                                                </a>
-                                            </div>
+                                            <div style={{marginTop: "22px"}}>
+                                                <br/>
+                                                <div className={"divider-container"}>
+                                                    <hr className={"divider"}/>
+                                                    <p className={"or-text"}>or</p>
+                                                    <hr className={"divider"}/>
+                                                </div>
 
-                                            <div style={{color: "red"}}>
-                                                <a onClick={() => navigate(NAV_FORGET_PASSWORD)}
-                                                   className="icon-link"
-                                                   style={{
-                                                       cursor: "pointer",
-                                                       textDecoration: "underline",
-                                                       color: "red",
-                                                       display: "inline-flex",
-                                                       alignItems: "center",
-                                                       marginLeft: "100px"
-                                                   }}>
-                                                    <strong>
-                                                        Forgot password&nbsp;
-                                                        <i className="bi bi-question"></i>
-                                                    </strong>
-                                                </a>
+                                                <div style={{color: "blue", margin: "10px", marginLeft: "40px"}}>
+                                                    New to Social-Network?
+                                                    <a className="custom-link"
+                                                       onClick={() => navigate(NAV_CREATE_ACCOUNT)}
+                                                       style={{
+                                                           cursor: "pointer",
+                                                           textDecoration: "underline",
+                                                           color: "blue",
+                                                           display: "inline-flex",
+                                                           alignItems: "center",
+                                                           marginLeft: "10px"
+                                                       }}>
+                                                        <strong> Sign Up
+                                                            <i className="bi bi-arrow-right custom-arrow-icon"></i>
+                                                        </strong>
+                                                    </a>
+                                                </div>
+
+                                                <div style={{color: "red"}}>
+                                                    <a onClick={() => navigate(NAV_FORGET_PASSWORD)}
+                                                       className="icon-link"
+                                                       style={{
+                                                           cursor: "pointer",
+                                                           textDecoration: "underline",
+                                                           color: "red",
+                                                           display: "inline-flex",
+                                                           alignItems: "center",
+                                                           marginLeft: "100px"
+                                                       }}>
+                                                        <strong>
+                                                            Forgot password&nbsp;
+                                                            <i className="bi bi-question"></i>
+                                                        </strong>
+                                                    </a>
+                                                </div>
                                             </div>
 
                                         </div>
@@ -276,7 +285,7 @@ export default function Login({ onLogin }) {
 
             <div className="right-section">
                 <img src={logo} alt="Logo" className="logo"/>
-                <p className="site-info" style={{color: "black", fontFamily:'Brush Script MT'}}>
+                <p className="site-info" style={{color: "black", fontFamily: 'Brush Script MT'}}>
                     Welcome back, log in to continue creating new experiences.
                 </p>
             </div>

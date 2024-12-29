@@ -1,4 +1,6 @@
 const URL_SERVER_SIDE = "http://localhost:8080/social-network";
+const URL_SSE = "http://localhost:8080/sse/stream";
+const MAIL_SERVICE = "servicenetwork62@gmail.com";
 const URL_CREATE_USER = "/add-user";
 const URL_LOGIN_USER = "/login-user";
 const URL_VERIFY = "/verify-code";
@@ -29,16 +31,19 @@ const NAV_CHANGE_PASSWORD = "/changePassword";
 const NAV_CREATOR = "/creator";
 const NAV_DASHBOARD = "/dashboard";
 const NAV_PROFILE = "/profile";
+const NAV_MESSAGE = "/message";
 const NAV_ERROR = "*";
 const NAV_FORGET_PASSWORD = "/forgetPassword";
 const NAV_DEFAULT = "/";
 const PATH = "/";
+const MAILTO = "mailto:"
 
 const TIME_LOADING = 2000;
 const MAX_SCROLL = 4;
 
 export {
     URL_SERVER_SIDE,
+    URL_SSE,
     URL_CREATE_USER,
     URL_LOGIN_USER,
     URL_VERIFY,
@@ -58,7 +63,6 @@ export {
     URL_LIKE,
     URL_UNLIKE,
     URL_LIKES_COUNT,
-    PATH,
     NAV_LOGIN,
     NAV_CREATE_ACCOUNT,
     NAV_SETTINGS,
@@ -69,9 +73,13 @@ export {
     NAV_DASHBOARD,
     NAV_PROFILE,
     NAV_ERROR,
+    NAV_MESSAGE,
     NAV_FORGET_PASSWORD,
     NAV_DEFAULT,
     NAV_CHANGE_PASSWORD,
+    MAIL_SERVICE,
+    MAILTO,
+    PATH,
     MAX_SCROLL,
     TIME_LOADING,
 

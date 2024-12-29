@@ -11,7 +11,7 @@ import {
     NAV_CREATOR,
     NAV_DASHBOARD, NAV_DEFAULT,
     NAV_ERROR, NAV_FORGET_PASSWORD,
-    NAV_LOGIN,
+    NAV_LOGIN, NAV_MESSAGE,
     NAV_PROFILE, NAV_PROFILE_SEARCH, NAV_SEARCH, NAV_SETTINGS,
     PATH
 } from "../utils/Constants";
@@ -23,6 +23,7 @@ import Settings from "../pages/Settings";
 import ChangePassword from "../pages/ChangePassword";
 import Search from "../pages/Search";
 import ProfileSearch from "../pages/ProfileSearch";
+import Message from "../pages/Message";
 
 export default function ManagerAccount() {
     const cookies = new Cookies();
@@ -57,6 +58,7 @@ export default function ManagerAccount() {
                             <Route path={NAV_PROFILE} element={<Profile />} />
                             <Route path={NAV_SEARCH} element={<Search />} />
                             <Route path={NAV_PROFILE_SEARCH} element={<ProfileSearch />} />
+                            <Route path={NAV_MESSAGE} element={<Message />} />
                             <Route path={NAV_SETTINGS} element={<Settings />} />
                             <Route path={NAV_CHANGE_PASSWORD} element={<ChangePassword />} />
                             <Route path={NAV_ERROR} element={<NotFoundPage />} />

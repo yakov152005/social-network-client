@@ -405,9 +405,17 @@ export default function CreateAccount() {
                                 </button>
                             </div>
 
-                            <br></br>
 
-                            <div style={{color: "blue", margin: "10px", marginLeft: "40px"}}>
+                            <div style={{marginTop: "10px"}}>
+                                <br/>
+
+                                <div className={"divider-container"}>
+                                    <hr className={"divider"}/>
+                                    <p className={"or-text"}>or</p>
+                                    <hr className={"divider"}/>
+                                </div>
+
+                                <div style={{color: "blue", margin: "10px", marginLeft: "40px"}}>
                                 Already have an account? &nbsp;
                                 <a onClick={() => navigate(NAV_LOGIN)}
                                    className="custom-link"
@@ -423,6 +431,7 @@ export default function CreateAccount() {
                                         <i className="bi bi-arrow-right custom-arrow-icon"></i>
                                     </strong>
                                 </a>
+                                </div>
                             </div>
 
                         </div>

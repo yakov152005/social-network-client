@@ -1,9 +1,10 @@
 import React, {useState} from "react";
 import axios from "axios";
-import {NAV_LOGIN, TIME_LOADING, URL_RESET_PASSWORD, URL_SERVER_SIDE} from "../utils/Constants";
+import {MAIL_SERVICE, MAILTO, NAV_LOGIN, TIME_LOADING, URL_RESET_PASSWORD, URL_SERVER_SIDE} from "../utils/Constants";
 import {useNavigate} from "react-router-dom";
 import "../css/LoginAndCreate.css"
 import "../css/LoadingStyle.css"
+import "../css/ForgetPasswordStyle.css"
 import logo from "../assets/image/lock-square-rounded_notFill.png";
 
 
@@ -108,24 +109,44 @@ export default function ForgetPassword() {
                                 </button>
                             </div>
 
-                            <br/>
 
-                            <div style={{color: "blue", margin: "5px", marginLeft: "123px"}}>
-                                <a onClick={() => navigate(NAV_LOGIN)}
-                                   className="custom-link"
-                                   style={{
-                                       cursor: "pointer",
-                                       textDecoration: "underline",
-                                       color: "blue",
-                                       display: "inline-flex",
-                                       alignItems: "center",
-                                   }}>
-                                    <strong>
-                                        Back to login&nbsp;
-                                        <i className="bi bi-arrow-right custom-arrow-icon"></i>
-                                    </strong>
-                                </a>
+                            <div style={{marginTop: "30px", textAlign: "center"}}>
+                                <div className={"divider-container"}>
+                                    <hr className={"divider"}/>
+                                    <p className={"or-text"}>or</p>
+                                    <hr className={"divider"}/>
+                                </div>
+
+                                <div style={{color: "green"}}>
+                                    <a onClick={() => navigate(NAV_LOGIN)}
+                                       className="custom-link"
+                                       style={{
+                                           cursor: "pointer",
+                                           textDecoration: "underline",
+                                           color: "green",
+                                           display: "inline-flex",
+                                           alignItems: "center",
+                                       }}>
+                                        <strong>
+                                            Back to login&nbsp;
+                                            <i className="bi bi-arrow-right custom-arrow-icon"></i>
+                                        </strong>
+                                    </a>
+                                </div>
+
+                                <div style={{marginTop:"10px"}}>
+                                    <p style={{color:"green" , fontSize:"15px"}}>Is there any problem?&nbsp;
+                                    <a
+                                        href={MAILTO + MAIL_SERVICE}
+                                        className={"a-link-forget"}>
+                                        <strong>
+                                            Contact us!
+                                        </strong>
+                                    </a>
+                                    </p>
+                                </div>
                             </div>
+
 
                         </div>
                     )}
@@ -135,8 +156,9 @@ export default function ForgetPassword() {
 
             <div className="right-section">
                 <img src={logo} alt="Logo" className="logo"/>
-                <h4 className="site-info" style={{color:"black", font:"bold"}}><strong>Having trouble logging in?</strong></h4>
-                <p className="site-info" style={{color: "white", fontSize:"14px"}}>
+                <h4 className="site-info" style={{color: "black", font: "bold"}}><strong>Having trouble logging
+                    in?</strong></h4>
+                <p className="site-info" style={{color: "white", fontSize: "14px"}}>
                     <strong>
                         Enter your username and your email address
                         and we'll send you a new password to get back into your account.
@@ -145,4 +167,4 @@ export default function ForgetPassword() {
             </div>
         </div>
     )
-}
+};
