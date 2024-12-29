@@ -1,5 +1,3 @@
-
-
 const URL_SERVER_SIDE = "http://localhost:8080/social-network";
 const URL_CREATE_USER = "/add-user";
 const URL_LOGIN_USER = "/login-user";
@@ -17,6 +15,9 @@ const URL_ALL_FOLLOW_NUM = "/get-num-followers-following";
 const URL_GET_PROFILE_SEARCH = "/get-all-details-profile-search";
 const URL_FOLLOW = "/follow";
 const URL_UNFOLLOW = "/unfollow";
+const URL_LIKE = "/like-post";
+const URL_UNLIKE = "/unlike-post";
+const URL_LIKES_COUNT = "/likes-count";
 
 const NAV_LOGIN = "/login";
 const NAV_CREATE_ACCOUNT = "/createAccount";
@@ -34,7 +35,7 @@ const NAV_DEFAULT = "/";
 const PATH = "/";
 
 const TIME_LOADING = 2000;
-const MAX_SCROLL = 6;
+const MAX_SCROLL = 4;
 
 export {
     URL_SERVER_SIDE,
@@ -54,6 +55,9 @@ export {
     URL_GET_PROFILE_SEARCH,
     URL_FOLLOW,
     URL_UNFOLLOW,
+    URL_LIKE,
+    URL_UNLIKE,
+    URL_LIKES_COUNT,
     PATH,
     NAV_LOGIN,
     NAV_CREATE_ACCOUNT,

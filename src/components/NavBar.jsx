@@ -87,7 +87,7 @@ export default function NavBar({ isLoggedIn, onLogout }) {
                             </NavLink>
                         </li>
                         <li className="nav-item">
-                            <button className="btn btn-danger nav-link" onClick={onLogout}>
+                            <button className="btn btn-danger nav-link" onClick={onLogout}  >
                                 <strong style={{color: "red"}}>Logout</strong><br/>&nbsp; &nbsp;&nbsp;
                                 <i className="bi bi-box-arrow-right" style={{fontSize: "17px", color: "red"}}></i>
                             </button>

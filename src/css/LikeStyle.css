@@ -1,0 +1,15 @@
+.like-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+}
+
+.like-section i {
+    font-size: 1.5rem;
+    transition: transform 0.2s ease;
+}
+
+.like-section i:hover {
+    transform: scale(1.2);
+}

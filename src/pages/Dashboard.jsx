@@ -1,10 +1,16 @@
 import React, {useEffect, useRef, useState} from "react";
 import axios from "axios";
-import {MAX_SCROLL, URL_GET_POST_HOME_FEED, URL_SERVER_SIDE} from "../utils/Constants";
+import {
+    MAX_SCROLL,
+    URL_GET_POST_HOME_FEED,
+    URL_LIKE,
+    URL_SERVER_SIDE,
+    URL_UNLIKE
+} from "../utils/Constants";
 import "../css/DashboardStyle.css";
 import UsernameAPI from "../api/UsernameAPI";
 import FormatDate from "../utils/FormatDate";
-import {IconMoodEmpty,IconMoodSmile} from '@tabler/icons-react';
+import {IconMoodEmpty,IconMoodSmile, IconHeart,IconHeartFilled } from '@tabler/icons-react';
 
 
 
@@ -15,6 +21,7 @@ export default function Dashboard() {
     const [hasMore, setHasMore] = useState(true);
     const [isFetching, setIsFetching] = useState(false);
     const feedContainerRef = useRef(null);
+
 
 
     const fetchUserDetails = async () => {
@@ -40,12 +47,11 @@ export default function Dashboard() {
             );
 
             if (response.data.success) {
-                const postsR = response.data.postList;
-
-                if (postsR.length === 0) {
+                const postDto = response.data.postList;
+                if (postDto.length === 0) {
                     setHasMore(false);
                 } else {
-                    setPosts((prevPosts) => [...prevPosts, ...postsR]);
+                    setPosts((prevPosts) => [...prevPosts, ...postDto]);
                 }
             } else {
                 console.warn("No more posts to fetch.");
@@ -57,6 +63,31 @@ export default function Dashboard() {
             setIsFetching(false);
         }
     };
+
+
+    const handleLikeToggle = async (postId,likedByUser) => {
+        try {
+            if (likedByUser){
+                const response = await axios.delete(URL_SERVER_SIDE + URL_UNLIKE + `/${postId}&${username}`);
+                console.log(response.data.error);
+            }else {
+                const response = await axios.post(URL_SERVER_SIDE + URL_LIKE + `/${postId}&${username}`);
+                console.log(response.data.error);
+
+            }
+            setPosts((prevPosts) =>
+                prevPosts.map((post) =>
+                    post.id === postId
+                        ? { ...post,
+                            likedByUser: !likedByUser,
+                            likesCount: post.likedByUser ? post.likesCount - 1 : post.likesCount + 1 }
+                        : post
+                )
+            );
+        }catch (error){
+            console.error("Error to fetching likes.",error);
+        }
+    }
 
 
     useEffect(() => {
@@ -79,7 +110,8 @@ export default function Dashboard() {
     }, [page]);
 
 
-    const handleScroll = () => {
+
+    const handleScroll = async () => {
         const container = feedContainerRef.current;
 
         if (!container) {
@@ -112,6 +144,9 @@ export default function Dashboard() {
             }
         };
     }, [hasMore, isFetching]);
+
+
+
 
     const renderErrorMessage = () => {
         if (isFetching) {
@@ -174,7 +209,25 @@ export default function Dashboard() {
                                 {post.imageUrl && (
                                     <img src={post.imageUrl} alt="Post" className="post-image"/>
                                 )}
-                                <p>{post.content}</p>
+                            </div>
+
+                            <div className="like-section">
+                                {post.likedByUser ? (
+                                    <IconHeartFilled
+                                        style={{cursor: "pointer", color: "red"}}
+                                        onClick={() => handleLikeToggle(post.id, post.likedByUser)}
+                                    />
+                                ) : (
+                                    <IconHeart
+                                        stroke={2}
+                                        style={{cursor: "pointer", color: "gray"}}
+                                        onClick={() => handleLikeToggle(post.id, post.likedByUser)}
+                                    />
+                                )}
+                                <br/>
+                                <p><strong>{post.likesCount || 0} likes</strong></p>
+
+                                <p><strong>{post.username} &nbsp;&nbsp;</strong>{post.content}</p>
                             </div>
                         </div>
                     ))
@@ -184,3 +237,4 @@ export default function Dashboard() {
         </div>
     );
 }
+
