@@ -138,7 +138,7 @@ export default function Message() {
             </div>
 
 
-            <div style={{width: "70%", padding: "10px"}}>
+            <div style={{width: "70%", padding: "10px" }}>
                 {currentChat ? (
                     <>
                         <h2>Chat with {currentChat}</h2>
