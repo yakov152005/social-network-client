@@ -9,7 +9,7 @@ import {
     NAV_CHANGE_PASSWORD,
     NAV_CREATE_ACCOUNT,
     NAV_CREATOR,
-    NAV_DASHBOARD, NAV_DEFAULT,
+    NAV_DASHBOARD, NAV_DEFAULT, NAV_DELETE_USER,
     NAV_ERROR, NAV_FORGET_PASSWORD,
     NAV_LOGIN, NAV_MESSAGE,
     NAV_PROFILE, NAV_PROFILE_SEARCH, NAV_SEARCH, NAV_SETTINGS,
@@ -24,6 +24,7 @@ import ChangePassword from "../pages/ChangePassword";
 import Search from "../pages/Search";
 import ProfileSearch from "../pages/ProfileSearch";
 import Message from "../pages/Message";
+import DeleteUser from "../pages/DeleteUser";
 
 
 export default function ManagerAccount() {
@@ -62,6 +63,7 @@ export default function ManagerAccount() {
                             <Route path={NAV_MESSAGE} element={<Message />} />
                             <Route path={NAV_SETTINGS} element={<Settings />} />
                             <Route path={NAV_CHANGE_PASSWORD} element={<ChangePassword />} />
+                            <Route path={NAV_DELETE_USER} element={<DeleteUser />} />
                             <Route path={NAV_ERROR} element={<NotFoundPage />} />
                         </>
                     )}

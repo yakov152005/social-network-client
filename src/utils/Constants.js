@@ -24,6 +24,7 @@ const URL_LIKES_COUNT = "/likes-count";
 const URL_MESSAGE_HISTORY = "/get-message-history";
 const URL_SEND_MESSAGE = "/send-message";
 const URL_GET_CHAT_USERS = "/get-chat-users";
+const URL_DELETE_USER = "/delete-user";
 
 const NAV_LOGIN = "/login";
 const NAV_CREATE_ACCOUNT = "/createAccount";
@@ -38,6 +39,7 @@ const NAV_PROFILE = "/profile";
 const NAV_MESSAGE = "/message";
 const NAV_ERROR = "*";
 const NAV_FORGET_PASSWORD = "/forgetPassword";
+const NAV_DELETE_USER = "/deleteUser";
 const NAV_DEFAULT = "/";
 const PATH = "/";
 const MAILTO = "mailto:"
@@ -71,6 +73,8 @@ export {
     URL_SSE_USER,
     URL_SEND_MESSAGE,
     URL_MESSAGE_HISTORY,
+    URL_DELETE_USER,
+    NAV_DELETE_USER,
     NAV_MESSAGE,
     NAV_LOGIN,
     NAV_CREATE_ACCOUNT,
