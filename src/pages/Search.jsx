@@ -1,7 +1,6 @@
 import React, {useCallback, useEffect, useState} from "react";
 import axios from "axios";
 import {
-    NAV_PROFILE_SEARCH,
     NAV_PROFILE_SEARCH_BASE,
     URL_GET_ALL_USER_NAMES_AND_PIC,
     URL_SERVER_SIDE

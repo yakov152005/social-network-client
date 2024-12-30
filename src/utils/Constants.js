@@ -1,5 +1,6 @@
 const URL_SERVER_SIDE = "http://localhost:8080/social-network";
-const URL_SSE = "http://localhost:8080/sse/stream";
+const URL_SSE_DATE = "http://localhost:8080/sse/stream/date";
+const URL_SSE_USER = "http://localhost:8080/sse/stream/user";
 const MAIL_SERVICE = "servicenetwork62@gmail.com";
 const URL_CREATE_USER = "/add-user";
 const URL_LOGIN_USER = "/login-user";
@@ -20,6 +21,9 @@ const URL_UNFOLLOW = "/unfollow";
 const URL_LIKE = "/like-post";
 const URL_UNLIKE = "/unlike-post";
 const URL_LIKES_COUNT = "/likes-count";
+const URL_MESSAGE_HISTORY = "/get-message-history";
+const URL_SEND_MESSAGE = "/send-message";
+const URL_GET_CHAT_USERS = "/get-chat-users";
 
 const NAV_LOGIN = "/login";
 const NAV_CREATE_ACCOUNT = "/createAccount";
@@ -43,7 +47,7 @@ const MAX_SCROLL = 4;
 
 export {
     URL_SERVER_SIDE,
-    URL_SSE,
+    URL_SSE_DATE,
     URL_CREATE_USER,
     URL_LOGIN_USER,
     URL_VERIFY,
@@ -60,9 +64,14 @@ export {
     URL_GET_PROFILE_SEARCH,
     URL_FOLLOW,
     URL_UNFOLLOW,
+    URL_GET_CHAT_USERS,
     URL_LIKE,
     URL_UNLIKE,
     URL_LIKES_COUNT,
+    URL_SSE_USER,
+    URL_SEND_MESSAGE,
+    URL_MESSAGE_HISTORY,
+    NAV_MESSAGE,
     NAV_LOGIN,
     NAV_CREATE_ACCOUNT,
     NAV_SETTINGS,
@@ -73,7 +82,6 @@ export {
     NAV_DASHBOARD,
     NAV_PROFILE,
     NAV_ERROR,
-    NAV_MESSAGE,
     NAV_FORGET_PASSWORD,
     NAV_DEFAULT,
     NAV_CHANGE_PASSWORD,

@@ -25,6 +25,7 @@ import Search from "../pages/Search";
 import ProfileSearch from "../pages/ProfileSearch";
 import Message from "../pages/Message";
 
+
 export default function ManagerAccount() {
     const cookies = new Cookies();
     const token = cookies.get("token");

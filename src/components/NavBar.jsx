@@ -8,7 +8,8 @@ import {
     NAV_PROFILE,
     NAV_SETTINGS,
     NAV_CREATOR,
-    NAV_SEARCH, NAV_MESSAGE
+    NAV_SEARCH,
+    NAV_MESSAGE
 } from "../utils/Constants";
 import { IconSearch ,IconMail } from '@tabler/icons-react';
 

@@ -1,13 +1,21 @@
 import React, {useEffect, useState} from "react";
 import UsernameAPI from "../api/UsernameAPI";
 import axios from "axios";
-import {URL_FOLLOW, URL_GET_PROFILE_SEARCH, URL_SERVER_SIDE, URL_UNFOLLOW} from "../utils/Constants";
+import {
+    NAV_MESSAGE,
+    URL_FOLLOW,
+    URL_GET_PROFILE_SEARCH,
+    URL_SERVER_SIDE,
+    URL_UNFOLLOW
+} from "../utils/Constants";
 import Post from "../components/Post";
 import "../css/ProfileStyle.css"
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 export default function ProfileSearch() {
     const { usernameSearch} = useParams();
+    const navigate = useNavigate();
+
     const [currentUsername, setCurrentUsername] = useState(null);
     const [isFollowing, setIsFollowing] = useState(false);
     const [profileData, setProfileData] = useState({
@@ -80,6 +88,10 @@ export default function ProfileSearch() {
         }
     };
 
+    const handleSendMessage = () => {
+        navigate(NAV_MESSAGE + `?receiver=${profileData.username}`);
+    };
+
     useEffect(() => {
         fetchDetails();
     }, []);
@@ -105,29 +117,34 @@ export default function ProfileSearch() {
                 <div className="profile-info">
                     <h1>
                         <strong>{profileData.username ? profileData.username.toLocaleUpperCase() : "Loading..."}</strong>
+                        &nbsp; &nbsp;
+                        <button onClick={handleFollowToggle} className={"btn btn-primary"} style={{fontSize: "12px"}}>
+                            {isFollowing ? "Unfollow" : "Follow"}
+                        </button>
+                        &nbsp; &nbsp;
+                        <button onClick={handleSendMessage} className={"btn btn-primary"} style={{fontSize: "12px"}}>
+                            Message
+                        </button>
                     </h1>
+
+                    <br/>
                     <p>posts <strong>{profileData.posts.length}</strong> &nbsp; &nbsp;  &nbsp; &nbsp;
                         followers <strong>{profileData.followers}</strong> &nbsp; &nbsp;  &nbsp; &nbsp;
                         following <strong>{profileData.following}</strong>
                     </p>
-                    <div>
-                        <button onClick={handleFollowToggle} className={"btn btn-primary"} style={{fontSize:"12px"}}>
-                            {isFollowing ? "Unfollow" : "Follow"}
-                        </button>
-                    </div>
+
                 </div>
             </div>
 
             <div>
                 {
                     profileData.posts.length > 0 ? (
-                            <Post posts={profileData.posts}/>
-                        ) : (
-                            <p>No posts available.</p>
-                        )
-                    }
-                </div>
-
+                        <Post posts={profileData.posts}/>
+                    ) : (
+                        <p>No posts available.</p>
+                    )
+                }
+            </div>
 
 
         </div>

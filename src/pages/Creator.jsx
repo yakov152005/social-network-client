@@ -1,12 +1,12 @@
 import {useEffect, useState} from "react";
-import {MAIL_SERVICE, MAILTO, URL_SSE} from "../utils/Constants";
+import {MAIL_SERVICE, MAILTO, URL_SSE_DATE} from "../utils/Constants";
 
 
 export default function Creator() {
     const [message, setMessage] = new useState("");
 
     useEffect(() => {
-        const sse = new EventSource(URL_SSE);
+        const sse = new EventSource(URL_SSE_DATE);
         sse.addEventListener("message", (event) => {
             setMessage(event.data);
         });
