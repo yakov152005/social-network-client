@@ -6,10 +6,10 @@ import {
     URL_LIKE,
     URL_SERVER_SIDE,
     URL_UNLIKE
-} from "../utils/Constants";
-import "../css/DashboardStyle.css";
-import UsernameAPI from "../api/UsernameAPI";
-import FormatDate from "../utils/FormatDate";
+} from "../../utils/Constants";
+import "../../css/dashboard/DashboardStyle.css";
+import UsernameAPI from "../../api/UsernameAPI";
+import FormatDate from "../../utils/FormatDate";
 import {IconMoodEmpty,IconMoodSmile, IconHeart,IconHeartFilled } from '@tabler/icons-react';
 
 

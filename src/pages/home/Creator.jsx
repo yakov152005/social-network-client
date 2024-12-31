@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {MAIL_SERVICE, MAILTO, URL_SSE_DATE} from "../utils/Constants";
+import {MAIL_SERVICE, MAILTO, URL_SSE_DATE} from "../../utils/Constants";
 
 
 export default function Creator() {

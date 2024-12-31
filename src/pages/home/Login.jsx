@@ -7,15 +7,15 @@ import {
     URL_LOGIN_USER,
     URL_SERVER_SIDE,
     URL_VERIFY
-} from "../utils/Constants";
+} from "../../utils/Constants";
 import Cookies from "universal-cookie";
 import { useNavigate} from "react-router-dom";
-import logo from '../assets/image/iconSocialNetWorkTheOriginalOne.png';
-import showPass from "../assets/form/show_password.png"
-import hidePass from "../assets/form/hide_password.png"
+import logo from '../../assets/image/iconSocialNetWorkTheOriginalOne.png';
+import showPass from "../../assets/form/show_password.png"
+import hidePass from "../../assets/form/hide_password.png"
 import { IconMoodCheck } from '@tabler/icons-react';
-import "../css/LoginAndCreate.css"
-import "../css/LoadingStyle.css"
+import "../../css/home/LoginAndCreate.css"
+import "../../css/LoadingStyle.css"
 
 
 

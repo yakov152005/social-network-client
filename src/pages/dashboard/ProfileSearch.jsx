@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import UsernameAPI from "../api/UsernameAPI";
+import UsernameAPI from "../../api/UsernameAPI";
 import axios from "axios";
 import {
     NAV_MESSAGE,
@@ -7,9 +7,9 @@ import {
     URL_GET_PROFILE_SEARCH,
     URL_SERVER_SIDE,
     URL_UNFOLLOW
-} from "../utils/Constants";
-import Post from "../components/Post";
-import "../css/ProfileStyle.css"
+} from "../../utils/Constants";
+import Post from "../../components/Post";
+import "../../css/dashboard/ProfileStyle.css"
 import {useNavigate, useParams} from "react-router-dom";
 
 export default function ProfileSearch() {

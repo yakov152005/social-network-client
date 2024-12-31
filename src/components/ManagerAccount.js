@@ -1,9 +1,9 @@
 import React from "react";
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
-import CreateAccount from "../pages/CreateAccount";
-import Login from "../pages/Login";
-import Creator from "../pages/Creator";
-import Dashboard from "../pages/Dashboard";
+import CreateAccount from "../pages/home/CreateAccount";
+import Login from "../pages/home/Login";
+import Creator from "../pages/home/Creator";
+import Dashboard from "../pages/dashboard/Dashboard";
 import Cookies from "universal-cookie";
 import {
     NAV_CHANGE_PASSWORD,
@@ -17,14 +17,14 @@ import {
 } from "../utils/Constants";
 import NotFoundPage from "../pages/NotFoundPage";
 import NavBar from "./NavBar";
-import Profile from "../pages/Profile";
-import ForgetPassword from "../pages/ForgetPassword";
-import Settings from "../pages/Settings";
-import ChangePassword from "../pages/ChangePassword";
-import Search from "../pages/Search";
-import ProfileSearch from "../pages/ProfileSearch";
-import Message from "../pages/Message";
-import DeleteUser from "../pages/DeleteUser";
+import Profile from "../pages/dashboard/Profile";
+import ForgetPassword from "../pages/home/ForgetPassword";
+import Settings from "../pages/settings/Settings";
+import ChangePassword from "../pages/settings/ChangePassword";
+import Search from "../pages/dashboard/Search";
+import ProfileSearch from "../pages/dashboard/ProfileSearch";
+import Message from "../pages/dashboard/Message";
+import DeleteUser from "../pages/settings/DeleteUser";
 
 
 export default function ManagerAccount() {

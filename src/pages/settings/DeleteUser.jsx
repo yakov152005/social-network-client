@@ -1,8 +1,8 @@
 import {useNavigate} from "react-router-dom";
 import React, {useEffect, useState} from "react";
-import {NAV_CREATE_ACCOUNT, NAV_LOGIN, NAV_SETTINGS, PATH, URL_DELETE_USER, URL_SERVER_SIDE} from "../utils/Constants";
-import UsernameAPI from "../api/UsernameAPI";
-import "../css/SettingsStyle.css"
+import {NAV_CREATE_ACCOUNT, NAV_SETTINGS, PATH, URL_DELETE_USER, URL_SERVER_SIDE} from "../../utils/Constants";
+import UsernameAPI from "../../api/UsernameAPI";
+import "../../css/settings/SettingsStyle.css"
 import axios from "axios";
 import { IconAlertTriangle } from '@tabler/icons-react';
 import Swal from "sweetalert2";

@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from "react";
-import UsernameAPI from "../api/UsernameAPI";
+import UsernameAPI from "../../api/UsernameAPI";
 import axios from "axios";
 import {
     URL_GET_CHAT_USERS,
@@ -7,12 +7,12 @@ import {
     URL_SEND_MESSAGE,
     URL_SERVER_SIDE,
     URL_SSE_USER
-} from "../utils/Constants";
+} from "../../utils/Constants";
 import {useLocation} from "react-router-dom";
-import FormatDate from "../utils/FormatDate";
-import send from "../assets/navbar/send.png";
-import "../css/MessageStyle.css"
-import img_null from "../assets/navbar/User_Profile_null.png"
+import FormatDate from "../../utils/FormatDate";
+import send from "../../assets/navbar/send.png";
+import "../../css/dashboard/MessageStyle.css"
+import img_null from "../../assets/navbar/User_Profile_null.png"
 
 
 export default function Message() {

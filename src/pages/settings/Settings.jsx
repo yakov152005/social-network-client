@@ -1,6 +1,6 @@
-import "../css/SettingsStyle.css"
+import "../../css/settings/SettingsStyle.css"
 import {useNavigate} from "react-router-dom";
-import {NAV_CHANGE_PASSWORD, NAV_DELETE_USER} from "../utils/Constants";
+import {NAV_CHANGE_PASSWORD, NAV_DELETE_USER} from "../../utils/Constants";
 
 
 export default function Settings() {

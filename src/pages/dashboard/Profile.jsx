@@ -6,10 +6,11 @@ import {
     URL_GET_POST_PROFILE,
     URL_GET_PROFILE_PIC,
     URL_SERVER_SIDE
-} from "../utils/Constants";
-import UsernameAPI from "../api/UsernameAPI";
-import "../css/ProfileStyle.css"
-import Post from "../components/Post";
+} from "../../utils/Constants";
+import UsernameAPI from "../../api/UsernameAPI";
+import "../../css/dashboard/ProfileStyle.css"
+import Post from "../../components/Post";
+import Swal from "sweetalert2";
 
 
 export default function Profile() {
@@ -88,38 +89,75 @@ export default function Profile() {
             const response = await axios.post(URL_SERVER_SIDE + URL_ADD_POST + `/${username}`,
                 newPost);
             if (response.data.success) {
+                await Swal.fire({
+                    title: "Good job!",
+                    text: "Post added successfully!",
+                    icon: "success",
+                });
                 console.log(response.data.error);
                 setNewPost({content: "", imageUrl: ""});
                 fetchPosts();
             } else {
+                await Swal.fire({
+                    title: "Error",
+                    text: "The post must have text, try again.",
+                    icon: "error",
+                });
                 console.error(response.data.error);
             }
         } catch (error) {
+            await Swal.fire({
+                title: "Error",
+                text: "An unexpected error occurred. Please try again later.",
+                icon: "error",
+            });
             console.error("Failed to add post", error);
         }
     };
 
     const addProfilePicture = async () => {
-        if (!profilePicture || profilePicture.length === 0 || !profilePicture.startsWith("http") ){
-            alert("Choose a profile pic");
+        if (!profilePicture || profilePicture.length === 0 || !profilePicture.startsWith("http")) {
+            await Swal.fire({
+                title: "Error",
+                text: "Please choose a valid profile picture URL.",
+                icon: "error",
+            });
             return;
         }
+
         try {
-            const response= await axios.post(URL_SERVER_SIDE + URL_ADD_PROFILE_PIC,{
+            const response = await axios.post(URL_SERVER_SIDE + URL_ADD_PROFILE_PIC, {
                 username: username,
                 profilePicture: profilePicture,
             });
-            if (response.data.success){
+
+            if (response.data.success) {
                 fetchProfilePicture();
+                await Swal.fire({
+                    title: "Good job!",
+                    text: "Profile picture added successfully!",
+                    icon: "success",
+                });
                 setProfilePicture("");
                 console.log(response.data.error);
-            }else {
-                console.log("Error to upload img.");
+            } else {
+                console.log("Error uploading profile picture.");
+                await Swal.fire({
+                    title: "Error",
+                    text: "Failed to upload profile picture. Please try again.",
+                    icon: "error",
+                });
             }
-        }catch (error){
-            console.error("Failed to fetching add picture.",error);
+        } catch (error) {
+            console.error("Failed to fetch and add picture.", error);
+            await Swal.fire({
+                title: "Error",
+                text: "An unexpected error occurred. Please try again later.",
+                icon: "error",
+            });
         }
-    }
+    };
+
 
 
     useEffect(() => {

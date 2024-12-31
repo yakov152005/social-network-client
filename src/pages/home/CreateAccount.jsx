@@ -1,13 +1,14 @@
 import React, {useState} from "react";
 import axios from "axios";
-import {NAV_LOGIN, TIME_LOADING, URL_CREATE_USER, URL_SERVER_SIDE} from "../utils/Constants";
-import "../css/LoginAndCreate.css";
-import "../css/LoadingStyle.css"
-import logo from '../assets/image/iconSocialNetWorkTheOriginalOne.png';
+import {NAV_LOGIN, TIME_LOADING, URL_CREATE_USER, URL_SERVER_SIDE} from "../../utils/Constants";
+import "../../css/home/LoginAndCreate.css";
+import "../../css/LoadingStyle.css"
+import logo from '../../assets/image/iconSocialNetWorkTheOriginalOne.png';
 import {useNavigate} from "react-router-dom";
 import {IconLockCheck, IconDeviceMobileFilled, IconMailFilled, IconBalloonFilled,IconMoodCheck } from '@tabler/icons-react';
-import showPass from "../assets/form/show_password.png"
-import hidePass from "../assets/form/hide_password.png"
+import showPass from "../../assets/form/show_password.png"
+import hidePass from "../../assets/form/hide_password.png"
+
 
 
 export default function CreateAccount() {

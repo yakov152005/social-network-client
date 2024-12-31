@@ -4,11 +4,11 @@ import {
     NAV_PROFILE_SEARCH_BASE,
     URL_GET_ALL_USER_NAMES_AND_PIC,
     URL_SERVER_SIDE
-} from "../utils/Constants";
-import logo from "../assets/image/iconSocialNetWorkTheOriginalOne.png"
-import "../css/SearchStyle.css"
+} from "../../utils/Constants";
+import logo from "../../assets/image/iconSocialNetWorkTheOriginalOne.png"
+import "../../css/dashboard/SearchStyle.css"
 import {IconMoodEmpty} from "@tabler/icons-react";
-import UsernameAPI from "../api/UsernameAPI";
+import UsernameAPI from "../../api/UsernameAPI";
 import {useNavigate} from "react-router-dom";
 
 

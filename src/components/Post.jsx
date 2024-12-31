@@ -1,5 +1,5 @@
 import React from "react";
-import "../css/ProfileStyle.css"
+import "../css/dashboard/ProfileStyle.css"
 import FormatDate from "../utils/FormatDate";
 
 export default function Post({posts}) {

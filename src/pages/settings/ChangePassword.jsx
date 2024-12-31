@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from "react";
-import "../css/SettingsStyle.css"
+import "../../css/settings/SettingsStyle.css"
 import axios from "axios";
-import {NAV_SETTINGS, URL_CHANGE_PASSWORD, URL_SERVER_SIDE} from "../utils/Constants";
+import {NAV_SETTINGS, URL_CHANGE_PASSWORD, URL_SERVER_SIDE} from "../../utils/Constants";
 import {useNavigate} from "react-router-dom";
-import UsernameAPI from "../api/UsernameAPI";
+import UsernameAPI from "../../api/UsernameAPI";
 import {IconCloudLock } from "@tabler/icons-react";
+import Swal from "sweetalert2";
 
 export default function ChangePassword() {
     const navigate = useNavigate();
@@ -77,33 +78,48 @@ export default function ChangePassword() {
             }))
             return;
         }
-        try {
-            const response = await axios.post(URL_SERVER_SIDE + URL_CHANGE_PASSWORD, {
-                username: formData.username,
-                currentPassword: formData.currentPassword,
-                newPassword: formData.newPassword,
-            });
 
-            if (response.data.success) {
-                alert(response.data.error);
-                setFormData({
-                    username: "",
-                    currentPassword: "",
-                    newPassword: "",
-                    confirmPassword: "",
-                });
-                navigate(NAV_SETTINGS);
-            } else {
-                alert(response.data.error);
-                setFormData({
+        const result = await Swal.fire({
+            title: "Are you sure?",
+            text: "Before you change your password, make sure you have saved it in a secure place and that you remember it.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Yes, change it!",
+            cancelButtonText: "Cancel",
+        });
+
+        if (result.isConfirmed){
+            try {
+                const response = await axios.post(URL_SERVER_SIDE + URL_CHANGE_PASSWORD, {
                     username: formData.username,
-                    currentPassword: "",
-                    newPassword: "",
-                    confirmPassword: "",
+                    currentPassword: formData.currentPassword,
+                    newPassword: formData.newPassword,
                 });
+
+                if (response.data.success) {
+                    Swal.fire("Changed!",response.data.error,"success");
+                    setFormData({
+                        username: "",
+                        currentPassword: "",
+                        newPassword: "",
+                        confirmPassword: "",
+                    });
+                    navigate(NAV_SETTINGS);
+                } else {
+                    Swal.fire("Error",response.data.error,"error");
+                    setFormData({
+                        username: formData.username,
+                        currentPassword: "",
+                        newPassword: "",
+                        confirmPassword: "",
+                    });
+                }
+            } catch (error) {
+                console.log("Error to fetch change password");
+                Swal.fire("Error", "Failed to delete user.", "error");
             }
-        } catch (error) {
-            console.log("Error to fetch change password");
         }
     };
 
