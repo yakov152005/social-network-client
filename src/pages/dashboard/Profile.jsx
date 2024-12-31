@@ -11,6 +11,7 @@ import UsernameAPI from "../../api/UsernameAPI";
 import "../../css/dashboard/ProfileStyle.css"
 import Post from "../../components/Post";
 import Swal from "sweetalert2";
+import img_null from "../../assets/navbar/User_Profile_null.png"
 
 
 export default function Profile() {
@@ -199,7 +200,7 @@ export default function Profile() {
             <div className="profile-header">
                 <div className="profile-picture">
                     <img
-                        src={currentProfilePicture || "https://via.placeholder.com/150"}
+                        src={currentProfilePicture || img_null}
                         alt="Profile"
                     />
                 </div>

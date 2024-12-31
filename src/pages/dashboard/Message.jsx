@@ -168,7 +168,7 @@ export default function Message() {
                             onClick={() => fetchLoadChatMessages(chatUser.receiver)}
                         >
                             <img
-                                src={chatUser.profilePicture ? chatUser.profilePicture : img_null}
+                                src={chatUser.profilePicture || img_null}
                                 alt={chatUser.receiver}
                                 style={{borderRadius: "50%", marginRight: "10px", width: "40px", height: "40px"}}
                             />

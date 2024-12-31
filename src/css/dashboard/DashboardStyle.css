@@ -5,8 +5,8 @@ body {
     background-color: #fafafa;
     color: #333;
     overflow-y: auto;
-    scrollbar-width: thin; /* גלילה דקה */
-    scrollbar-color: #888 #f1f1f1; /* צבע הידית וצבע המסלול */
+    scrollbar-width: thin;
+    scrollbar-color: #888 #f1f1f1;
 }
 
 .feed-container {

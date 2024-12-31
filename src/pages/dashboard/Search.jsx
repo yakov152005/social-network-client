@@ -5,7 +5,7 @@ import {
     URL_GET_ALL_USER_NAMES_AND_PIC,
     URL_SERVER_SIDE
 } from "../../utils/Constants";
-import logo from "../../assets/image/iconSocialNetWorkTheOriginalOne.png"
+import img_null from "../../assets/navbar/User_Profile_null.png"
 import "../../css/dashboard/SearchStyle.css"
 import {IconMoodEmpty} from "@tabler/icons-react";
 import UsernameAPI from "../../api/UsernameAPI";
@@ -110,7 +110,7 @@ export default function Search() {
                              onClick={() => handleUserClick(profile.username)}
                         >
                             <img
-                                src={profile.profilePicture || logo}
+                                src={profile.profilePicture || img_null}
                                 alt={profile.username}
                                 className="search-profile-picture"
                                 onClick={() => handleUserClick(profile.username)}

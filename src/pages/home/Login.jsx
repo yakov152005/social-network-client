@@ -3,7 +3,7 @@ import axios from "axios";
 import {
     NAV_CREATE_ACCOUNT,
     NAV_FORGET_PASSWORD,
-    TIME_LOADING,
+    TIME_LOADING, TIME_LOADING_FAST,
     URL_LOGIN_USER,
     URL_SERVER_SIDE,
     URL_VERIFY
@@ -16,6 +16,7 @@ import hidePass from "../../assets/form/hide_password.png"
 import { IconMoodCheck } from '@tabler/icons-react';
 import "../../css/home/LoginAndCreate.css"
 import "../../css/LoadingStyle.css"
+import Swal from "sweetalert2";
 
 
 
@@ -84,7 +85,12 @@ export default function Login({ onLogin }) {
 
     const verifyCode = async () => {
         if (!verificationCode) {
-            setErrorMessage("Please enter the verification code.");
+            //setErrorMessage("Please enter the verification code.");
+            await Swal.fire({
+                title: "Error",
+                text: "Please enter the verification code.",
+                icon: "error",
+            });
             return;
         }
 
@@ -100,20 +106,35 @@ export default function Login({ onLogin }) {
             if (response.data && response.data.token) {
                 cookies.set("token", response.data.token, { path: "/"});
                 console.log("Token:", response.data.token);
+                Swal.fire({
+                    title: "Verified!!",
+                    text: "Success to login.",
+                    icon: "success",
+                });
 
                 setTimeout(() => {
                     setLoadingVerification(false);
                     onLogin();
-                }, TIME_LOADING);
+                }, TIME_LOADING_FAST);
 
             } else {
-                setErrorMessage("Invalid verification code.");
+                await Swal.fire({
+                    title: "Error",
+                    text: "Invalid verification code.",
+                    icon: "error",
+                });
+               // setErrorMessage("Invalid verification code.");
                 console.log("Token not found")
                 setLoadingVerification(false);
             }
         } catch (error) {
             console.error("Error verifying code", error);
-            setErrorMessage("Failed to verify code. Please try again later.");
+            //setErrorMessage("Failed to verify code. Please try again later.");
+            await Swal.fire({
+                title: "Error",
+                text: "Failed to verify code. Please try again later.",
+                icon: "error",
+            });
             setLoadingVerification(false);
         }
     };

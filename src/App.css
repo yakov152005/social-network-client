@@ -7,7 +7,6 @@
   background-color: rgba(241, 229, 255, 0.28);
   width: 100vw;
   min-height: 100vh;
-
   padding-bottom: 20px;
   padding-top: 0.4px;
   display: flex;
@@ -34,9 +33,7 @@ html, body {
   overflow: hidden;
 }
 
-/*
-לנאב בר של האאיקון למעלה
- */
+
 .disabled {
   pointer-events: none;
   color: gray;

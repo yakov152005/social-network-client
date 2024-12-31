@@ -11,6 +11,7 @@ import {
 import Post from "../../components/Post";
 import "../../css/dashboard/ProfileStyle.css"
 import {useNavigate, useParams} from "react-router-dom";
+import img_null from "../../assets/navbar/User_Profile_null.png"
 
 export default function ProfileSearch() {
     const { usernameSearch} = useParams();
@@ -109,7 +110,7 @@ export default function ProfileSearch() {
             <div className="profile-header">
                 <div className="profile-picture">
                     <img
-                        src={profileData.profilePicture || "https://via.placeholder.com/150"}
+                        src={profileData.profilePicture? profileData.profilePicture  : img_null}
                         alt="Profile"
                     />
                 </div>

@@ -7,19 +7,22 @@
 }
 
 .left-section-message {
-    background: white;
+    background: linear-gradient(to bottom left, #eaeaf6, rgb(255, 255, 255));
     height: 100vh;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: #888 #f1f1f1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px;
 }
 
 .right-section-message {
-    background: linear-gradient(to bottom right, #ffffff, #f7f7f7);
+    background: linear-gradient(to bottom right, #eaeaf6,  rgb(255, 255, 255));
     color: black;
     text-align: center;
-    padding: 50px;
+    padding: 110px;
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -34,12 +37,24 @@
 }
 
 .chat-list {
-    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
     padding: 0;
-    margin: 0;
     list-style: none;
-    border-right: 1px solid #ddd;
+    width: 100%;
+    max-width: 340px;
+    max-height: 90%;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background: #f9f9f9;
+    scrollbar-width: thin;
+    scrollbar-color: #888 #f1f1f1;
+    margin-left: -210px;
 }
+
 
 .chat-item {
     padding: 15px;
@@ -51,11 +66,11 @@
 }
 
 .chat-item:hover {
-    background: #f9f9f9;
+    background: #b2c9cf;
 }
 
 .chat-item.active {
-    background: #f1f1f1;
+    background: #b2c9cf;
     font-weight: bold;
 }
 
@@ -73,17 +88,18 @@
     width: 100%;
     max-height: 400px;
     overflow-y: auto;
-    scrollbar-width: thin;
+    scrollbar-width: none;
     scrollbar-color: #888 #f1f1f1;
 }
 
 .message-input {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 55px;
     margin-top: 10px;
     padding: 10px;
     border-top: 1px solid #ddd;
+    border-radius: 10px;
     background: white;
 }
 
@@ -91,7 +107,7 @@
     flex: 1;
     padding: 10px;
     border: 1px solid #ddd;
-    border-radius: 20px;
+    border-radius: 10px;
     outline: none;
 }
 
@@ -100,7 +116,7 @@
     background: #007bff;
     color: white;
     border: none;
-    border-radius: 20px;
+    border-radius: 10px;
     cursor: pointer;
     transition: background 0.3s;
 }

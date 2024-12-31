@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import axios from "axios";
-import {NAV_LOGIN, TIME_LOADING, URL_CREATE_USER, URL_SERVER_SIDE} from "../../utils/Constants";
+import {NAV_LOGIN, TIME_LOADING, TIME_LOADING_FAST, URL_CREATE_USER, URL_SERVER_SIDE} from "../../utils/Constants";
 import "../../css/home/LoginAndCreate.css";
 import "../../css/LoadingStyle.css"
 import logo from '../../assets/image/iconSocialNetWorkTheOriginalOne.png';
@@ -8,6 +8,7 @@ import {useNavigate} from "react-router-dom";
 import {IconLockCheck, IconDeviceMobileFilled, IconMailFilled, IconBalloonFilled,IconMoodCheck } from '@tabler/icons-react';
 import showPass from "../../assets/form/show_password.png"
 import hidePass from "../../assets/form/hide_password.png"
+import Swal from "sweetalert2";
 
 
 
@@ -127,7 +128,11 @@ export default function CreateAccount() {
         const {username, password, passwordConfirm, phoneNumber, email, age} = formData;
 
         if (!username || !password || !passwordConfirm || !phoneNumber || !email || age <= 0) {
-            setErrorMessage("Please fill all fields.");
+            await Swal.fire({
+                title: "Error",
+                text: "Please fill all fields.",
+                icon: "error",
+            });
             return;
         }
 
@@ -143,7 +148,11 @@ export default function CreateAccount() {
                 age: parseInt(age, 10),
             });
             if (response.data.success) {
-                setErrorMessage("Success to add user.")
+                  Swal.fire({
+                    title: "Good job!",
+                    text: "Success to add user.",
+                    icon: "success",
+                });
                 console.log(`{success: ${response.data.success}, error:{ ${response.data.error} }`);
                 setFormData({
                     username: "",
@@ -157,12 +166,16 @@ export default function CreateAccount() {
                 setTimeout(() => {
                     setLoading(false);
                     navigate(NAV_LOGIN);
-                }, TIME_LOADING);
+                }, TIME_LOADING_FAST);
 
             } else {
                 const errorCode = response.data.errorCode;
                 const fieldToClear = switchError(errorCode);
-                setErrorMessage(response.data.error);
+                await Swal.fire({
+                    title: "Error",
+                    text: response.data.error,
+                    icon: "error",
+                });
                 console.log(`{success: ${response.data.success}, error:{ ${response.data.error} } , errorCode: { ${errorCode}`);
 
                 setFormData((prevFormData) => ({
@@ -174,7 +187,11 @@ export default function CreateAccount() {
             }
         } catch (error) {
             console.log("Error creating user", error);
-            setErrorMessage("Failed to create user. Please try again later.");
+            await Swal.fire({
+                title: "Error",
+                text: "Failed to create user. Please try again later.",
+                icon: "error",
+            });
             setLoading(false);
 
         }
