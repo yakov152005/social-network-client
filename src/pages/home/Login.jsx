@@ -106,16 +106,17 @@ export default function Login({ onLogin }) {
             if (response.data && response.data.token) {
                 cookies.set("token", response.data.token, { path: "/"});
                 console.log("Token:", response.data.token);
-                Swal.fire({
-                    title: "Verified!!",
-                    text: "Success to login.",
-                    icon: "success",
-                });
+
 
                 setTimeout(() => {
+                    Swal.fire({
+                        title: "Verified!!",
+                        text: "Success to login.",
+                        icon: "success",
+                    });
                     setLoadingVerification(false);
                     onLogin();
-                }, TIME_LOADING_FAST);
+                }, TIME_LOADING);
 
             } else {
                 await Swal.fire({

@@ -9,7 +9,7 @@ import {
 } from "../../utils/Constants";
 import UsernameAPI from "../../api/UsernameAPI";
 import "../../css/dashboard/ProfileStyle.css"
-import Post from "../../components/Post";
+import Post from "../../components/dashboard/Post";
 import Swal from "sweetalert2";
 import img_null from "../../assets/navbar/User_Profile_null.png"
 

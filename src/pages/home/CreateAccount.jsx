@@ -148,11 +148,7 @@ export default function CreateAccount() {
                 age: parseInt(age, 10),
             });
             if (response.data.success) {
-                  Swal.fire({
-                    title: "Good job!",
-                    text: "Success to add user.",
-                    icon: "success",
-                });
+
                 console.log(`{success: ${response.data.success}, error:{ ${response.data.error} }`);
                 setFormData({
                     username: "",
@@ -164,9 +160,14 @@ export default function CreateAccount() {
                 });
 
                 setTimeout(() => {
+                    Swal.fire({
+                        title: "Good job!",
+                        text: "Success to add user.",
+                        icon: "success",
+                    });
                     setLoading(false);
                     navigate(NAV_LOGIN);
-                }, TIME_LOADING_FAST);
+                }, TIME_LOADING);
 
             } else {
                 const errorCode = response.data.errorCode;

@@ -25,6 +25,8 @@ const URL_MESSAGE_HISTORY = "/get-message-history";
 const URL_SEND_MESSAGE = "/send-message";
 const URL_GET_CHAT_USERS = "/get-chat-users";
 const URL_DELETE_USER = "/delete-user";
+const URL_ADD_COMMENT = "/add-comment";
+const URL_SHOW_ALL_COMMENT_POST = "/get-all-comment-post";
 
 const NAV_LOGIN = "/login";
 const NAV_CREATE_ACCOUNT = "/createAccount";
@@ -75,6 +77,8 @@ export {
     URL_SEND_MESSAGE,
     URL_MESSAGE_HISTORY,
     URL_DELETE_USER,
+    URL_ADD_COMMENT,
+    URL_SHOW_ALL_COMMENT_POST,
     NAV_DELETE_USER,
     NAV_MESSAGE,
     NAV_LOGIN,

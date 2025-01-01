@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import logo from '../assets/image/iconSocialNetWorkTheOriginalOne.png';
+import logo from '../../assets/image/iconSocialNetWorkTheOriginalOne.png';
 import {
     NAV_CREATE_ACCOUNT,
     NAV_LOGIN,
@@ -10,7 +10,7 @@ import {
     NAV_CREATOR,
     NAV_SEARCH,
     NAV_MESSAGE
-} from "../utils/Constants";
+} from "../../utils/Constants";
 import { IconSearch ,IconMail } from '@tabler/icons-react';
 
 export default function NavBar({ isLoggedIn, onLogout }) {

@@ -8,11 +8,12 @@ import {
     URL_UNLIKE
 } from "../../utils/Constants";
 import "../../css/dashboard/DashboardStyle.css";
+import img_null from "../../assets/navbar/User_Profile_null.png"
+
 import UsernameAPI from "../../api/UsernameAPI";
 import FormatDate from "../../utils/FormatDate";
 import {IconMoodEmpty,IconMoodSmile, IconHeart,IconHeartFilled } from '@tabler/icons-react';
-
-
+import Comment from "../../components/dashboard/Comment";
 
 export default function Dashboard() {
     const [username, setUsername] = useState("");
@@ -90,6 +91,24 @@ export default function Dashboard() {
     }
 
 
+    const handleScroll = async () => {
+        const container = feedContainerRef.current;
+
+        if (!container) {
+            console.log("Container not found");
+            return;
+        }
+
+        const scrollTop = container.scrollTop;
+        const scrollHeight = container.scrollHeight;
+        const clientHeight = container.clientHeight;
+
+
+        if (scrollTop + clientHeight >= scrollHeight - 50 && hasMore && !isFetching) {
+            setPage((prevPage) => prevPage + 1);
+        }
+    };
+
     useEffect(() => {
         fetchUserDetails();
     }, []);
@@ -110,24 +129,6 @@ export default function Dashboard() {
     }, [page]);
 
 
-
-    const handleScroll = async () => {
-        const container = feedContainerRef.current;
-
-        if (!container) {
-            console.log("Container not found");
-            return;
-        }
-
-        const scrollTop = container.scrollTop;
-        const scrollHeight = container.scrollHeight;
-        const clientHeight = container.clientHeight;
-
-
-        if (scrollTop + clientHeight >= scrollHeight - 50 && hasMore && !isFetching) {
-            setPage((prevPage) => prevPage + 1);
-        }
-    };
 
     useEffect(() => {
         const container = feedContainerRef.current;
@@ -197,7 +198,7 @@ export default function Dashboard() {
                             <div className="post-header">
                                 <div className="post-user-info">
                                     <img
-                                        src={post.profilePicture || "/image/logoNetWork.png"}
+                                        src={post.profilePicture || img_null}
                                         alt="User Profile"
                                         className="post-profile-picture"
                                     />
@@ -229,6 +230,8 @@ export default function Dashboard() {
 
                                 <p><strong>{post.username} &nbsp;&nbsp;</strong>{post.content}</p>
                             </div>
+
+                            <Comment postId={post.id} username={username} commentCount={post.commentCount}/>
                         </div>
                     ))
                 )}
@@ -237,4 +240,5 @@ export default function Dashboard() {
         </div>
     );
 }
+
 

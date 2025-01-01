@@ -8,7 +8,7 @@ import {
     URL_SERVER_SIDE,
     URL_UNFOLLOW
 } from "../../utils/Constants";
-import Post from "../../components/Post";
+import Post from "../../components/dashboard/Post";
 import "../../css/dashboard/ProfileStyle.css"
 import {useNavigate, useParams} from "react-router-dom";
 import img_null from "../../assets/navbar/User_Profile_null.png"
