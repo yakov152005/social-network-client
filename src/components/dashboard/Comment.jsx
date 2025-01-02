@@ -75,12 +75,13 @@ export default function Comment({ postId, username ,commentCount: initialComment
                                 <img
                                     src={comment.profilePicture || img_null}
                                     alt={comment.username}
-                                    style={{borderRadius: "50%", marginRight: "10px", width: "40px", height: "40px"}}
+                                    style={{borderRadius: "50%", marginLeft:"7px",marginRight: "10px", width: "40px", height: "40px"}}
                                 />
                                 <strong style={{color: "darkblue", marginRight: "12px"}}>{comment.username}</strong>
                                 {comment.content}
                             </div>
-                            <div style={{fontSize: "small", color: "gray"}}>
+
+                            <div style={{fontSize: "small", color: "gray", marginLeft:"8px"}}>
                                 {comment.date ? FormatDate(comment.date) : "Unknown date"}
                             </div>
                         </li>

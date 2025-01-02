@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import UsernameAPI from "../../api/UsernameAPI";
 import axios from "axios";
 import {
@@ -8,13 +8,11 @@ import {
     URL_SERVER_SIDE,
     URL_UNFOLLOW
 } from "../../utils/Constants";
-import Post from "../../components/dashboard/Post";
-import "../../css/dashboard/ProfileStyle.css"
-import {useNavigate, useParams} from "react-router-dom";
-import img_null from "../../assets/navbar/User_Profile_null.png"
+import ProfileSearchComponent from "../../components/dashboard/ProfileSearchComponent";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function ProfileSearch() {
-    const { usernameSearch} = useParams();
+    const { usernameSearch } = useParams();
     const navigate = useNavigate();
 
     const [currentUsername, setCurrentUsername] = useState(null);
@@ -37,9 +35,7 @@ export default function ProfileSearch() {
         }
     };
 
-
     const fetchProfileSearch = async () => {
-
         try {
             const response = await axios.get(URL_SERVER_SIDE + URL_GET_PROFILE_SEARCH + `/${currentUsername}&${usernameSearch}`);
             if (response.data.success) {
@@ -50,40 +46,34 @@ export default function ProfileSearch() {
                     followers: profileDto.followers,
                     following: profileDto.following,
                     isFollowing: profileDto.isFollowing,
-                    posts: profileDto.posts,
+                    posts: profileDto.posts
                 });
                 setIsFollowing(profileDto.isFollowing);
-                console.log(response.data.error)
             } else {
-                console.log(response.data.error)
+                console.error(response.data.error);
             }
         } catch (error) {
             console.error("Error to fetch profile search.", error);
         }
-    }
+    };
+
+
 
     const handleFollowToggle = async () => {
         try {
             if (isFollowing) {
                 const response = await axios.delete(URL_SERVER_SIDE + URL_UNFOLLOW + `/${usernameSearch}&${currentUsername}`);
                 if (response.data.success) {
-                    console.log(response.data.error);
                     setIsFollowing(false);
-                }else {
-                    console.log(response.data.error);
                 }
             } else {
                 const response = await axios.post(URL_SERVER_SIDE + URL_FOLLOW + `/${usernameSearch}&${currentUsername}`);
-                if (response.data.success){
+                if (response.data.success) {
                     setIsFollowing(true);
-                    console.log(response.data.error);
-                }else {
-                    console.log(response.data.error)
                 }
             }
 
             await fetchProfileSearch();
-
         } catch (error) {
             console.error("Error toggling follow state", error);
         }
@@ -97,57 +87,19 @@ export default function ProfileSearch() {
         fetchDetails();
     }, []);
 
-
     useEffect(() => {
         if (usernameSearch && currentUsername) {
             fetchProfileSearch();
         }
     }, [usernameSearch, currentUsername]);
 
-
     return (
-        <div className="profile-container">
-            <div className="profile-header">
-                <div className="profile-picture">
-                    <img
-                        src={profileData.profilePicture? profileData.profilePicture  : img_null}
-                        alt="Profile"
-                    />
-                </div>
-
-                <div className="profile-info">
-                    <h1>
-                        <strong>{profileData.username ? profileData.username.toLocaleUpperCase() : "Loading..."}</strong>
-                        &nbsp; &nbsp;
-                        <button onClick={handleFollowToggle} className={"btn btn-primary"} style={{fontSize: "12px"}}>
-                            {isFollowing ? "Unfollow" : "Follow"}
-                        </button>
-                        &nbsp; &nbsp;
-                        <button onClick={handleSendMessage} className={"btn btn-primary"} style={{fontSize: "12px"}}>
-                            Message
-                        </button>
-                    </h1>
-
-                    <br/>
-                    <p>posts <strong>{profileData.posts.length}</strong> &nbsp; &nbsp;  &nbsp; &nbsp;
-                        followers <strong>{profileData.followers}</strong> &nbsp; &nbsp;  &nbsp; &nbsp;
-                        following <strong>{profileData.following}</strong>
-                    </p>
-
-                </div>
-            </div>
-
-            <div>
-                {
-                    profileData.posts.length > 0 ? (
-                        <Post posts={profileData.posts}/>
-                    ) : (
-                        <p>No posts available.</p>
-                    )
-                }
-            </div>
-
-
-        </div>
-    )
+        <ProfileSearchComponent
+            username={usernameSearch}
+            profileData={profileData}
+            isFollowing={isFollowing}
+            onFollowToggle={handleFollowToggle}
+            onSendMessage={handleSendMessage}
+        />
+    );
 }

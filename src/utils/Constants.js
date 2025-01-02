@@ -27,6 +27,7 @@ const URL_GET_CHAT_USERS = "/get-chat-users";
 const URL_DELETE_USER = "/delete-user";
 const URL_ADD_COMMENT = "/add-comment";
 const URL_SHOW_ALL_COMMENT_POST = "/get-all-comment-post";
+const URL_GET_ALL_FOLLOWERS_FOLLOWING = "/get-all-followers-following";
 
 const NAV_LOGIN = "/login";
 const NAV_CREATE_ACCOUNT = "/createAccount";
@@ -79,6 +80,7 @@ export {
     URL_DELETE_USER,
     URL_ADD_COMMENT,
     URL_SHOW_ALL_COMMENT_POST,
+    URL_GET_ALL_FOLLOWERS_FOLLOWING,
     NAV_DELETE_USER,
     NAV_MESSAGE,
     NAV_LOGIN,

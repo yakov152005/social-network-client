@@ -12,6 +12,8 @@ import "../../css/dashboard/ProfileStyle.css"
 import Post from "../../components/dashboard/Post";
 import Swal from "sweetalert2";
 import img_null from "../../assets/navbar/User_Profile_null.png"
+import FollowersAPI from "../../api/FollowersAPI";
+import FollowListComponent from "../../components/dashboard/FollowListComponent";
 
 
 export default function Profile() {
@@ -23,6 +25,10 @@ export default function Profile() {
     const [currentProfilePicture, setCurrentProfilePicture] = useState("");
     const [followers, setFollowers] = useState(-1);
     const [following, setFollowing] = useState(-1);
+    const [getAllFollowers, setGetAllFollowers] = useState([]);
+    const [getAllFollowing, setGetAllFollowing] = useState([]);
+    const [showFollowers, setShowFollowers] = useState(false);
+    const [showFollowing, setShowFollowing] = useState(false);
 
 
     const fetchDetails = async () => {
@@ -160,6 +166,24 @@ export default function Profile() {
     };
 
 
+    const fetchFollowingAndFollowers = async () => {
+        try {
+            const api = new FollowersAPI();
+            await api.fetchFollowingAndFollowers(username,setGetAllFollowers,setGetAllFollowing);
+        } catch (error) {
+            console.log("Error to fetching data", error);
+        }
+    };
+
+    const handleShowFollowers = () => {
+        fetchFollowingAndFollowers();
+        setShowFollowers(true);
+    };
+
+    const handleShowFollowing = () => {
+        fetchFollowingAndFollowers();
+        setShowFollowing(true);
+    };
 
     useEffect(() => {
         fetchDetails();
@@ -208,8 +232,20 @@ export default function Profile() {
                 <div className="profile-info">
                     <h1><strong>{username ? username.toLocaleUpperCase() : "Loading..."}</strong></h1>
                     <p>posts <strong>{posts.length}</strong> &nbsp; &nbsp;  &nbsp; &nbsp;
-                        followers <strong>{followers}</strong> &nbsp; &nbsp;  &nbsp; &nbsp;
-                        following <strong>{following}</strong>
+                        <button
+                            className="btn btn-link"
+                            onClick={handleShowFollowers}
+                            style={{textDecoration: "none" ,color:"#555"}}
+                        >
+                            followers <strong>{followers}</strong> &nbsp; &nbsp;  &nbsp; &nbsp;
+                        </button>
+                        <button
+                            className="btn btn-link"
+                            onClick={handleShowFollowing}
+                            style={{textDecoration: "none",color:"#555"}}
+                        >
+                            following <strong>{following}</strong>
+                        </button>
                     </p>
                 </div>
             </div>
@@ -266,6 +302,14 @@ export default function Profile() {
                 )
             }
             </div>
+
+            {showFollowers && (
+                <FollowListComponent title="Followers" list={getAllFollowers} onClose={() => setShowFollowers(false)}/>
+            )}
+
+            {showFollowing && (
+                <FollowListComponent title="Following" list={getAllFollowing} onClose={() => setShowFollowing(false)}/>
+            )}
 
         </div>
     );
