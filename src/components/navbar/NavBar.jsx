@@ -16,7 +16,6 @@ import UsernameAPI from "../../api/UsernameAPI";
 import { Badge, Avatar } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
-import UserProfilePicAPI from "../../api/UserProfilePicAPI";
 
 export default function NavBar({ isLoggedIn, onLogout }) {
     const [username,setUsername] = useState("");
@@ -25,7 +24,7 @@ export default function NavBar({ isLoggedIn, onLogout }) {
     const fetchDetails = async () => {
         try {
             const api = new UsernameAPI();
-            await api.fetchUserDetails(setUsername);
+            await api.fetchUserDetails(setUsername,setUserProfilePic);
         }catch (error){
             console.log("Error to fetching user details.",error);
         }
@@ -34,20 +33,6 @@ export default function NavBar({ isLoggedIn, onLogout }) {
     useEffect(() => {
         fetchDetails();
     }, [document.cookie]);
-
-    useEffect(() => {
-        if (username) {
-            const fetchProfilePic = async () => {
-                try {
-                    const api = new UserProfilePicAPI();
-                    await api.fetchProfilePic(username, setUserProfilePic);
-                } catch (error) {
-                    console.log("Error to fetching profile pic", error);
-                }
-            }
-            fetchProfilePic();
-        }
-    }, [username]);
 
     const StyledBadge = styled(Badge)(({ theme }) => ({
         '& .MuiBadge-badge': {

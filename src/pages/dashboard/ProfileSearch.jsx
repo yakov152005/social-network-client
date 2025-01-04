@@ -23,7 +23,7 @@ export default function ProfileSearch() {
         followers: 0,
         following: 0,
         isFollowing: false,
-        posts: []
+        posts: [],
     });
 
     const fetchDetails = async () => {
@@ -46,7 +46,7 @@ export default function ProfileSearch() {
                     followers: profileDto.followers,
                     following: profileDto.following,
                     isFollowing: profileDto.isFollowing,
-                    posts: profileDto.posts
+                    posts: profileDto.posts,
                 });
                 setIsFollowing(profileDto.isFollowing);
             } else {

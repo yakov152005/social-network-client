@@ -3,7 +3,7 @@ import Cookies from "universal-cookie";
 import { URL_GET_USER, URL_SERVER_SIDE } from "../utils/Constants";
 
 export default class UsernameAPI {
-    async fetchUserDetails(setUsername) {
+    async fetchUserDetails(setUsername,setProfilePicture) {
         const cookies = new Cookies();
 
         try {
@@ -18,10 +18,17 @@ export default class UsernameAPI {
                 },
             });
             console.log("Fetched user details:", response.data);
-            if (setUsername) {
+
+            if (setUsername && setProfilePicture) {
                 setUsername(response.data.username);
+                setProfilePicture(response.data.profilePicture);
+                return response.data.username && response.data.profilePicture;
             }
-            return response.data.username;
+            if (setUsername){
+                setUsername(response.data.username);
+                return response.data.username
+            }
+
         } catch (error) {
             console.error("Error fetching user details:", error);
             throw error;

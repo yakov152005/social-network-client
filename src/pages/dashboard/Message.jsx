@@ -13,7 +13,6 @@ import FormatDate from "../../utils/FormatDate";
 import send from "../../assets/navbar/send.png";
 import "../../css/dashboard/MessageStyle.css"
 import img_null from "../../assets/navbar/User_Profile_null.png"
-import UserProfilePicAPI from "../../api/UserProfilePicAPI";
 import {Badge} from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import { styled } from '@mui/material/styles';
@@ -122,7 +121,7 @@ export default function Message() {
         const fetchSender = async () => {
             try {
                 const api = new UsernameAPI();
-                await api.fetchUserDetails(setSender);
+                await api.fetchUserDetails(setSender,setSenderProfilePic);
             } catch (error) {
                 console.error("Failed to load user details", error);
             }
@@ -133,15 +132,6 @@ export default function Message() {
 
     useEffect(() => {
         if (sender) {
-            const fetchProfilePic = async () => {
-                try {
-                    const api = new UserProfilePicAPI();
-                    await api.fetchProfilePic(sender, setSenderProfilePic);
-                } catch (error) {
-                    console.log("Error to fetching profile pic", error);
-                }
-            }
-            fetchProfilePic();
             fetchChatUsers();
         }
     }, [sender]);
@@ -171,8 +161,8 @@ export default function Message() {
     }, [receiverFromProfileSearch]);
 
     const SmallAvatar = styled(Avatar)(({ theme }) => ({
-        width: 30, // הגדל את הרוחב
-        height: 30, // הגדל את הגובה
+        width: 30,
+        height: 30,
         border: `2px solid ${theme.palette.background.paper}`,
     }));
 

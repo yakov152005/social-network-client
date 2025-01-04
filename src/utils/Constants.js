@@ -12,7 +12,6 @@ const URL_ADD_POST = "/add-post";
 const URL_GET_POST_PROFILE = "/get-post-by-username";
 const URL_GET_POST_HOME_FEED = "/home-feed-post";
 const URL_ADD_PROFILE_PIC = "/add-profile-pic";
-const URL_GET_PROFILE_PIC = "/get-profile-pic";
 const URL_CHANGE_PASSWORD = "/change-password";
 const URL_ALL_FOLLOW_NUM = "/get-num-followers-following";
 const URL_GET_PROFILE_SEARCH = "/get-all-details-profile-search";
@@ -21,7 +20,6 @@ const URL_UNFOLLOW = "/unfollow";
 const URL_LIKE = "/like-post";
 const URL_UNLIKE = "/unlike-post";
 const URL_GET_ALL_LIKES_POST = "/get-all-likes-post";
-const URL_LIKES_COUNT = "/likes-count";
 const URL_MESSAGE_HISTORY = "/get-message-history";
 const URL_SEND_MESSAGE = "/send-message";
 const URL_GET_CHAT_USERS = "/get-chat-users";
@@ -50,7 +48,7 @@ const MAILTO = "mailto:"
 
 const TIME_LOADING = 2000;
 const TIME_LOADING_FAST = 50;
-const MAX_SCROLL = 4;
+const MAX_SCROLL = 5;
 
 export {
     URL_SERVER_SIDE,
@@ -65,7 +63,6 @@ export {
     URL_GET_POST_PROFILE,
     URL_GET_POST_HOME_FEED,
     URL_ADD_PROFILE_PIC,
-    URL_GET_PROFILE_PIC,
     URL_ALL_FOLLOW_NUM,
     URL_CHANGE_PASSWORD,
     URL_GET_PROFILE_SEARCH,
@@ -75,7 +72,6 @@ export {
     URL_LIKE,
     URL_UNLIKE,
     URL_GET_ALL_LIKES_POST,
-    URL_LIKES_COUNT,
     URL_SSE_USER,
     URL_SEND_MESSAGE,
     URL_MESSAGE_HISTORY,

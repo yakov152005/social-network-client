@@ -20,7 +20,12 @@ import AvatarGroup from '@mui/material/AvatarGroup';
 import LikeListComponent from "../../components/dashboard/LikeListComponent";
 import {Tooltip} from "@mui/material";
 
-
+/**
+ * לסדר את הסקרולר שיטען יותר מ20 פוסטים
+ * מכיוון שהוא טוען מהר אז הוא לפעמים מדלג על דפים
+ * @returns {Element}
+ * @constructor
+ */
 export default function Dashboard() {
     const [username, setUsername] = useState("");
     const [posts, setPosts] = useState([]);
@@ -144,16 +149,10 @@ export default function Dashboard() {
     useEffect(() => {
         if (username) {
             console.log("Username updated:", username);
+            console.log("Page updated:", page);
             fetchHomeFeedPosts();
         }
-    }, [username]);
-
-
-    useEffect(() => {
-        if (username) {
-            fetchHomeFeedPosts();
-        }
-    }, [page]);
+    }, [username,page]);
 
 
 
@@ -163,6 +162,8 @@ export default function Dashboard() {
         if (container) {
             console.log("Adding scroll event listener to container");
             container.addEventListener("scroll", handleScroll);
+        }else {
+            console.warn("Container not found");
         }
 
         return () => {

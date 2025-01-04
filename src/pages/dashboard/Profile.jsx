@@ -4,7 +4,6 @@ import {
     URL_ADD_POST,
     URL_ADD_PROFILE_PIC, URL_ALL_FOLLOW_NUM,
     URL_GET_POST_PROFILE,
-    URL_GET_PROFILE_PIC,
     URL_SERVER_SIDE
 } from "../../utils/Constants";
 import UsernameAPI from "../../api/UsernameAPI";
@@ -17,12 +16,12 @@ import FollowListComponent from "../../components/dashboard/FollowListComponent"
 
 
 export default function Profile() {
-    const [username, setUsername] = useState(null);
+    const [username, setUsername] = useState("");
+    const [currentProfilePicture, setCurrentProfilePicture] = useState("");
     const [posts, setPosts] = useState([]);
     const [newPost, setNewPost] = useState({content: "", imageUrl: ""});
     const [loading, setLoading] = useState(false);
     const [profilePicture, setProfilePicture] = useState("");
-    const [currentProfilePicture, setCurrentProfilePicture] = useState("");
     const [followers, setFollowers] = useState(-1);
     const [following, setFollowing] = useState(-1);
     const [getAllFollowers, setGetAllFollowers] = useState([]);
@@ -34,7 +33,7 @@ export default function Profile() {
     const fetchDetails = async () => {
         try {
             const api = new UsernameAPI();
-            await api.fetchUserDetails(setUsername);
+            await api.fetchUserDetails(setUsername,setCurrentProfilePicture);
         } catch (error) {
             console.error("Failed to load user details", error);
         }
@@ -58,21 +57,6 @@ export default function Profile() {
         }
     };
 
-    const fetchProfilePicture = async  () => {
-        try {
-            const response = await axios.get(URL_SERVER_SIDE + URL_GET_PROFILE_PIC + `/${username}`);
-            if (response.data.success){
-                setCurrentProfilePicture(response.data.profilePicture);
-                console.log(currentProfilePicture)
-            }else {
-                console.log(response.data.error);
-            }
-
-
-        }catch (error){
-            console.error("Failed to  fetch profile picture.",error);
-        }
-    }
 
     const fetchFollowsNumber = async () => {
         try {
@@ -139,7 +123,7 @@ export default function Profile() {
             });
 
             if (response.data.success) {
-                fetchProfilePicture();
+                setCurrentProfilePicture(profilePicture);
                 await Swal.fire({
                     title: "Good job!",
                     text: "Profile picture added successfully!",
@@ -147,6 +131,7 @@ export default function Profile() {
                 });
                 setProfilePicture("");
                 console.log(response.data.error);
+                fetchDetails();
             } else {
                 console.log("Error uploading profile picture.");
                 await Swal.fire({
@@ -193,7 +178,6 @@ export default function Profile() {
     useEffect(() => {
         if (username) {
             fetchPosts();
-            fetchProfilePicture();
             fetchFollowsNumber();
         }
     }, [username]);
@@ -281,7 +265,7 @@ export default function Profile() {
                     style={{borderRadius: "10px", border: "none"}}
                     type="text"
                     placeholder="Image URL"
-                    value={newPost.imageUrl}
+                    value={newPost.imageUrl || null}
                     onChange={(e) => setNewPost({...newPost, imageUrl: e.target.value})}
                 />
 

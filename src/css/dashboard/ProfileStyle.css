@@ -40,28 +40,5 @@
     color: #555;
 }
 
-.post-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 10px;
-}
 
-.post-item {
-    position: relative;
-    border: 1px solid #dbdbdb;
-    background-color: #fff;
-    overflow: hidden;
-    border-radius: 10px;
-}
 
-.post-item img {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-
-.post-content {
-    padding: 1px;
-    font-size: 14px;
-    color: #555;
-}
