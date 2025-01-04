@@ -107,7 +107,7 @@ export default function Profile() {
             } else {
                 await Swal.fire({
                     title: "Error",
-                    text: "The post must have text, try again.",
+                    text: "The post must have image, try again.",
                     icon: "error",
                 });
                 console.error(response.data.error);

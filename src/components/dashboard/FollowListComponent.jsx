@@ -1,14 +1,34 @@
 import img_null from "../../assets/navbar/User_Profile_null.png";
 import "../../css/components/FollowListComponent.css"
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {NAV_PROFILE_SEARCH_BASE} from "../../utils/Constants";
+import {NAV_PROFILE, NAV_PROFILE_SEARCH_BASE} from "../../utils/Constants";
+import UsernameAPI from "../../api/UsernameAPI";
 
 export default function FollowListComponent({ title, list, onClose }) {
+    const [username,setUsername] = useState("");
     const [searchQuery, setSearchQuery] = useState("");
     const navigate = useNavigate();
 
+
+    const fetchDetails = async () => {
+        try {
+            const api = new UsernameAPI();
+            await api.fetchUserDetails(setUsername);
+        }catch (error){
+            console.log("Error to fetching user details.",error);
+        }
+    }
+
+    useEffect(() => {
+        fetchDetails();
+    }, []);
+
     const handleUserClick = (usernameSearch) => {
+        if (usernameSearch === username){
+            navigate(NAV_PROFILE);
+            return;
+        }
         onClose();
         navigate(NAV_PROFILE_SEARCH_BASE + `/${usernameSearch}`);
     };

@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from "react";
 import axios from "axios";
 import {
-    MAX_SCROLL,
+    MAX_SCROLL, NAV_PROFILE, NAV_PROFILE_SEARCH_BASE, URL_GET_ALL_LIKES_POST,
     URL_GET_POST_HOME_FEED,
     URL_LIKE,
     URL_SERVER_SIDE,
@@ -12,8 +12,14 @@ import img_null from "../../assets/navbar/User_Profile_null.png"
 
 import UsernameAPI from "../../api/UsernameAPI";
 import FormatDate from "../../utils/FormatDate";
-import {IconMoodEmpty,IconMoodSmile, IconHeart,IconHeartFilled } from '@tabler/icons-react';
+import {IconMoodEmpty,IconMoodSmile, IconHeart,IconHeartFilled, IconMessageCircle } from '@tabler/icons-react';
 import Comment from "../../components/dashboard/Comment";
+import {useNavigate} from "react-router-dom";
+import Avatar from '@mui/material/Avatar';
+import AvatarGroup from '@mui/material/AvatarGroup';
+import LikeListComponent from "../../components/dashboard/LikeListComponent";
+import {Tooltip} from "@mui/material";
+
 
 export default function Dashboard() {
     const [username, setUsername] = useState("");
@@ -21,8 +27,11 @@ export default function Dashboard() {
     const [page, setPage] = useState(0);
     const [hasMore, setHasMore] = useState(true);
     const [isFetching, setIsFetching] = useState(false);
+    const [selectedPostId, setSelectedPostId] = useState(null);
+    const [likesList, setLikesList] = useState([]);
+    const [showLikes, setShowLikes] = useState(false);
     const feedContainerRef = useRef(null);
-
+    const navigate = useNavigate();
 
 
     const fetchUserDetails = async () => {
@@ -65,6 +74,17 @@ export default function Dashboard() {
         }
     };
 
+    const fetchAllLikes = async (postId) => {
+        try {
+            const response = await axios.get(URL_SERVER_SIDE + URL_GET_ALL_LIKES_POST + `/${postId}`);
+            if (response.data.success) {
+                setLikesList(response.data.likeDtos);
+                setShowLikes(true);
+            }
+        } catch (error) {
+            console.error("Error fetching likes", error);
+        }
+    };
 
     const handleLikeToggle = async (postId,likedByUser) => {
         try {
@@ -76,15 +96,22 @@ export default function Dashboard() {
                 console.log(response.data.error);
 
             }
-            setPosts((prevPosts) =>
-                prevPosts.map((post) =>
-                    post.id === postId
-                        ? { ...post,
+
+            const response = await axios.get(URL_SERVER_SIDE + URL_GET_ALL_LIKES_POST + `/${postId}`);
+            if (response.data.success) {
+                const updatedLikes = response.data.likeDtos;
+                setPosts((prevPosts) =>
+                    prevPosts.map((post) => post.id === postId ?
+                        {
+                            ...post,
                             likedByUser: !likedByUser,
-                            likesCount: post.likedByUser ? post.likesCount - 1 : post.likesCount + 1 }
+                            likesCount: post.likedByUser ? post.likesCount - 1 : post.likesCount + 1,
+                                likes: updatedLikes,
+                        }
                         : post
-                )
-            );
+                    ));
+            }
+
         }catch (error){
             console.error("Error to fetching likes.",error);
         }
@@ -147,6 +174,14 @@ export default function Dashboard() {
     }, [hasMore, isFetching]);
 
 
+    const handleUserClick = (usernameSearch) => {
+        if (usernameSearch === username){
+            navigate(NAV_PROFILE);
+            return;
+        }
+
+        navigate(NAV_PROFILE_SEARCH_BASE + `/${usernameSearch}`);
+    };
 
 
     const renderErrorMessage = () => {
@@ -183,6 +218,10 @@ export default function Dashboard() {
         return null;
     };
 
+    const handleNavComment = (postId) => {
+        setSelectedPostId((prev) => (prev === postId ? null : postId));
+    };
+
 
     return (
         <div className="feed-container" ref={feedContainerRef}>
@@ -201,8 +240,9 @@ export default function Dashboard() {
                                         src={post.profilePicture || img_null}
                                         alt="User Profile"
                                         className="post-profile-picture"
+                                        onClick={() => handleUserClick(post.username)}
                                     />
-                                    <p><strong>{post.username}</strong></p>
+                                    <p><strong onClick={() => handleUserClick(post.username)}>{post.username}</strong></p>
                                 </div>
                                 <p className="post-date">{FormatDate(post.date)}</p>
                             </div>
@@ -214,29 +254,78 @@ export default function Dashboard() {
 
                             <div className="like-section">
                                 {post.likedByUser ? (
-                                    <IconHeartFilled
+                                    <Tooltip title="Unlike">
+                                        <IconHeartFilled
                                         style={{cursor: "pointer", color: "red"}}
                                         onClick={() => handleLikeToggle(post.id, post.likedByUser)}
-                                    />
+                                        />
+                                    </Tooltip>
                                 ) : (
-                                    <IconHeart
-                                        stroke={2}
-                                        style={{cursor: "pointer", color: "gray"}}
-                                        onClick={() => handleLikeToggle(post.id, post.likedByUser)}
-                                    />
+                                    <Tooltip title="Like">
+                                        <IconHeart
+                                            stroke={2}
+                                            style={{cursor: "pointer", color: "gray"}}
+                                            onClick={() => handleLikeToggle(post.id, post.likedByUser)}
+                                        />
+                                    </Tooltip>
                                 )}
+                                <Tooltip title="Add Comment">
+                                    <IconMessageCircle
+                                        stroke={2}
+                                        style={{cursor: "pointer", color: "gray", marginLeft: "7px"}}
+                                        onClick={() => handleNavComment(post.id)}
+                                    />
+                                </Tooltip>
                                 <br/>
-                                <p><strong>{post.likesCount || 0} likes</strong></p>
 
-                                <p><strong>{post.username} &nbsp;&nbsp;</strong>{post.content}</p>
+                                <AvatarGroup
+                                    spacing="small"
+                                    max={3}
+                                    onClick={() => fetchAllLikes(post.id)}
+                                    className="custom-avatar-group"
+                                >
+                                    {post.likes.map((like) => (
+                                        <Avatar
+                                            key={like.id}
+                                            alt={like.username}
+                                            src={like.profilePicture || img_null}
+                                        />
+                                    ))}
+                                </AvatarGroup>
+
+                                <p><strong  onClick={() => fetchAllLikes(post.id)} style={{cursor:"pointer"}}>
+                                    {post.likesCount || 0} likes
+                                </strong></p>
+
+                                <p><strong
+                                    style={{cursor: "pointer"}}
+                                    onClick={() => handleUserClick(post.username)}>
+                                    {post.username} &nbsp;&nbsp;</strong>
+                                    {post.content}
+                                </p>
                             </div>
 
-                            <Comment postId={post.id} username={username} commentCount={post.commentCount}/>
+                            {selectedPostId === post.id && (
+                                <Comment
+                                    postId={post.id}
+                                    username={username}
+                                    commentCount={post.commentCount}
+                                />
+                            )}
                         </div>
                     ))
                 )}
             </div>
+
             {renderErrorMessage()}
+
+            {showLikes && (
+                <LikeListComponent
+                    likesList={likesList}
+                    username={username}
+                    onClose={() => setShowLikes(false)}
+                />
+            )}
         </div>
     );
 }

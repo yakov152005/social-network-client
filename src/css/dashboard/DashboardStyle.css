@@ -53,6 +53,8 @@ body {
     display: flex;
     align-items: center;
     gap: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 .post-profile-picture {
@@ -69,4 +71,19 @@ body {
 .post-image {
     width: 100%;
     height: auto;
+}
+
+
+.custom-avatar-group {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.custom-avatar-group .MuiAvatarGroup-avatar {
+    width: 34px;
+    height: 34px;
+    font-size: 14px;
 }

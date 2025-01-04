@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/icons-material": "^6.3.1",
+    "@mui/material": "^6.3.1",
     "@tabler/icons-preact": "^3.26.0",
     "@tabler/icons-react": "^3.26.0",
     "axios": "^1.7.9",

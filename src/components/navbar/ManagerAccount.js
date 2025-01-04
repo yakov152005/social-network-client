@@ -1,4 +1,3 @@
-import React from "react";
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import CreateAccount from "../../pages/home/CreateAccount";
 import Login from "../../pages/home/Login";
@@ -24,7 +23,7 @@ import ChangePassword from "../../pages/settings/ChangePassword";
 import Search from "../../pages/dashboard/Search";
 import ProfileSearch from "../../pages/dashboard/ProfileSearch";
 import Message from "../../pages/dashboard/Message";
-import DeleteUser from "../../pages/settings/DeleteUser";
+import DeleteUser from "../../pages/settings/DeleteUser";;
 
 
 export default function ManagerAccount() {

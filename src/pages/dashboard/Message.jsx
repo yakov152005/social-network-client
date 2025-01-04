@@ -13,6 +13,10 @@ import FormatDate from "../../utils/FormatDate";
 import send from "../../assets/navbar/send.png";
 import "../../css/dashboard/MessageStyle.css"
 import img_null from "../../assets/navbar/User_Profile_null.png"
+import UserProfilePicAPI from "../../api/UserProfilePicAPI";
+import {Badge} from "@mui/material";
+import Avatar from "@mui/material/Avatar";
+import { styled } from '@mui/material/styles';
 
 
 export default function Message() {
@@ -27,6 +31,7 @@ export default function Message() {
     const [messages, setMessages] = useState([]);
     const [messageContent, setMessageContent] = useState("");
     const [sender, setSender] = useState("");
+    const [senderProfilePic,setSenderProfilePic] = useState("");
 
     const messagesEndRef = useRef(null);
     const chatBoxRef = useRef(null);
@@ -126,9 +131,18 @@ export default function Message() {
     }, []);
 
 
-    useEffect( () => {
-        if (sender){
-            fetchChatUsers()
+    useEffect(() => {
+        if (sender) {
+            const fetchProfilePic = async () => {
+                try {
+                    const api = new UserProfilePicAPI();
+                    await api.fetchProfilePic(sender, setSenderProfilePic);
+                } catch (error) {
+                    console.log("Error to fetching profile pic", error);
+                }
+            }
+            fetchProfilePic();
+            fetchChatUsers();
         }
     }, [sender]);
 
@@ -156,6 +170,12 @@ export default function Message() {
         }
     }, [receiverFromProfileSearch]);
 
+    const SmallAvatar = styled(Avatar)(({ theme }) => ({
+        width: 30, // הגדל את הרוחב
+        height: 30, // הגדל את הגובה
+        border: `2px solid ${theme.palette.background.paper}`,
+    }));
+
 
     return (
         <div style={{ display: "flex", height: "100vh" }}>
@@ -182,19 +202,42 @@ export default function Message() {
             <div className="right-section-message">
                 {currentChat ? (
                     <>
-                        <h2>Chat with {currentChat} </h2>
-                        <img
-                            src={currentProfilePicture}
-                            alt={currentChat}
-                            style={{borderRadius: "50%", marginRight: "10px", width: "40px", height: "40px"}}
-                        />
+                        <h3 style={{color:"gray"}}>Chat with {currentChat} </h3>
+
+                        <Badge
+                            overlap="circular"
+                            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                            badgeContent={
+                                <SmallAvatar
+                                    alt={sender}
+                                    src={senderProfilePic}
+                                    style={{ objectFit: 'cover' }}
+                                />
+                            }
+                        >
+                            <Avatar
+                                alt={currentChat}
+                                src={currentProfilePicture}
+                                style={{
+                                    width: '50px',
+                                    height: '50px',
+                                    objectFit: 'cover',
+                                }}
+                            />
+                        </Badge>
+
+                        <br/>
+
                         <div className="chat-box"
-                            ref={chatBoxRef}
-                            style={{height: "400px", overflowY: "scroll", border: "1px solid gray",}}
+                             ref={chatBoxRef}
+                             style={{height: "400px", overflowY: "scroll", border: "1px solid gray",}}
                         >
                             {messages.map((message, index) => (
                                 <div key={index}
-                                     style={{textAlign: message.sender === sender ? "right" : "left", margin: "10px 0",}}>
+                                     style={{
+                                         textAlign: message.sender === sender ? "right" : "left",
+                                         margin: "10px 0",
+                                     }}>
                                     <strong>{message.sender}</strong>: {message.content}
                                     <div style={{fontSize: "small", color: "gray"}}>
                                         {FormatDate(message.sentAt)}

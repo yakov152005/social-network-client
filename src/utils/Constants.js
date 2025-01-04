@@ -20,6 +20,7 @@ const URL_FOLLOW = "/follow";
 const URL_UNFOLLOW = "/unfollow";
 const URL_LIKE = "/like-post";
 const URL_UNLIKE = "/unlike-post";
+const URL_GET_ALL_LIKES_POST = "/get-all-likes-post";
 const URL_LIKES_COUNT = "/likes-count";
 const URL_MESSAGE_HISTORY = "/get-message-history";
 const URL_SEND_MESSAGE = "/send-message";
@@ -73,6 +74,7 @@ export {
     URL_GET_CHAT_USERS,
     URL_LIKE,
     URL_UNLIKE,
+    URL_GET_ALL_LIKES_POST,
     URL_LIKES_COUNT,
     URL_SSE_USER,
     URL_SEND_MESSAGE,

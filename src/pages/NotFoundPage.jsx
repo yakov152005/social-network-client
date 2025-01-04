@@ -1,16 +1,22 @@
 import "../css/ErrorStyle.css";
 import { IconZoomExclamation } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
-import {NAV_LOGIN, PATH} from "../utils/Constants";
+import {NAV_DASHBOARD, NAV_LOGIN, PATH} from "../utils/Constants";
 import Cookies from "universal-cookie";
 
 export default function NotFoundPage() {
     const cookies = new Cookies();
+    const token = cookies.get("token",{path: PATH});
     const navigate = useNavigate();
 
     const handleLogout = () => {
-        cookies.remove("token", { path: PATH });
-        navigate(NAV_LOGIN);
+        if (!token) {
+            cookies.remove("token", {path: PATH});
+            navigate(NAV_LOGIN);
+        }else {
+            navigate(NAV_DASHBOARD);
+        }
+
     };
 
     return (
@@ -37,7 +43,7 @@ export default function NotFoundPage() {
                             alignItems: "center",
                         }}
                     >
-                        Back to login&nbsp;
+                        Back to {token ? "Home Page" : "Login"}&nbsp;
                         <i className="bi bi-arrow-right custom-arrow-icon"></i>
                     </a>
                 </div>
