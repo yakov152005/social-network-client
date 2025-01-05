@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import axios from "axios";
-import {NAV_LOGIN, TIME_LOADING, TIME_LOADING_FAST, URL_CREATE_USER, URL_SERVER_SIDE} from "../../utils/Constants";
+import {NAV_LOGIN, TIME_LOADING, URL_CREATE_USER, URL_SERVER_SIDE} from "../../utils/Constants";
 import "../../css/home/LoginAndCreate.css";
 import "../../css/LoadingStyle.css"
 import logo from '../../assets/image/iconSocialNetWorkTheOriginalOne.png';

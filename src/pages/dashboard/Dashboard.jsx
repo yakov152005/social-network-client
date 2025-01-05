@@ -226,6 +226,7 @@ export default function Dashboard() {
 
     return (
         <div className="feed-container" ref={feedContainerRef}>
+            <br/>
             <div className="alert alert-link" role="alert">
                 <h1 style={{color: "blue", fontFamily: "Brush Script MT"}}>
                     <strong>Welcome to your Home Feed, {username || "Guest"}!</strong>
@@ -243,7 +244,8 @@ export default function Dashboard() {
                                         className="post-profile-picture"
                                         onClick={() => handleUserClick(post.username)}
                                     />
-                                    <p><strong onClick={() => handleUserClick(post.username)}>{post.username}</strong></p>
+                                    <p><strong
+                                        onClick={() => handleUserClick(post.username)}>{post.username}</strong></p>
                                 </div>
                                 <p className="post-date">{FormatDate(post.date)}</p>
                             </div>
@@ -257,8 +259,8 @@ export default function Dashboard() {
                                 {post.likedByUser ? (
                                     <Tooltip title="Unlike">
                                         <IconHeartFilled
-                                        style={{cursor: "pointer", color: "red"}}
-                                        onClick={() => handleLikeToggle(post.id, post.likedByUser)}
+                                            style={{cursor: "pointer", color: "red"}}
+                                            onClick={() => handleLikeToggle(post.id, post.likedByUser)}
                                         />
                                     </Tooltip>
                                 ) : (
@@ -294,7 +296,7 @@ export default function Dashboard() {
                                     ))}
                                 </AvatarGroup>
 
-                                <p><strong  onClick={() => fetchAllLikes(post.id)} style={{cursor:"pointer"}}>
+                                <p><strong onClick={() => fetchAllLikes(post.id)} style={{cursor: "pointer"}}>
                                     {post.likesCount || 0} likes
                                 </strong></p>
 

@@ -192,65 +192,70 @@ export default function Message() {
             <div className="right-section-message">
                 {currentChat ? (
                     <>
-                        <h3 style={{color:"gray"}}>Chat with {currentChat} </h3>
+                        <div style={{padding: "20px", borderBottom: "1px solid #ddd"}}>
+                            <h3 style={{color: "gray", marginBottom: "10px"}}>Chat with {currentChat}</h3>
 
-                        <Badge
-                            overlap="circular"
-                            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                            badgeContent={
-                                <SmallAvatar
-                                    alt={sender}
-                                    src={senderProfilePic}
-                                    style={{ objectFit: 'cover' }}
+                            <Badge
+                                overlap="circular"
+                                anchorOrigin={{vertical: "bottom", horizontal: "right"}}
+                                badgeContent={
+                                    <SmallAvatar
+                                        alt={sender}
+                                        src={senderProfilePic}
+                                        style={{objectFit: "cover"}}
+                                    />
+                                }
+                            >
+                                <Avatar
+                                    alt={currentChat}
+                                    src={currentProfilePicture}
+                                    style={{
+                                        width: "50px",
+                                        height: "50px",
+                                        objectFit: "cover",
+                                    }}
                                 />
-                            }
-                        >
-                            <Avatar
-                                alt={currentChat}
-                                src={currentProfilePicture}
-                                style={{
-                                    width: '50px',
-                                    height: '50px',
-                                    objectFit: 'cover',
-                                }}
-                            />
-                        </Badge>
+                            </Badge>
+                        </div>
 
-                        <br/>
 
-                        <div className="chat-box"
-                             ref={chatBoxRef}
-                             style={{height: "400px", overflowY: "scroll", border: "1px solid gray",}}
-                        >
+                        <div className="chat-box" ref={chatBoxRef}>
                             {messages.map((message, index) => (
-                                <div key={index}
-                                     style={{
-                                         textAlign: message.sender === sender ? "right" : "left",
-                                         margin: "10px 0",
-                                     }}>
-                                    <strong>{message.sender}</strong>: {message.content}
+                                <div
+                                    key={index}
+                                    className={`chat-message ${message.sender === sender ? "right" : ""}`}
+                                >
+                                    <strong>{message.sender}</strong>
+                                    <div className="message-content">{message.content}</div>
                                     <div style={{fontSize: "small", color: "gray"}}>
                                         {FormatDate(message.sentAt)}
                                     </div>
                                 </div>
                             ))}
-
                             <div ref={messagesEndRef}/>
                         </div>
-                        <div className="message-input">
-                            <input
-                                type="text"
+
+
+                        <div className="message-input-container">
+                            <textarea
+                                className="message-textarea"
                                 value={messageContent}
                                 onChange={(e) => setMessageContent(e.target.value)}
                                 placeholder="Type a message..."
                             />
-                            <button onClick={() => fetchSendMessage(currentChat)}>Send</button>
+                            {messageContent && (
+                                <button
+                                    className="message-submit-button"
+                                    onClick={() => fetchSendMessage(currentChat)}
+                                >Send
+                                </button>
+                            )}
                         </div>
                     </>
                 ) : (
-                    <div>
+                    <div className="message-placeholder">
                         <img src={send} alt="Logo" className="logo-message"/>
-                        <h5><strong>Your messages</strong></h5>
+                        <h4><strong>Your messages</strong></h4>
                         <p style={{color: "gray"}}>You can send private messages to friends.</p>
                     </div>
                 )}

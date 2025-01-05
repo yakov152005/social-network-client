@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {MAIL_SERVICE, MAILTO, URL_SSE_DATE} from "../../utils/Constants";
-
+import "../../css/home/CreatorStyle.css";
 
 export default function Creator() {
     const [message, setMessage] = new useState("");
@@ -16,7 +16,7 @@ export default function Creator() {
     }, [setMessage]);
 
     return (
-        <div>
+        <div className={"creator-div"}>
             <div style={{fontFamily: 'Arial'}}>
                 <div className="p-3 mb-2 bg-primary text-white"><strong>Developed By: Yakov Ben HemoⒸ</strong></div>
                 <div className="p-3 mb-2 bg-primary text-white"><strong>{message}</strong></div>

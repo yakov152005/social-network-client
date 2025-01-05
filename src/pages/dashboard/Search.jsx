@@ -86,7 +86,7 @@ export default function Search() {
 
 
     return (
-        <div>
+        <div className={"search-body"}>
             <div className="alert alert-link" role="alert">
                 <h1 style={{color: "blue", fontFamily: 'Brush Script MT'}}><strong>
                     Search page

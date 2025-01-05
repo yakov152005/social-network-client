@@ -1,3 +1,19 @@
+.setting-home {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    color: #333;
+    height: calc(100vh - 100px);
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #888 #f1f1f1;
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+    box-shadow: 10px 0px 10px rgba(0.3, 0.3, 2, 0.3);
+    box-shadow: 0px 10px 10px rgba(0.3, 0.3, 2, 0.4);
+}
+
 .settings-container {
     display: flex;
     align-items: center;
@@ -8,6 +24,8 @@
     background: linear-gradient(-moz-mac-accentdarkestshadow, #34424a, #ffffff);
     border-radius: 20px;
     overflow: hidden;
+    box-shadow: 10px 0px 10px rgba(0.3, 0.3, 2, 0.3);
+    box-shadow: 0px 10px 10px rgba(0.3, 0.3, 2, 0.4);
 }
 
 .settings-floating-form{

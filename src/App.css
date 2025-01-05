@@ -14,7 +14,6 @@
   border-radius: 10px;
 }
 
-
 @media (max-width: 768px) {
   .floating-form {
     padding: 10px;
@@ -31,26 +30,90 @@
 html, body {
   height: 100%;
   overflow: hidden;
+
 }
 
-
 .disabled {
-  pointer-events: none;
+  pointer-events: visible;
   color: gray;
-  cursor: not-allowed;
+  cursor: pointer;
   border: 5px solid cornflowerblue;
   border-radius: 20px;
   background-color: dodgerblue;
 }
 
+
+.background {
+  width: 100%;
+  min-height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+
+.content-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 0;
+  min-height: calc(100vh - 100px);
+  overflow-y: auto;
+}
+
 .navbar {
-  width:auto;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
+  padding: 10px 20px;
+}
+
+.content {
+  max-width: 1200px;
+  width: 100%;
+}
+
+.navbar .nav-item {
+  margin: 0 15px;
+}
+
+.navbar .nav-link {
+  font-size: 14px;
+  color: #007bff;
+}
+
+.navbar .nav-link:hover {
+  color: #0056b3;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    height: auto;
+  }
+  .nav-item {
+    margin: 10px 0;
+  }
+}
+
+
+/* .navbar {
+  width:100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
   border-radius: 10px;
-}
+ */
 
-
-
+/*
+ background-color: #fff;
+padding: 20px;
+border-radius: 10px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+ */

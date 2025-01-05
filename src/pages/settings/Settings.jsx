@@ -15,9 +15,7 @@ export default function Settings() {
     };
 
     return(
-        <div>
-            <br/>
-            <br/>
+        <div className={"setting-home"}>
             <button
                 className={"btn btn-outline-danger"}
                 onClick={handleChangePassword}
