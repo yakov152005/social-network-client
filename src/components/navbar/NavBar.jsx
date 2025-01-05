@@ -11,7 +11,7 @@ import {
     NAV_SEARCH,
     NAV_MESSAGE
 } from "../../utils/Constants";
-import { IconSearch ,IconMail } from '@tabler/icons-react';
+import {IconSearch, IconMailFilled} from '@tabler/icons-react';
 import UsernameAPI from "../../api/UsernameAPI";
 import {Badge, Avatar, Tooltip} from '@mui/material';
 import { styled } from '@mui/material/styles';
@@ -81,7 +81,7 @@ export default function NavBar({ isLoggedIn, onLogout }) {
                         <Tooltip title="Sign Up" >
                             <li className="nav-item">
                                     <NavLink
-                                        className={({isActive}) => `nav-link ${isActive ? "active" : ""}`}
+                                        className={({isActive}) => `nav-link ${isActive ? "active-nav" : ""}`}
                                         to={NAV_CREATE_ACCOUNT}>
                                         <strong> Create Account</strong><br/>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                                         <i className="bi bi-person-vcard" style={{fontSize: "17px"}}></i>
@@ -91,7 +91,7 @@ export default function NavBar({ isLoggedIn, onLogout }) {
                         <Tooltip title="Sign In" >
                             <li className="nav-item">
                                 <NavLink
-                                    className={({isActive}) => `nav-link ${isActive ? "active" : ""}`}
+                                    className={({isActive}) => `nav-link ${isActive ? "active-nav" : ""}`}
                                     to={NAV_LOGIN}>
                                     <strong>Login</strong><br/>&nbsp; &nbsp;&nbsp;
                                     <i className="bi bi-box-arrow-right" style={{fontSize: "17px"}}></i>
@@ -101,7 +101,7 @@ export default function NavBar({ isLoggedIn, onLogout }) {
                         <Tooltip title="Creator" >
                             <li className="nav-item">
                                 <NavLink
-                                    className={({isActive}) => `nav-link ${isActive ? "active" : ""}`}
+                                    className={({isActive}) => `nav-link ${isActive ? "active-nav" : ""}`}
                                     to={NAV_CREATOR}>
                                     <strong>Creator</strong><br/>&nbsp; &nbsp; &nbsp;
                                     <i className="bi bi-code" style={{fontSize: "17px"}}></i>
@@ -112,19 +112,19 @@ export default function NavBar({ isLoggedIn, onLogout }) {
                 ) : (
                     <>
                     <Tooltip title="Home Page" >
-                        <li className="nav-item">
+                        <li className="nav-item" style={{marginTop:"1px"}}>
                             <NavLink
-                                className={({isActive}) => `nav-link ${isActive ? "active" : ""}`}
+                                className={({isActive}) => `nav-link ${isActive ? "active-nav" : ""}`}
                                 to={NAV_DASHBOARD}>
-                                <strong>Home</strong><br/>&nbsp; &nbsp;&nbsp;
-                                <i className="bi bi-house" style={{fontSize: "17px"}}></i>
+                                {/*<strong>Home</strong><br/>&nbsp; &nbsp;&nbsp;*/}
+                                <i className="bi bi-house-door-fill" style={{fontSize: "32px"}}></i>
                             </NavLink>
                         </li>
                     </Tooltip>
                     <Tooltip title="Profile" >
-                        <li className="nav-item">
+                        <li className="nav-item" style={{marginTop:"1px"}}>
                             <NavLink
-                                className={({isActive}) => `nav-link ${isActive ? "active" : ""}`}
+                                className={({isActive}) => `nav-link ${isActive ? "active-nav" : ""}`}
                                 to={NAV_PROFILE}>&nbsp;
                                 <StyledBadge
                                     overlap="circular"
@@ -138,40 +138,40 @@ export default function NavBar({ isLoggedIn, onLogout }) {
                         </li>
                     </Tooltip>
                     <Tooltip title="Messenger" >
-                        <li className="nav-item">
+                        <li className="nav-item" style={{marginTop:"10px"}}>
                             <NavLink
-                                className={({isActive}) => `nav-link ${isActive ? "active" : ""}`}
+                                className={({isActive}) => `nav-link ${isActive ? "active-nav" : ""}`}
                                 to={NAV_MESSAGE}>
-                                <strong>Message</strong><br/>&nbsp; &nbsp; &nbsp;
-                                <IconMail stroke={2} size={21}/>
+                                {/* <strong>Message</strong><br/>&nbsp; &nbsp; &nbsp;*/}
+                                <IconMailFilled stroke={2} size={35}/>
                             </NavLink>
                         </li>
                     </Tooltip>
                     <Tooltip title="Search" >
-                        <li className="nav-item">
+                        <li className="nav-item" style={{marginTop:"10px"}}>
                             <NavLink
-                                className={({isActive}) => `nav-link ${isActive ? "active" : ""}`}
+                                className={({isActive}) => `nav-link ${isActive ? "active-nav" : ""}`}
                                 to={NAV_SEARCH}>
-                                <strong>Search</strong><br/>&nbsp; &nbsp; &nbsp;
-                                <IconSearch stroke={2} size={21}/>
+                                {/*  <strong>Search</strong><br/>&nbsp; &nbsp; &nbsp; */}
+                                <IconSearch stroke={2} size={35}/>
                             </NavLink>
                         </li>
                     </Tooltip>
                     <Tooltip title="Settings" >
-                        <li className="nav-item">
+                        <li className="nav-item" style={{marginTop:"3px"}}>
                             <NavLink
-                                className={({isActive}) => `nav-link ${isActive ? "active" : ""}`}
+                                className={({isActive}) => `nav-link ${isActive ? "active-nav" : ""}`}
                                 to={NAV_SETTINGS}>
-                                <strong>Settings</strong><br/>&nbsp; &nbsp; &nbsp;
-                                <i className="bi bi-gear" style={{fontSize: "17px"}}></i>
+                                {/* <strong>Settings</strong><br/>&nbsp; &nbsp; &nbsp; */}
+                                <i className="bi bi-gear" style={{fontSize: "30px"}}></i>
                             </NavLink>
                         </li>
                     </Tooltip>
                     <Tooltip title="Logout" >
-                        <li className="nav-item">
+                        <li className="nav-item" style={{marginTop:"3px"}}>
                             <button className="btn btn-danger nav-link" onClick={onLogout}>
-                                <strong style={{color: "red"}}>Logout</strong><br/>&nbsp; &nbsp;&nbsp;
-                                <i className="bi bi-box-arrow-right" style={{fontSize: "17px", color: "red"}}></i>
+                                {/*  <strong style={{color: "red"}}>Logout</strong><br/>&nbsp; &nbsp;&nbsp; */}
+                                <i className="bi bi-box-arrow-right" style={{fontSize: "30px", color: "red"}}></i>
                             </button>
                         </li>
                     </Tooltip>
@@ -182,116 +182,3 @@ export default function NavBar({ isLoggedIn, onLogout }) {
         </nav>
     );
 }
-
-/*
-import React from "react";
-import { NavLink } from "react-router-dom";
-import logo from '../../assets/image/iconSocialNetWorkTheOriginalOne.png';
-import {
-    NAV_CREATE_ACCOUNT,
-    NAV_LOGIN,
-    NAV_DASHBOARD,
-    NAV_PROFILE,
-    NAV_SETTINGS,
-    NAV_CREATOR,
-    NAV_SEARCH,
-    NAV_MESSAGE
-} from "../../utils/Constants";
-import { IconSearch ,IconMail } from '@tabler/icons-react';
-
-export default function NavBar({ isLoggedIn, onLogout }) {
-    return (
-        <nav className="navbar bg-body-tertiary">
-            <div className="container-fluid">
-                <a className="navbar-brand disabled" href="#" aria-disabled="true">
-                    <img
-                        src={logo} alt="NetWork" width="35" height="30"
-                        className="d-inline-block align-text-top rounded" />
-                    <strong style={{color: "white", fontFamily:'Brush Script MT'}}>Social-Network</strong>
-
-                </a>
-
-                <ul className="nav nav-pills mb-3">
-                {!isLoggedIn ? (
-                        <>
-                            <li className="nav-item">
-                                <NavLink
-                                    className={({isActive}) => `nav-link ${isActive ? "active" : ""}`}
-                                    to={NAV_CREATE_ACCOUNT}>
-                                    <strong> Create Account</strong><br/>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                                    <i className="bi bi-person-vcard" style={{ fontSize: "17px" }} ></i>
-                                </NavLink>
-                            </li>
-                            <li className="nav-item">
-                                <NavLink
-                                    className={({isActive}) => `nav-link ${isActive ? "active" : ""}`}
-                                    to={NAV_LOGIN}>
-                                    <strong>Login</strong><br/>&nbsp; &nbsp;&nbsp;
-                                    <i className="bi bi-box-arrow-right" style={{fontSize: "17px"}}></i>
-                                </NavLink>
-                            </li>
-                            <li className="nav-item">
-                                <NavLink
-                                    className={({isActive}) => `nav-link ${isActive ? "active" : ""}`}
-                                    to={NAV_CREATOR}>
-                                    <strong>Creator</strong><br/>&nbsp; &nbsp; &nbsp;
-                                    <i className="bi bi-code" style={{fontSize: "17px"}}></i>
-                                </NavLink>
-                            </li>
-                        </>
-                ) : (
-                    <>
-                        <li className="nav-item">
-                            <NavLink
-                                className={({isActive}) => `nav-link ${isActive ? "active" : ""}`}
-                                to={NAV_DASHBOARD}>
-                                <strong>Home</strong><br/>&nbsp; &nbsp;&nbsp;
-                                <i className="bi bi-house" style={{fontSize: "17px"}}></i>
-                            </NavLink>
-                        </li>
-                        <li className="nav-item">
-                            <NavLink
-                                className={({isActive}) => `nav-link ${isActive ? "active" : ""}`}
-                                to={NAV_PROFILE}>
-                                <strong>Profile</strong><br/>&nbsp; &nbsp;&nbsp;
-                                <i className="bi bi-person-circle" style={{fontSize: "17px"}}></i>
-                            </NavLink>
-                        </li>
-                        <li className="nav-item">
-                            <NavLink
-                                className={({isActive}) => `nav-link ${isActive ? "active" : ""}`}
-                                to={NAV_MESSAGE}>
-                                <strong>Message</strong><br/>&nbsp; &nbsp; &nbsp;
-                                <IconMail stroke={2} size={21}/>
-                            </NavLink>
-                        </li>
-                        <li className="nav-item">
-                            <NavLink
-                                className={({isActive}) => `nav-link ${isActive ? "active" : ""}`}
-                                to={NAV_SEARCH}>
-                                <strong>Search</strong><br/>&nbsp; &nbsp; &nbsp;
-                                <IconSearch stroke={2} size={21}/>
-                            </NavLink>
-                        </li>
-                        <li className="nav-item">
-                            <NavLink
-                                className={({isActive}) => `nav-link ${isActive ? "active" : ""}`}
-                                to={NAV_SETTINGS}>
-                                <strong>Settings</strong><br/>&nbsp; &nbsp; &nbsp;
-                                <i className="bi bi-gear" style={{fontSize: "17px"}}></i>
-                            </NavLink>
-                        </li>
-                        <li className="nav-item">
-                            <button className="btn btn-danger nav-link" onClick={onLogout}>
-                                <strong style={{color: "red"}}>Logout</strong><br/>&nbsp; &nbsp;&nbsp;
-                                <i className="bi bi-box-arrow-right" style={{fontSize: "17px", color: "red"}}></i>
-                            </button>
-                        </li>
-                    </>
-                )}
-                </ul>
-            </div>
-        </nav>
-    );
-}
- */

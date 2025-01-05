@@ -3,7 +3,7 @@ import axios from "axios";
 import {
     NAV_CREATE_ACCOUNT,
     NAV_FORGET_PASSWORD,
-    TIME_LOADING, TIME_LOADING_FAST,
+    TIME_LOADING,
     URL_LOGIN_USER,
     URL_SERVER_SIDE,
     URL_VERIFY
@@ -13,7 +13,7 @@ import { useNavigate} from "react-router-dom";
 import logo from '../../assets/image/iconSocialNetWorkTheOriginalOne.png';
 import showPass from "../../assets/form/show_password.png"
 import hidePass from "../../assets/form/hide_password.png"
-import { IconMoodCheck } from '@tabler/icons-react';
+import { IconMoodCheck,IconLockPassword  } from '@tabler/icons-react';
 import "../../css/home/LoginAndCreate.css"
 import "../../css/LoadingStyle.css"
 import Swal from "sweetalert2";
@@ -140,6 +140,23 @@ export default function Login({ onLogin }) {
         }
     };
 
+    const styleIcon = {
+        left: "0.8rem",
+        top: "50%",
+        transform: "translateY(-50%)",
+        pointerEvents: "none",
+        display: "flex",
+        alignItems: "center",
+    };
+    const styleI = {fontSize: "1.2rem", color: "#6c757d"};
+    const styleFinal = {
+        left: "2.5rem",
+        top: "50%",
+        transform: "translateY(-50%)",
+        height: "1.5rem",
+        width: "1px",
+        backgroundColor: "#ddd",
+    }
 
     return (
         <div className="auth-container">
@@ -271,8 +288,8 @@ export default function Login({ onLogin }) {
 
                                         </div>
                                     ) : (
-                                        <div>
-                                            <h4>Enter Verification Code</h4>
+                                        <div className="verification-form">
+                                            <h4 className="verification-title">Enter Verification Code</h4>
                                             <div className="form-floating mb-3">
                                                 <input
                                                     type="text"
@@ -281,8 +298,15 @@ export default function Login({ onLogin }) {
                                                     placeholder="Verification Code"
                                                     value={verificationCode}
                                                     onChange={handleVerificationChange}
+                                                    style={{paddingLeft: "3.5rem"}}
                                                 />
-                                                <label htmlFor="verification">Verification Code</label>
+                                                <label htmlFor="verification" style={{paddingLeft: "3.5rem"}}>
+                                                    Verification Code
+                                                </label>
+                                                <div className="position-absolute icon-container" style={styleIcon}>
+                                                    <i className="fa-sharp-duotone fa-solid fa-lock" style={styleI}></i>
+                                                </div>
+                                                <div className="position-absolute" style={styleFinal}></div>
                                             </div>
 
                                             {errorMessage && (
@@ -305,12 +329,35 @@ export default function Login({ onLogin }) {
                 </div>
             </div>
 
+
             <div className="right-section">
-                <img src={logo} alt="Logo" className="logo"/>
-                <p className="site-info" style={{color: "black", fontFamily: 'Brush Script MT'}}>
-                    Welcome back, log in to continue creating new experiences.
-                </p>
+                {!isVerification ? (
+                    <div>
+                        <img src={logo} alt="Logo" className="logo"/>
+                        <p className="site-info"
+                           style={{color: "black", fontFamily: 'Brush Script MT', marginLeft: "40px"}}>
+                            Welcome back, log in to continue creating new experiences.
+                        </p>
+                    </div>
+
+                ) : (
+                    <div >
+                        <IconLockPassword stroke={1} size={"200px"} color={"black"}/>
+                        <h2 style={{color:"red"}}>Please note!</h2>
+                        <p className="site-info-verification">
+                            The requested resource requires a strong level of authentication. In order to verify your
+                            identity,
+                            an SMS with an Authentication Code will be sent to your mobile phone (in the next few
+                            minutes).
+                        </p>
+                        <p className="site-info-verification">
+                            You must wait until the SMS is received on your mobile device.
+                            The duration depends on the mobile provider and usually takes about 2 minutes.
+                        </p>
+                    </div>
+                )}
             </div>
+
 
         </div>
     );

@@ -7,7 +7,7 @@ import {
 } from "../../utils/Constants";
 import img_null from "../../assets/navbar/User_Profile_null.png"
 import "../../css/dashboard/SearchStyle.css"
-import {IconMoodEmpty} from "@tabler/icons-react";
+import {IconMoodEmpty, IconMoodSearch} from "@tabler/icons-react";
 import UsernameAPI from "../../api/UsernameAPI";
 import {useNavigate} from "react-router-dom";
 
@@ -122,9 +122,28 @@ export default function Search() {
                         </div>
                     ))
                 ) : (
-                    <p style={{color: "gray", fontSize: "15px"}}>
-                        No friend found...<IconMoodEmpty stroke={2} size={"15px"}/>
-                    </p>
+                    <div>
+                        {!value && filterByUsernames.length === 0 ?
+                            (
+                                <div>
+                                    <p style={{color: "gray", fontSize: "15px",marginLeft:"2px"}}>
+                                        Search friend!
+                                        <IconMoodSearch stroke={2} size={"15px"} style={{marginLeft:"5px"}}/>
+                                    </p>
+                                </div>
+
+                            )
+                            :
+                            (
+                                <div>
+                                    <p style={{color: "gray", fontSize: "15px"}}>
+                                        No friend found...
+                                        <IconMoodEmpty stroke={2} size={"15px"}/>
+                                    </p>
+                                </div>
+                            )
+                        }
+                    </div>
                 )
             }
         </div>
