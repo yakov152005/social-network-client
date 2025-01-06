@@ -345,14 +345,17 @@ export default function Login({ onLogin }) {
                         <IconLockPassword stroke={1} size={"200px"} color={"black"}/>
                         <h2 style={{color:"red"}}>Please note!</h2>
                         <p className="site-info-verification">
-                            The requested resource requires a strong level of authentication. In order to verify your
+                            The requested resource requires a <strong>strong level of authentication</strong>.
+                        </p>
+                        <p className="site-info-verification">
+                            In order to verify your
                             identity,
-                            an SMS with an Authentication Code will be sent to your mobile phone (in the next few
+                            an <strong>SMS</strong> with an <strong>Authentication Code</strong> will be sent to your <strong>mobile phone</strong> (in the next few
                             minutes).
                         </p>
                         <p className="site-info-verification">
-                            You must wait until the SMS is received on your mobile device.
-                            The duration depends on the mobile provider and usually takes about 2 minutes.
+                            You must wait until the <strong>SMS</strong> is received on your mobile device.
+                            The duration depends on the mobile provider and usually takes about <strong>2 minutes</strong>.
                         </p>
                     </div>
                 )}

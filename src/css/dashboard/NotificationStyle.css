@@ -44,6 +44,7 @@
 }
 
 .notification-profile-image {
+    cursor: pointer;
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -59,6 +60,7 @@
 }
 
 .notification-initiator {
+    cursor: pointer;
     font-weight: bold;
     font-size: 16px;
     color: #333;

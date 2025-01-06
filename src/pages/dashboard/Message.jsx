@@ -2,13 +2,14 @@ import React, {useEffect, useRef, useState} from "react";
 import UsernameAPI from "../../api/UsernameAPI";
 import axios from "axios";
 import {
+    NAV_PROFILE_SEARCH_BASE,
     URL_GET_CHAT_USERS,
     URL_MESSAGE_HISTORY,
     URL_SEND_MESSAGE,
     URL_SERVER_SIDE,
     URL_SSE_USER
 } from "../../utils/Constants";
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import FormatDate from "../../utils/FormatDate";
 import send from "../../assets/navbar/send.png";
 import "../../css/dashboard/MessageStyle.css"
@@ -22,6 +23,7 @@ export default function Message() {
     const location = useLocation();
     const params = new URLSearchParams(location.search);
     const receiverFromProfileSearch = params.get("receiver");
+    const navigate = useNavigate();
     console.log(receiverFromProfileSearch)
 
     const [chatUsers, setChatUsers] = useState([]);
@@ -99,6 +101,9 @@ export default function Message() {
         }
     }
 
+    const handleUserClick = (usernameReceiver) => {
+        navigate(NAV_PROFILE_SEARCH_BASE + `/${usernameReceiver}`);
+    };
 
     useEffect(() => {
         scrollToBottom();
@@ -193,7 +198,9 @@ export default function Message() {
                 {currentChat ? (
                     <>
                         <div style={{padding: "20px", borderBottom: "1px solid #ddd"}}>
-                            <h3 style={{color: "gray", marginBottom: "10px"}}>Chat with {currentChat}</h3>
+                            <h3 style={{color: "gray", marginBottom: "10px",cursor:"pointer"}}
+                                onClick={() => handleUserClick(currentChat)}
+                            >Chat with {currentChat}</h3>
 
                             <Badge
                                 overlap="circular"
