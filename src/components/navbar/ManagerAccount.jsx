@@ -10,7 +10,7 @@ import {
     NAV_CREATOR,
     NAV_DASHBOARD, NAV_DEFAULT, NAV_DELETE_USER,
     NAV_ERROR, NAV_FORGET_PASSWORD,
-    NAV_LOGIN, NAV_MESSAGE,
+    NAV_LOGIN, NAV_MESSAGE, NAV_NOTIFICATION,
     NAV_PROFILE, NAV_PROFILE_SEARCH, NAV_SEARCH, NAV_SETTINGS,
     PATH
 } from "../../utils/Constants";
@@ -24,6 +24,7 @@ import Search from "../../pages/dashboard/Search";
 import ProfileSearch from "../../pages/dashboard/ProfileSearch";
 import Message from "../../pages/dashboard/Message";
 import DeleteUser from "../../pages/settings/DeleteUser";
+import Notification from "../../pages/dashboard/Notification";
 
 
 export default function ManagerAccount() {
@@ -65,6 +66,7 @@ export default function ManagerAccount() {
                                 <Route path={NAV_SETTINGS} element={<Settings/>}/>
                                 <Route path={NAV_CHANGE_PASSWORD} element={<ChangePassword/>}/>
                                 <Route path={NAV_DELETE_USER} element={<DeleteUser/>}/>
+                                <Route path={NAV_NOTIFICATION} element={<Notification/>}/>
                                 <Route path={NAV_ERROR} element={<NotFoundPage/>}/>
                             </>
                         )}

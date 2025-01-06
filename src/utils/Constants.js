@@ -27,6 +27,7 @@ const URL_DELETE_USER = "/delete-user";
 const URL_ADD_COMMENT = "/add-comment";
 const URL_SHOW_ALL_COMMENT_POST = "/get-all-comment-post";
 const URL_GET_ALL_FOLLOWERS_FOLLOWING = "/get-all-followers-following";
+const URL_GET_ALL_NOTIFICATION = "/get-all-notification";
 
 const NAV_LOGIN = "/login";
 const NAV_CREATE_ACCOUNT = "/createAccount";
@@ -42,6 +43,7 @@ const NAV_MESSAGE = "/message";
 const NAV_ERROR = "*";
 const NAV_FORGET_PASSWORD = "/forgetPassword";
 const NAV_DELETE_USER = "/deleteUser";
+const NAV_NOTIFICATION = "/notification";
 const NAV_DEFAULT = "/";
 const PATH = "/";
 const MAILTO = "mailto:"
@@ -79,6 +81,7 @@ export {
     URL_ADD_COMMENT,
     URL_SHOW_ALL_COMMENT_POST,
     URL_GET_ALL_FOLLOWERS_FOLLOWING,
+    URL_GET_ALL_NOTIFICATION,
     NAV_DELETE_USER,
     NAV_MESSAGE,
     NAV_LOGIN,
@@ -94,6 +97,7 @@ export {
     NAV_FORGET_PASSWORD,
     NAV_DEFAULT,
     NAV_CHANGE_PASSWORD,
+    NAV_NOTIFICATION,
     MAIL_SERVICE,
     MAILTO,
     PATH,

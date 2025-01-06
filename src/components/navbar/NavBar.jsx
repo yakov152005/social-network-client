@@ -9,9 +9,9 @@ import {
     NAV_SETTINGS,
     NAV_CREATOR,
     NAV_SEARCH,
-    NAV_MESSAGE
+    NAV_MESSAGE, NAV_NOTIFICATION
 } from "../../utils/Constants";
-import {IconSearch, IconMailFilled} from '@tabler/icons-react';
+import {IconSearch, IconBrandMessengerFilled, IconBell } from '@tabler/icons-react';
 import UsernameAPI from "../../api/UsernameAPI";
 import {Badge, Avatar, Tooltip} from '@mui/material';
 import { styled } from '@mui/material/styles';
@@ -137,13 +137,22 @@ export default function NavBar({ isLoggedIn, onLogout }) {
                             </NavLink>
                         </li>
                     </Tooltip>
+                     <Tooltip title="Notification">
+                            <li className="nav-item" style={{marginTop: "12px"}}>
+                                <NavLink
+                                    className={({isActive}) => `nav-link ${isActive ? "active-nav" : ""}`}
+                                    to={NAV_NOTIFICATION}>
+                                    <IconBell stroke={2} size={35}/>
+                                </NavLink>
+                            </li>
+                     </Tooltip>
                     <Tooltip title="Messenger" >
                         <li className="nav-item" style={{marginTop:"10px"}}>
                             <NavLink
                                 className={({isActive}) => `nav-link ${isActive ? "active-nav" : ""}`}
                                 to={NAV_MESSAGE}>
-                                {/* <strong>Message</strong><br/>&nbsp; &nbsp; &nbsp;*/}
-                                <IconMailFilled stroke={2} size={35}/>
+                                {/* <strong>Message</strong><br/>&nbsp; &nbsp; &nbsp;  <IconMailFilled stroke={2} size={35}/>*/}
+                                <IconBrandMessengerFilled stroke={2} size={35}/>
                             </NavLink>
                         </li>
                     </Tooltip>
@@ -163,7 +172,7 @@ export default function NavBar({ isLoggedIn, onLogout }) {
                                 className={({isActive}) => `nav-link ${isActive ? "active-nav" : ""}`}
                                 to={NAV_SETTINGS}>
                                 {/* <strong>Settings</strong><br/>&nbsp; &nbsp; &nbsp; */}
-                                <i className="bi bi-gear" style={{fontSize: "30px"}}></i>
+                                <i className="bi bi-gear-fill" style={{fontSize: "30px"}}></i>
                             </NavLink>
                         </li>
                     </Tooltip>
