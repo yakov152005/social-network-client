@@ -61,7 +61,7 @@ export default function ForgetPassword() {
                         navigate(NAV_LOGIN);
                     }, 50);
                 } else {
-                    Swal.fire("Error", response.data.error, "error");
+                    //Swal.fire("Error", response.data.error, "error");
                     setErrorMessage(response.data.error);
                     console.log(`{success: ${response.data.success}, error:{ ${response.data.error} }}`);
                     setUserName("");
@@ -69,7 +69,8 @@ export default function ForgetPassword() {
                     setLoading(false);
                 }
             } catch (error) {
-                Swal.fire("Error", "Failed to delete user.", "error");
+                //Swal.fire("Error", "Failed to delete user.", "error");
+                setErrorMessage("Failed to delete user.");
                 console.error("Error get request Email", error);
                 setLoading(false);
             }

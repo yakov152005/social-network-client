@@ -172,11 +172,14 @@ export default function CreateAccount() {
             } else {
                 const errorCode = response.data.errorCode;
                 const fieldToClear = switchError(errorCode);
+               /*
                 await Swal.fire({
                     title: "Error",
                     text: response.data.error,
                     icon: "error",
                 });
+                */
+                setErrorMessage(response.data.error);
                 console.log(`{success: ${response.data.success}, error:{ ${response.data.error} } , errorCode: { ${errorCode}`);
 
                 setFormData((prevFormData) => ({
@@ -188,11 +191,14 @@ export default function CreateAccount() {
             }
         } catch (error) {
             console.log("Error creating user", error);
+           /*
             await Swal.fire({
                 title: "Error",
                 text: "Failed to create user. Please try again later.",
                 icon: "error",
             });
+            */
+            setErrorMessage("Failed to create user. Please try again later.");
             setLoading(false);
 
         }

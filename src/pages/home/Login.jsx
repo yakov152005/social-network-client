@@ -119,23 +119,13 @@ export default function Login({ onLogin }) {
                 }, TIME_LOADING);
 
             } else {
-                await Swal.fire({
-                    title: "Error",
-                    text: "Invalid verification code.",
-                    icon: "error",
-                });
-               // setErrorMessage("Invalid verification code.");
+                setErrorMessage("Invalid verification code.");
                 console.log("Token not found")
                 setLoadingVerification(false);
             }
         } catch (error) {
             console.error("Error verifying code", error);
-            //setErrorMessage("Failed to verify code. Please try again later.");
-            await Swal.fire({
-                title: "Error",
-                text: "Failed to verify code. Please try again later.",
-                icon: "error",
-            });
+            setErrorMessage("Failed to verify code. Please try again later.");
             setLoadingVerification(false);
         }
     };

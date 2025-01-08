@@ -185,9 +185,16 @@ export default function Profile() {
 
     if (loading) {
         return (
-            <div>
-                <strong style={{color: "blue"}}>Loading...</strong>
-                <div className="spinner-border text-primary" role="status"></div>
+            <div style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "100vh",
+                color: "gray",
+            }}>
+                <strong style={{ fontSize: "24px", marginBottom: "20px" }}>Loading...</strong>
+                <div className="spinner-border text-secondary" role="status" style={{ width: "3rem", height: "3rem" }}></div>
             </div>
         );
     }
