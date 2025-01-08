@@ -69,8 +69,8 @@ export default function ForgetPassword() {
                     setLoading(false);
                 }
             } catch (error) {
-                //Swal.fire("Error", "Failed to delete user.", "error");
-                setErrorMessage("Failed to delete user.");
+                Swal.fire("Error", "Failed to reset password.", "error");
+                setErrorMessage("Failed to reset user.");
                 console.error("Error get request Email", error);
                 setLoading(false);
             }
