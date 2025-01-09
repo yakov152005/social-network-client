@@ -70,7 +70,7 @@ export default function ForgetPassword() {
                 }
             } catch (error) {
                 Swal.fire("Error", "Failed to reset password.", "error");
-                setErrorMessage("Failed to reset user.");
+                setErrorMessage("Failed to reset password.");
                 console.error("Error get request Email", error);
                 setLoading(false);
             }
