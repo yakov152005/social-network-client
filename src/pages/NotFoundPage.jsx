@@ -1,7 +1,7 @@
 import "../css/ErrorStyle.css";
 import { IconZoomExclamation } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
-import {NAV_DASHBOARD, NAV_LOGIN, PATH} from "../utils/Constants";
+import { NAV_DASHBOARD, NAV_LOGIN, PATH} from "../utils/Constants";
 import Cookies from "universal-cookie";
 
 export default function NotFoundPage() {
