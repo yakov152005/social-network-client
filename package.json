@@ -2,6 +2,7 @@
   "name": "social-network-client",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://social-network-client-k8fp.onrender.com",
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
