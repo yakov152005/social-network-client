@@ -28,6 +28,7 @@ const URL_ADD_COMMENT = "/add-comment";
 const URL_SHOW_ALL_COMMENT_POST = "/get-all-comment-post";
 const URL_GET_ALL_FOLLOWERS_FOLLOWING = "/get-all-followers-following";
 const URL_GET_ALL_NOTIFICATION = "/get-all-notification";
+const URL_VALIDATE_TOKEN = "/validateToken";
 
 const NAV_LOGIN = "/login";
 const NAV_CREATE_ACCOUNT = "/createAccount";
@@ -79,6 +80,7 @@ export {
     URL_MESSAGE_HISTORY,
     URL_DELETE_USER,
     URL_ADD_COMMENT,
+    URL_VALIDATE_TOKEN,
     URL_SHOW_ALL_COMMENT_POST,
     URL_GET_ALL_FOLLOWERS_FOLLOWING,
     URL_GET_ALL_NOTIFICATION,

@@ -25,6 +25,8 @@ import ProfileSearch from "../../pages/dashboard/ProfileSearch";
 import Message from "../../pages/dashboard/Message";
 import DeleteUser from "../../pages/settings/DeleteUser";
 import Notification from "../../pages/dashboard/Notification";
+import {useEffect, useState} from "react";
+import ValidateToken from "../../api/ValidateToken";
 
 
 export default function ManagerAccount() {
@@ -32,6 +34,24 @@ export default function ManagerAccount() {
     const token = cookies.get("token");
     const navigate = useNavigate();
     console.log("home page token check", token);
+    const [username, setUsername] = useState("");
+
+    const fetchToken = async ()=> {
+        try {
+            const api = new ValidateToken();
+            await api.validateTokenApi(token,navigate,cookies,setUsername);
+        }catch (error){
+            console.log("Error to fetching token",error);
+        }
+    }
+
+    useEffect(() => {
+        if (token) {
+            fetchToken();
+            console.log("home page token check", token);
+            console.log("Username passed to manger:", username);
+        }
+    }, [token, navigate, cookies,username]);
 
     const handleLogout = () => {
         cookies.remove("token", {path: PATH});
