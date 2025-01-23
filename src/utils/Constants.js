@@ -30,7 +30,7 @@ const URL_GET_ALL_FOLLOWERS_FOLLOWING = "/get-all-followers-following";
 const URL_GET_ALL_NOTIFICATION = "/get-all-notification";
 const URL_VALIDATE_TOKEN = "/validateToken";
 
-const NAV_LOGIN = URL_SERVER_SIDE + "/login-user";
+const NAV_LOGIN = "/login";
 const NAV_CREATE_ACCOUNT = "/createAccount";
 const NAV_SETTINGS = "/settingsPage";
 const NAV_SEARCH = "/search";
