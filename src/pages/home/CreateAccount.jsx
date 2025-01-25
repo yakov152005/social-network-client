@@ -442,8 +442,8 @@ export default function CreateAccount() {
                                             <hr className={"divider"}/>
                                         </div>
 
-                                        <div style={{color: "blue", margin: "10px", marginLeft: "40px"}}>
-                                            Already have an account? &nbsp;
+                                        <div style={{color: "gray", margin: "10px", marginLeft: "40px"}}>
+                                            Do you have an account? &nbsp;
                                             <a onClick={() => navigate(NAV_LOGIN)}
                                                className="custom-link"
                                                style={{

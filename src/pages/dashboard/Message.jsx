@@ -249,6 +249,14 @@ export default function Message() {
                                 value={messageContent}
                                 onChange={(e) => setMessageContent(e.target.value)}
                                 placeholder="Type a message..."
+                                onKeyDown={(e) => {
+                                    if (e.key === "Enter" && !e.shiftKey) {
+                                        e.preventDefault();
+                                        if (messageContent.trim()) {
+                                            fetchSendMessage(currentChat);
+                                        }
+                                    }
+                                }}
                             />
                             {messageContent && (
                                 <button

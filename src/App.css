@@ -30,7 +30,6 @@
 html, body {
   height: 100%;
   overflow: hidden;
-
 }
 
 .disabled {
@@ -117,6 +116,7 @@ html, body {
   .navbar {
     flex-direction: column;
     height: auto;
+    padding-bottom: 10px;
   }
   .nav-item {
     margin: 10px 0;

@@ -239,7 +239,7 @@ export default function Login({ onLogin }) {
                                                     <hr className={"divider"}/>
                                                 </div>
 
-                                                <div style={{color: "blue", margin: "10px", marginLeft: "40px"}}>
+                                                <div style={{color: "gray", margin: "10px", marginLeft: "40px"}}>
                                                     New to Social-Network?
                                                     <a className="custom-link"
                                                        onClick={() => navigate(NAV_CREATE_ACCOUNT)}

@@ -136,6 +136,14 @@ export default function Comment({ postId, username ,commentCount: initialComment
                     value={newComment}
                     onChange={(e) => setNewComment(e.target.value)}
                     placeholder="Write a comment..."
+                    onKeyDown={(e) => {
+                        if (e.key === "Enter" && !e.shiftKey) {
+                            e.preventDefault();
+                            if (newComment.trim()) {
+                                handleAddComment();
+                            }
+                        }
+                    }}
                 />
                 {newComment.trim() && (
                     <button className="comment-submit-button" onClick={handleAddComment}>
