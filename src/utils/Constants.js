@@ -32,6 +32,7 @@ const URL_GET_ALL_FOLLOWERS_FOLLOWING = "/get-all-followers-following";
 const URL_GET_ALL_NOTIFICATION = "/get-all-notification";
 const URL_VALIDATE_TOKEN = "/validateToken";
 const URL_GET_NUM_OF_USERS = "/get-num-of-users";
+const URL_CONFIRM_RESET_PASS = "/confirm-reset-password";
 
 const NAV_LOGIN = "/login";
 const NAV_CREATE_ACCOUNT = "/createAccount";
@@ -52,7 +53,7 @@ const NAV_DEFAULT = "/";
 const PATH = "/";
 const MAILTO = "mailto:"
 
-const TIME_LOADING = 2000;
+const TIME_LOADING = 1000;
 const TIME_LOADING_FAST = 50;
 const MAX_SCROLL = 5;
 
@@ -88,6 +89,7 @@ export {
     URL_GET_ALL_FOLLOWERS_FOLLOWING,
     URL_GET_ALL_NOTIFICATION,
     URL_GET_NUM_OF_USERS,
+    URL_CONFIRM_RESET_PASS,
     NAV_DELETE_USER,
     NAV_MESSAGE,
     NAV_LOGIN,

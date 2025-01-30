@@ -27,6 +27,7 @@ import DeleteUser from "../../pages/settings/DeleteUser";
 import Notification from "../../pages/dashboard/Notification";
 import {useEffect, useState} from "react";
 import ValidateToken from "../../api/ValidateToken";
+import ConfirmResetPasswordPage from "../../pages/home/ConfirmResetPasswordPage";
 
 
 export default function ManagerAccount() {
@@ -73,6 +74,7 @@ export default function ManagerAccount() {
                                 <Route path={NAV_LOGIN} element={<Login onLogin={() => navigate(NAV_DASHBOARD)}/>}/>
                                 <Route path={NAV_CREATOR} element={<Creator/>}/>
                                 <Route path={NAV_FORGET_PASSWORD} element={<ForgetPassword/>}/>
+                                <Route path={"/confirm-reset"} element={<ConfirmResetPasswordPage/>}/>
                                 <Route path={NAV_ERROR} element={<NotFoundPage/>}/>
                             </>
                         )}
