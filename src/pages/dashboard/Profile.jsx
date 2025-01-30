@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import axios from "axios";
 import {
     URL_ADD_POST,
@@ -13,6 +13,8 @@ import Swal from "sweetalert2";
 import img_null from "../../assets/navbar/User_Profile_null.png"
 import FollowersAPI from "../../api/FollowersAPI";
 import FollowListComponent from "../../components/dashboard/FollowListComponent";
+import {useDropzone} from "react-dropzone";
+import "../../css/home/ForgetPasswordStyle.css"
 
 
 export default function Profile() {
@@ -22,12 +24,15 @@ export default function Profile() {
     const [newPost, setNewPost] = useState({content: "", imageUrl: ""});
     const [loading, setLoading] = useState(false);
     const [profilePicture, setProfilePicture] = useState("");
+    const [selectedFile, setSelectedFile] = useState(null);
     const [followers, setFollowers] = useState(-1);
     const [following, setFollowing] = useState(-1);
     const [getAllFollowers, setGetAllFollowers] = useState([]);
     const [getAllFollowing, setGetAllFollowing] = useState([]);
     const [showFollowers, setShowFollowers] = useState(false);
     const [showFollowing, setShowFollowing] = useState(false);
+    const [showUploadeProfilePic, setShowUploadeProfilePic] = useState(false);
+    const [showUploadePost, setShowUploadePost] = useState(false);
 
 
     const fetchDetails = async () => {
@@ -76,9 +81,39 @@ export default function Profile() {
 
 
     const addPost = async () => {
+        if (!selectedFile && !newPost.imageUrl) {
+            await Swal.fire({
+                title: "Error",
+                text: "Please choose a post picture.",
+                icon: "error",
+            });
+            return;
+        }
+
+        let formDataPost = new FormData();
+        formDataPost.append("username", username);
+        formDataPost.append("content", newPost.content);
+
+        if (selectedFile) {
+            formDataPost.append("postImageFile", selectedFile);
+        } else if (newPost.imageUrl.startsWith("http")) {
+            formDataPost.append("postImageUrl", newPost.imageUrl);
+        } else {
+            await Swal.fire({
+                title: "Error",
+                text: "Invalid post picture format.",
+                icon: "error",
+            });
+            return;
+        }
+
         try {
-            const response = await axios.post(URL_SERVER_SIDE + URL_ADD_POST + `/${username}`,
-                newPost);
+            const response = await axios.post(URL_SERVER_SIDE + URL_ADD_POST , formDataPost, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            });
+
             if (response.data.success) {
                 await Swal.fire({
                     title: "Good job!",
@@ -87,6 +122,7 @@ export default function Profile() {
                 });
                 console.log(response.data.error);
                 setNewPost({content: "", imageUrl: ""});
+                setSelectedFile(null);
                 fetchPosts();
             } else {
                 await Swal.fire({
@@ -106,45 +142,79 @@ export default function Profile() {
         }
     };
 
+
+    const onDrop = useCallback((acceptedFiles) => {
+        if (acceptedFiles.length > 0) {
+            const file = acceptedFiles[0];
+            setSelectedFile(file);
+            setProfilePicture("");
+            setNewPost({content: "", imageUrl: ""});
+        }
+    }, []);
+
+
+
+    const { getRootProps, getInputProps } = useDropzone({
+        onDrop,
+        accept: "image/*",
+        maxFiles: 1
+    });
+
+
     const addProfilePicture = async () => {
-        if (!profilePicture || profilePicture.length === 0 || !profilePicture.startsWith("http")) {
+        if (!selectedFile && !profilePicture) {
             await Swal.fire({
                 title: "Error",
-                text: "Please choose a valid profile picture URL.",
+                text: "Please choose a profile picture.",
+                icon: "error",
+            });
+            return;
+        }
+
+        let formData = new FormData();
+        formData.append("username", username);
+
+        if (selectedFile) {
+            formData.append("profilePictureFile", selectedFile);
+        } else if (profilePicture.startsWith("http")) {
+            formData.append("profilePictureUrl", profilePicture);
+        } else {
+            await Swal.fire({
+                title: "Error",
+                text: "Invalid profile picture format.",
                 icon: "error",
             });
             return;
         }
 
         try {
-            const response = await axios.post(URL_SERVER_SIDE + URL_ADD_PROFILE_PIC, {
-                username: username,
-                profilePicture: profilePicture,
+            const response = await axios.post(URL_SERVER_SIDE + URL_ADD_PROFILE_PIC, formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
             });
 
             if (response.data.success) {
-                setCurrentProfilePicture(profilePicture);
+                setCurrentProfilePicture(selectedFile ? URL.createObjectURL(selectedFile) : profilePicture);
                 await Swal.fire({
-                    title: "Good job!",
-                    text: "Profile picture added successfully!",
+                    title: "Success!",
+                    text: "Profile picture updated successfully.",
                     icon: "success",
                 });
+                setSelectedFile(null);
                 setProfilePicture("");
-                console.log(response.data.error);
-                fetchDetails();
             } else {
-                console.log("Error uploading profile picture.");
                 await Swal.fire({
                     title: "Error",
-                    text: "Failed to upload profile picture. Please try again.",
+                    text: "Failed to upload profile picture.",
                     icon: "error",
                 });
             }
         } catch (error) {
-            console.error("Failed to fetch and add picture.", error);
+            console.error("Error uploading profile picture:", error);
             await Swal.fire({
                 title: "Error",
-                text: "An unexpected error occurred. Please try again later.",
+                text: "An unexpected error occurred.",
                 icon: "error",
             });
         }
@@ -200,11 +270,6 @@ export default function Profile() {
     }
 
 
-    const handleChange = (event) => {
-        setProfilePicture(event.target.value);
-    };
-
-
     return (
         <div className="profile-container">
             <div className="alert alert-link" role="alert">
@@ -226,14 +291,14 @@ export default function Profile() {
                         <button
                             className="btn btn-link"
                             onClick={handleShowFollowers}
-                            style={{textDecoration: "none" ,color:"#555"}}
+                            style={{textDecoration: "none", color: "#555"}}
                         >
                             followers <strong>{followers}</strong> &nbsp; &nbsp;  &nbsp; &nbsp;
                         </button>
                         <button
                             className="btn btn-link"
                             onClick={handleShowFollowing}
-                            style={{textDecoration: "none",color:"#555"}}
+                            style={{textDecoration: "none", color: "#555"}}
                         >
                             following <strong>{following}</strong>
                         </button>
@@ -242,56 +307,133 @@ export default function Profile() {
             </div>
 
 
-            <div>
-                <h4><strong>Add a New Profile picture</strong></h4>
-                <input
-                    style={{borderRadius: "10px", border: "none"}}
-                    type="text"
-                    placeholder="Image URL"
-                    value={profilePicture}
-                    onChange={handleChange}
-                />
-                <br/><br/>
-                <button className={"btn btn-success"} onClick={addProfilePicture} disabled={!username}>
+
+            {showUploadeProfilePic ? (
+                <>
+                    <button className={"btn btn-outline-success"} onClick={() => {
+                        setShowUploadeProfilePic(false)
+                    }}>
+                        Hide Add Profile Picture
+                    </button>
+                    <div className={"box-drop-zone"}>
+                        <h4><strong>Add a New Profile Picture</strong></h4>
+
+
+                        <div {...getRootProps()} className={"div-select-file"}>
+                            <input {...getInputProps()} />
+                            {selectedFile ? (
+                                <p>{selectedFile.name}</p>
+                            ) : (
+                                <p style={{color: "gray"}}>Drag & Drop an image or click to select</p>
+                            )}
+                        </div>
+
+                        <p className={"or-text"}>—————————— or ——————————</p>
+
+                        <input
+                            type="text"
+                            placeholder="Enter image URL"
+                            value={profilePicture}
+                            onChange={(e) => {
+                                setProfilePicture(e.target.value);
+                                setSelectedFile(null);
+                            }}
+                           className={"input-url-profile"}
+                        />
+
+
+                        {(selectedFile || profilePicture) && (
+                            <img
+                                src={selectedFile ? URL.createObjectURL(selectedFile) : profilePicture}
+                                alt="Preview"
+                                className={"img-profile-uploade"}
+                            />
+                        )}
+
+
+                        <button
+                            onClick={addProfilePicture}
+                            disabled={!username}
+                            className={"btn btn-secondary"}
+                        >
+                            Add Profile Picture
+                        </button>
+                    </div>
+                </>
+            ) : (
+                <button className={"btn btn-outline-success"} onClick={() => {
+                    setShowUploadeProfilePic(true)
+                }}>
                     Add Profile Picture
                 </button>
-            </div>
+            )}
+
             <br/><br/>
 
-            <div className="add-post-form" style={{borderBottom: " 1px solid #dbdbdb"}}>
-                <h4><strong>Add a New Post</strong></h4>
-                <textarea
-                    style={{borderRadius: "10px", border: "none"}}
-                    placeholder="Status"
-                    value={newPost.content}
-                    onChange={(e) => setNewPost({...newPost, content: e.target.value})}/>
+            {showUploadePost ? (
+                <>
+                    <button className={"btn btn-outline-success"} onClick={() => {
+                        setShowUploadePost(false)
+                    }}>
+                        Hide Add Post
+                    </button>
+                    <div className="box-drop-zone">
+                        <h4><strong>Add a New Post</strong></h4>
+                        <textarea
+                            className={"input-url-profile"}
+                            placeholder="Status"
+                            value={newPost.content}
+                            onChange={(e) => setNewPost({...newPost, content: e.target.value})}/>
 
-                <br/>
+                        <input
+                            className={"input-url-profile"}
+                            type="text"
+                            placeholder="Image URL"
+                            value={newPost.imageUrl || null}
+                            onChange={(e) => {
+                                setNewPost({...newPost, imageUrl: e.target.value})
+                                setSelectedFile(null);
+                            }}
 
-                <input
-                    style={{borderRadius: "10px", border: "none"}}
-                    type="text"
-                    placeholder="Image URL"
-                    value={newPost.imageUrl || null}
-                    onChange={(e) => setNewPost({...newPost, imageUrl: e.target.value})}
-                />
+                        />
 
-                <br/><br/>
-                <button className={"btn btn-success"} onClick={addPost} disabled={!username}>
-                    Add Post
-                </button>
-            </div>
+                        <p className={"or-text"}>—————————— or ——————————</p>
+
+                        <div {...getRootProps()} className={"div-select-file"}>
+                            <input {...getInputProps()} />
+                            {selectedFile ? (
+                                <p>{selectedFile.name}</p>
+                            ) : (
+                                <p style={{color: "gray"}}>Drag & Drop an image or click to select</p>
+                            )}
+                        </div>
+
+                        <button className={"btn btn-secondary"} onClick={addPost} disabled={!username}>
+                            Add Post
+                        </button>
+                    </div>
+                </>
+            ) : (
+                <>
+                    <button className={"btn btn-outline-success"} onClick={() => {
+                        setShowUploadePost(true)
+                    }}>
+                        Add Post
+                    </button>
+                </>
+            )}
             <br/>
 
+            <div style={{borderBottom: " 1px solid #dbdbdb", marginBottom: "15px", marginTop:"20px"}}></div>
 
             <div>
-            {
-                posts.length > 0 ? (
-                    <Post posts={posts}/>
-                ) : (
-                    <p>No posts available.</p>
-                )
-            }
+                {
+                    posts.length > 0 ? (
+                        <Post posts={posts}/>
+                    ) : (
+                        <p>No posts available.</p>
+                    )
+                }
             </div>
 
             {showFollowers && (

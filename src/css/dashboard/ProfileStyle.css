@@ -50,5 +50,40 @@
     color: #555;
 }
 
+.input-url-profile{
+    padding: 10px;
+    width: 300px;
+    text-align: center;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+}
 
+.img-profile-uploade {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ddd;
+}
+
+.box-drop-zone{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.div-select-file{
+    border: 2px dashed gray;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    width: 300px;
+    background: #ffffff;
+    border-radius: 10px;
+}
 
