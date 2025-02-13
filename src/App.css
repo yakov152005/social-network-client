@@ -3,6 +3,22 @@
   font-feature-settings: 'liga' 1, 'calt' 1;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  min-height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  width: 100vw;
+  scrollbar-width: thin;
+  scrollbar-color: #cfd0d6 #f1f1f1;
+}
+
+
 .App {
   background-color: rgba(241, 229, 255, 0.28);
   width: 100vw;
@@ -12,33 +28,7 @@
   display: flex;
   flex-direction: column;
   border-radius: 10px;
-}
-
-@media (max-width: 768px) {
-  .floating-form {
-    padding: 10px;
-    max-width: 90%;
-  }
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html, body {
-  height: 100%;
-  overflow: hidden;
-}
-
-.disabled {
-  pointer-events: visible;
-  color: gray;
-  cursor: pointer;
-  border: 5px solid cornflowerblue;
-  border-radius: 20px;
-  background-color: #007bff;
+  justify-content: space-between;
 }
 
 .background {
@@ -51,6 +41,9 @@ html, body {
 }
 
 .content-wrapper {
+  max-width: 100%;
+  overflow-x: hidden;
+  flex-grow: 1;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -62,6 +55,7 @@ html, body {
 .content {
   max-width: 1200px;
   width: 100%;
+
 }
 
 .navbar {
@@ -73,6 +67,9 @@ html, body {
   background-color: #ffffff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
   padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .navbar .nav-item {
@@ -111,15 +108,79 @@ html, body {
   border-radius: 4px;
 }
 
+.disabled {
+  pointer-events: visible;
+  color: gray;
+  cursor: pointer;
+  border: 5px solid cornflowerblue;
+  border-radius: 20px;
+  background-color: #007bff;
+}
 
 @media (max-width: 768px) {
   .navbar {
     flex-direction: column;
     height: auto;
     padding-bottom: 10px;
+    align-items: center;
   }
+
   .nav-item {
     margin: 10px 0;
   }
+
+  .content {
+    padding: 10px;
+  }
+
+  .floating-form {
+    padding: 10px;
+    max-width: 90%;
+  }
 }
+
+
+@media (max-width: 480px) {
+  .navbar {
+    padding: 8px;
+    font-size: 14px;
+  }
+
+  .nav-item {
+    margin: 5px 0;
+  }
+
+  .content {
+    padding: 5px;
+  }
+
+  .footer-container {
+    padding: 10px;
+    text-align: center;
+    font-size: 12px;
+  }
+
+  .footer-links {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .social-links {
+    margin-top: 5px;
+  }
+
+  .social-icon {
+    font-size: 20px;
+    margin: 5px;
+  }
+}
+
+
+
+
+
+
+
+
+
 

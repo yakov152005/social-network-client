@@ -49,6 +49,8 @@ const NAV_ERROR = "*";
 const NAV_FORGET_PASSWORD = "/forgetPassword";
 const NAV_DELETE_USER = "/deleteUser";
 const NAV_NOTIFICATION = "/notification";
+const NAV_ACCESSIBILITY = "/accessibility";
+const NAV_TERM_AND_PRIVACY = "/terms-and-privacy";
 const NAV_DEFAULT = "/";
 const PATH = "/";
 const MAILTO = "mailto:"
@@ -106,6 +108,8 @@ export {
     NAV_DEFAULT,
     NAV_CHANGE_PASSWORD,
     NAV_NOTIFICATION,
+    NAV_TERM_AND_PRIVACY,
+    NAV_ACCESSIBILITY,
     MAIL_SERVICE,
     MAILTO,
     PATH,

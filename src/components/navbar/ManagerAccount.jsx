@@ -5,13 +5,14 @@ import Creator from "../../pages/home/Creator";
 import Dashboard from "../../pages/dashboard/Dashboard";
 import Cookies from "universal-cookie";
 import {
+    NAV_ACCESSIBILITY,
     NAV_CHANGE_PASSWORD,
     NAV_CREATE_ACCOUNT,
     NAV_CREATOR,
     NAV_DASHBOARD, NAV_DEFAULT, NAV_DELETE_USER,
     NAV_ERROR, NAV_FORGET_PASSWORD,
     NAV_LOGIN, NAV_MESSAGE, NAV_NOTIFICATION,
-    NAV_PROFILE, NAV_PROFILE_SEARCH, NAV_SEARCH, NAV_SETTINGS,
+    NAV_PROFILE, NAV_PROFILE_SEARCH, NAV_SEARCH, NAV_SETTINGS, NAV_TERM_AND_PRIVACY,
     PATH
 } from "../../utils/Constants";
 import NotFoundPage from "../../pages/NotFoundPage";
@@ -28,6 +29,9 @@ import Notification from "../../pages/dashboard/Notification";
 import {useEffect, useState} from "react";
 import ValidateToken from "../../api/ValidateToken";
 import ConfirmResetPasswordPage from "../../pages/home/ConfirmResetPasswordPage";
+import Footer from "./Footer";
+import AccessibilityStatement from "../websiteRegulations/AccessibilityStatement";
+import TermsAndPrivacy from "../websiteRegulations/TermsAndPrivacy";
 
 
 export default function ManagerAccount() {
@@ -67,6 +71,10 @@ export default function ManagerAccount() {
             <div className="content-wrapper">
                 <div className="content">
                     <Routes>
+
+                        <Route path={NAV_ACCESSIBILITY} element={<AccessibilityStatement />} />
+                        <Route path={NAV_TERM_AND_PRIVACY} element={<TermsAndPrivacy />} />
+
                         {!token && (
                             <>
                                 <Route path={NAV_DEFAULT} element={<Navigate to={NAV_LOGIN}/>}/>
@@ -94,7 +102,13 @@ export default function ManagerAccount() {
                         )}
                     </Routes>
                 </div>
+
             </div>
+           <>
+               {!token &&
+                   <Footer />
+               }
+           </>
         </div>
     );
 }
