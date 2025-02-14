@@ -162,7 +162,7 @@ export default function CreateAccount() {
                 setTimeout(() => {
                     Swal.fire({
                         title: "Good job!",
-                        text: "Success to add user.",
+                        text: "Success to add user. Email has been sent with all your details..",
                         icon: "success",
                     });
                     setLoading(false);
