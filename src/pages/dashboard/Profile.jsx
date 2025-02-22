@@ -23,6 +23,7 @@ export default function Profile() {
     const [posts, setPosts] = useState([]);
     const [newPost, setNewPost] = useState({content: "", imageUrl: ""});
     const [loading, setLoading] = useState(false);
+    const [loadingAddPost, setLoadingAddPost] = useState(false);
     const [profilePicture, setProfilePicture] = useState("");
     const [selectedFile, setSelectedFile] = useState(null);
     const [followers, setFollowers] = useState(-1);
@@ -89,6 +90,7 @@ export default function Profile() {
             });
             return;
         }
+        setLoadingAddPost(true);
 
         let formDataPost = new FormData();
         formDataPost.append("username", username);
@@ -140,6 +142,7 @@ export default function Profile() {
             });
             console.error("Failed to add post", error);
         }
+        setLoadingAddPost(false);
     };
 
 
@@ -170,6 +173,7 @@ export default function Profile() {
             });
             return;
         }
+        setLoadingAddPost(true);
 
         let formData = new FormData();
         formData.append("username", username);
@@ -218,6 +222,7 @@ export default function Profile() {
                 icon: "error",
             });
         }
+        setLoadingAddPost(false);
     };
 
 
@@ -353,10 +358,10 @@ export default function Profile() {
 
                         <button
                             onClick={addProfilePicture}
-                            disabled={!username}
+                            disabled={!username || loadingAddPost}
                             className={"btn btn-secondary"}
                         >
-                            Add Profile Picture
+                            {loadingAddPost ? "Processing...⌛" : "Add Profile Picture ✅"}
                         </button>
                     </div>
                 </>
@@ -408,8 +413,8 @@ export default function Profile() {
                             )}
                         </div>
 
-                        <button className={"btn btn-secondary"} onClick={addPost} disabled={!username}>
-                            Add Post
+                        <button className={"btn btn-secondary"} onClick={addPost} disabled={!username || loadingAddPost}>
+                            {loadingAddPost ? "Processing...⌛" : "Add Post ✅"}
                         </button>
                     </div>
                 </>

@@ -1,4 +1,4 @@
-import {Routes, Route, Navigate, useNavigate} from "react-router-dom";
+import {Routes, Route, Navigate, useNavigate, useLocation} from "react-router-dom";
 import CreateAccount from "../../pages/home/CreateAccount";
 import Login from "../../pages/home/Login";
 import Creator from "../../pages/home/Creator";
@@ -38,6 +38,7 @@ export default function ManagerAccount() {
     const cookies = new Cookies();
     const token = cookies.get("token");
     const navigate = useNavigate();
+    const location = useLocation();
     console.log("home page token check", token);
     const [username, setUsername] = useState("");
 
@@ -57,6 +58,11 @@ export default function ManagerAccount() {
             console.log("Username passed to manger:", username);
         }
     }, [token, navigate, cookies,username]);
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [location.pathname]);
+
 
     const handleLogout = () => {
         cookies.remove("token", {path: PATH});

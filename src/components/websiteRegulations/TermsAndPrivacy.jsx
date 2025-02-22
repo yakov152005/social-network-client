@@ -1,6 +1,12 @@
 import "../../css/websiteRegulations/TermsAndPrivacyStyle.css";
+import {useEffect} from "react";
 
 export default function TermsAndPrivacy() {
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
     return (
         <div className="terms-container">
             <h1>📜 תקנון, תנאי שימוש ומדיניות פרטיות</h1>

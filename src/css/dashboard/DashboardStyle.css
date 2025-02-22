@@ -79,3 +79,59 @@
     height: 34px;
     font-size: 14px;
 }
+
+@media (max-width: 768px) {
+    .feed-container {
+        width: 100%;
+        margin: 0;
+        padding: 10px;
+        max-width: 100%;
+    }
+
+    .posts-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .post-card {
+        width: 100%;
+        border-radius: 10px;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        border: 1px solid #ddd;
+        padding: 10px;
+        margin-bottom: 15px;
+        background-color: #fff;
+    }
+
+    .post-header {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .post-image {
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+    }
+
+    .post-profile-picture {
+        width: 35px;
+        height: 35px;
+    }
+
+    .post-date {
+        font-size: 12px;
+    }
+
+    .custom-avatar-group {
+        justify-content: flex-end;
+        flex-direction: row-reverse;
+    }
+
+    .custom-avatar-group .MuiAvatarGroup-avatar {
+        width: 30px;
+        height: 30px;
+        font-size: 12px;
+    }
+}

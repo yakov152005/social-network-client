@@ -139,3 +139,63 @@
     z-index: 10;
 }
 
+
+@media (max-width: 768px) {
+    .auth-container {
+        flex-direction: column;
+        height: auto;
+        min-height: 100vh;
+        border-radius: 5px;
+        padding: 20px;
+        box-shadow: none;
+    }
+
+    .left-section, .right-section {
+        width: 100%;
+        flex: none;
+        padding: 15px;
+    }
+
+    .left-section {
+        background: rgba(255, 255, 255, 0.9);
+        padding: 20px 10px;
+    }
+
+    .right-section {
+        background: linear-gradient(to bottom, #002f4b, #ffffff);
+        color: black;
+        padding: 20px;
+    }
+
+    .logo {
+        max-width: 120px;
+    }
+
+    .site-info {
+        font-size: 1.2em;
+        max-width: 100%;
+        text-align: center;
+    }
+
+    .floating-form {
+        width: 100%;
+        max-width: 350px;
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .form-title {
+        font-size: 1.2em;
+    }
+
+    .toggle-password-icon,
+    .toggle-password-icon-loading {
+        right: 20px;
+        top: 50%;
+        width: 20px;
+        height: 20px;
+    }
+}
+
+

@@ -85,3 +85,72 @@
     max-width: 120px;
     margin-bottom: 10px;
 }
+
+@media (max-width: 768px) {
+    .settings-container {
+        flex-direction: column; /* שינוי הפריסה לאנכית */
+        height: auto;
+        padding: 15px;
+    }
+
+    .left-section-settings, .right-section-settings {
+        width: 100%; /* כל חלק יתפוס 100% מהרוחב */
+        height: auto;
+        padding: 20px 10px;
+    }
+
+    .left-section-settings {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .right-section-settings {
+        background: linear-gradient(to bottom, #ffffff, #f7f7f7);
+        color: black;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .settings-floating-form {
+        max-width: 90%;
+        width: 100%;
+        min-width: 300px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+        padding: 15px;
+        border-radius: 10px;
+    }
+
+    .settings-form-title {
+        font-size: 1.3em;
+    }
+
+    .right-section-settings h2 {
+        font-size: 1.5em;
+    }
+
+    .right-section-settings p {
+        font-size: 0.9em;
+        padding: 0 10px;
+    }
+
+    .form-floating input {
+        font-size: 1em;
+    }
+
+    .d-grid button {
+        font-size: 1.2em;
+        padding: 10px;
+    }
+}
+
+
+
+

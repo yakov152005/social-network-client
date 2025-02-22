@@ -1,9 +1,15 @@
 import "../../css/websiteRegulations/AccessibilityStyle.css";
+import {useEffect} from "react";
 
 export default function AccessibilityStatement() {
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
     return (
         <div className="accessibility-container">
-            <h1>הצהרת נגישות באתר</h1>
+            <h1 >הצהרת נגישות באתר</h1>
             <p>
                 אנו מכירים בחשיבות של מתן שירות שוויוני ונגיש לכלל המבקרים באתרנו, כולל אנשים עם מוגבלויות.
                 אנו משקיעים מאמצים רבים כדי להנגיש את האתר ולהתאימו למגוון רחב של משתמשים,
