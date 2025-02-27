@@ -1,6 +1,8 @@
 import React, {useState} from "react";
 import axios from "axios";
 import {
+    MAIL_SERVICE,
+    MAILTO,
     NAV_CREATE_ACCOUNT,
     NAV_FORGET_PASSWORD,
     TIME_LOADING,
@@ -285,7 +287,7 @@ export default function Login({ onLogin }) {
                                         </div>
                                     ) : (
                                         <div className="verification-form">
-                                            <h4 className="verification-title">Enter Verification Code</h4>
+                                            <h4>Enter Verification Code</h4>
                                             <div className="form-floating mb-3">
                                                 <input
                                                     type="text"
@@ -312,7 +314,7 @@ export default function Login({ onLogin }) {
                                             )}
 
                                             <div className="d-grid">
-                                                <button className="btn btn-primary" type="button" onClick={verifyCode}>
+                                                <button className="btn btn-secondary" type="button" onClick={verifyCode}>
                                                     Verify Code
                                                 </button>
                                             </div>
@@ -357,24 +359,41 @@ export default function Login({ onLogin }) {
                         </div>
 
                 ) : (
-                    <div>
-                        <IconLockPassword stroke={1} size={"200px"} color={"black"}/>
-                        <h2 style={{color: "red"}}>Please note!</h2>
-                        <p className="site-info-verification">
-                            The requested resource requires a <strong>strong level of authentication</strong>.
+                    <div className="verification-section">
+                        <IconLockPassword stroke={1} size={"150px"} color={"#408091"}/>
+
+                        <h2 className="verification-title">🔒 Secure Authentication Required</h2>
+
+                        <p className="verification-text">
+                            To protect your account, we require <strong>STRONG AUTHENTICATION</strong>
                         </p>
-                        <p className="site-info-verification">
-                            In order to verify your
-                            identity,
-                            an <strong>SMS</strong> with an <strong>Authentication Code</strong> will be sent to
-                            your <strong>mobile phone</strong> (in the next few
-                            minutes).
-                        </p>
-                        <p className="site-info-verification">
-                            You must wait until the <strong>SMS</strong> is received on your mobile device.
-                            The duration depends on the mobile provider and usually takes about <strong>2 minutes</strong>.
+
+                        <div className="features">
+                            <div className="feature-item">
+                                <i className="fas fa-sms"></i> You will receive an SMS with a Verification code
+                                shortly.
+                            </div>
+                            <div className="feature-item">
+                                <i className="fas fa-clock"></i> This process may take up to 2 minutes, depending on
+                                your provider.
+                            </div>
+                            <div className="feature-item">
+                                <i className="fas fa-key"></i> Enter the CODE as soon as you receive it.
+                            </div>
+                            <div className="feature-item">
+                                <i className="fas fa-shield-alt"></i> Your security is our top priority! 🔐
+                            </div>
+                        </div>
+                        <p className="verification-footer">
+                            💡 Need help?
+                            <a
+                            href={MAILTO + MAIL_SERVICE}
+                            className={"contact-link"}>
+                            Contact Support
+                            </a>
                         </p>
                     </div>
+
                 )}
             </div>
 

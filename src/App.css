@@ -188,7 +188,7 @@ html, body {
   list-style: none;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .menu-button {
     display: block;
     position: fixed;

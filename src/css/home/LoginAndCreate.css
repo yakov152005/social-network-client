@@ -98,12 +98,54 @@
     100% { opacity: 1; }
 }
 
+.verification-section {
+    color: white;
+    text-align: center;
+    padding: 30px;
+    border-radius: 15px;
+    height: auto;
+    width: auto;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.verification-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #FFD700;
+    margin-top: 15px;
+}
+
+.verification-text {
+    font-size: 1.2rem;
+    color: #5c7e5f;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
 .site-info-verification {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 1em;
     max-width: 100%;
     line-height: 2;
     color:black;
+}
+
+.verification-footer {
+    font-size: 1.1rem;
+    margin-top: 20px;
+}
+
+.support-link {
+    color: #FFD700;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
+}
+
+.support-link:hover {
+    text-decoration: underline;
+    color: #FFC107;
 }
 
 .floating-form {
@@ -221,7 +263,7 @@
 }
 
 
-.btn-primary {
+.btn-primary{
     background: linear-gradient(90deg, #007BFF, #0056b3);
     border: none;
     transition: all 0.3s ease-in-out;
@@ -233,6 +275,17 @@
     box-shadow: 0px 0px 10px rgba(0, 91, 255, 0.5);
 }
 
+.btn-secondary{
+    background: linear-gradient(to bottom right, #00cbd5, #94d2bd);
+    border: none;
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-secondary:hover {
+    background: linear-gradient(to bottom right, #00cbd5, #94d2bd);
+    transform: scale(1.05);
+    box-shadow: 0px 0px 10px rgb(64, 128, 145);
+}
 
 @media (max-width: 768px) {
     .auth-container {

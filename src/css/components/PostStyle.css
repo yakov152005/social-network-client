@@ -86,3 +86,29 @@
     font-size: 16px;
     color: #555;
 }
+
+
+
+@media(max-width: 1160px) {
+    .post-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+}
+
+@media(max-width: 900px) {
+    .post-grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 3fr));
+    }
+    .post-item img {
+        height: 140px;
+    }
+}
+
+@media(max-width: 500px) {
+    .post-grid {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    }
+    .post-item img {
+        height: 130px;
+    }
+}

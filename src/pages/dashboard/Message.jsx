@@ -33,6 +33,7 @@ export default function Message() {
     const [messageContent, setMessageContent] = useState("");
     const [sender, setSender] = useState("");
     const [senderProfilePic,setSenderProfilePic] = useState("");
+    const [isChatListOpen, setIsChatListOpen] = useState(false);
 
     const messagesEndRef = useRef(null);
     const chatBoxRef = useRef(null);
@@ -171,16 +172,26 @@ export default function Message() {
         border: `2px solid ${theme.palette.background.paper}`,
     }));
 
+    const toggleChatList = () => {
+        setIsChatListOpen(!isChatListOpen);
+    };
+
+    const selectChat = (receiver) => {
+        fetchLoadChatMessages(receiver);
+        setIsChatListOpen(false);
+    };
 
     return (
-        <div style={{ display: "flex", height: "100vh" }}>
-            <div className="left-section-message">
+        <div style={{display: "flex", height: "100vh"}}>
+            <button className="hamburger-menu" onClick={toggleChatList}>📩</button>
+
+            <div className={`left-section-message ${isChatListOpen ? "open" : ""}`}>
                 <ul className="chat-list">
                     {chatUsers.map((chatUser, index) => (
                         <li
                             key={index}
                             className={`chat-item ${currentChat === chatUser.receiver ? "active" : ""}`}
-                            onClick={() => fetchLoadChatMessages(chatUser.receiver)}
+                            onClick={() => selectChat(chatUser.receiver)}
                         >
                             <img
                                 src={chatUser.profilePicture || img_null}
@@ -198,7 +209,7 @@ export default function Message() {
                 {currentChat ? (
                     <>
                         <div style={{padding: "20px", borderBottom: "1px solid #ddd"}}>
-                            <h3 style={{color: "gray", marginBottom: "10px",cursor:"pointer"}}
+                            <h3 style={{color: "gray", marginBottom: "10px", cursor: "pointer"}}
                                 onClick={() => handleUserClick(currentChat)}
                             >Chat with {currentChat}</h3>
 

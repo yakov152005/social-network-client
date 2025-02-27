@@ -6,7 +6,7 @@
     overflow-y: auto;
     scrollbar-width: thin;
     scrollbar-color: #ffffff #f1f1f1;
-    width: 80%;
+    width: 57%;
     margin: 0 auto;
     padding: 20px;
     box-sizing: border-box;
@@ -85,5 +85,11 @@
     width: 300px;
     background: #ffffff;
     border-radius: 10px;
+}
+
+@media(max-width: 800px) {
+    .profile-container {
+        width: 90%;
+    }
 }
 

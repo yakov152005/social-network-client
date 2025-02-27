@@ -4,7 +4,7 @@
     padding: 20px;
     max-width: 800px;
     margin-top: -60px;
-    margin-left: 200px;
+    margin-left: 550px;
     background-color: #ffffff;
     border-radius: 10px;
     scrollbar-width: thin;
@@ -80,7 +80,31 @@
     font-size: 14px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1800px){
+    .feed-container {
+        margin-left: 450px;
+    }
+}
+
+@media (max-width: 1600px){
+    .feed-container {
+        margin-left: 350px;
+    }
+}
+
+@media (max-width: 1300px){
+    .feed-container {
+        margin-left: 250px;
+    }
+}
+
+@media (max-width: 1200px){
+    .feed-container {
+        margin-left: 150px;
+    }
+}
+
+@media (max-width: 768px),(max-width: 968px) {
     .feed-container {
         width: 100%;
         margin: 0;
@@ -135,3 +159,4 @@
         font-size: 12px;
     }
 }
+
