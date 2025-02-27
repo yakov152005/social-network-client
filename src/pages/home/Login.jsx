@@ -51,7 +51,11 @@ export default function Login({ onLogin }) {
 
     const loginUser = async () => {
         if (!formData.username || !formData.password) {
-            setErrorMessage("Please fill all fields.");
+            await Swal.fire({
+                title: "Error",
+                text: "Please fill all fields.",
+                icon: "error",
+            });
             return;
         }
 
@@ -190,9 +194,15 @@ export default function Login({ onLogin }) {
                                                     placeholder="Username"
                                                     value={formData.username}
                                                     onChange={handleChange}
+                                                    style={{paddingLeft: "3.5rem"}}
                                                 />
-                                                <label htmlFor="username">Username</label>
+                                                <label htmlFor="username" className="label-user"
+                                                       style={{paddingLeft: "3.5rem"}}>Username</label>
+                                                <div className="position-absolute icon-container" style={styleIcon}><i
+                                                    className="fa-solid fa-user" style={styleI}></i></div>
+                                                <div className="position-absolute" style={styleFinal}></div>
                                             </div>
+
                                             <div className="form-floating mb-3">
                                                 <input
                                                     type={!showPassword ? "password" : "text"}
@@ -201,8 +211,14 @@ export default function Login({ onLogin }) {
                                                     placeholder="Password"
                                                     value={formData.password}
                                                     onChange={handleChange}
+                                                    style={{paddingLeft: "3.5rem"}}
                                                 />
-                                                <label htmlFor="password">Password</label>
+                                                <label htmlFor="password" className="label-user"
+                                                       style={{paddingLeft: "3.5rem"}}>Password</label>
+                                                <div className="position-absolute icon-container" style={styleIcon}>
+                                                    <i className="fa-sharp-duotone fa-solid fa-lock" style={styleI}></i>
+                                                </div>
+                                                <div className="position-absolute" style={styleFinal}></div>
 
                                                 {formData.password.length > 0 &&
                                                     <img
@@ -212,8 +228,15 @@ export default function Login({ onLogin }) {
                                                         onClick={handleShowPassword}
                                                     />
                                                 }
-
                                             </div>
+
+                                            <>
+                                                <a onClick={() => navigate(NAV_FORGET_PASSWORD)}
+                                                   className="icon-link forgot-password-link">
+                                                    <strong>Forgot password ?</strong>
+                                                </a>
+                                            </>
+
 
                                             {errorMessage && (
                                                 <div className="error-message">
@@ -224,7 +247,7 @@ export default function Login({ onLogin }) {
                                             <div className="d-grid">
                                                 <button className="btn btn-primary"
                                                         type="button"
-                                                        disabled={!(formData.username && formData.password)}
+                                                    /*disabled={!(formData.username && formData.password)} */
                                                         onClick={loginUser}
                                                 >
                                                     Login
@@ -257,23 +280,6 @@ export default function Login({ onLogin }) {
                                                     </a>
                                                 </div>
 
-                                                <div style={{color: "red"}}>
-                                                    <a onClick={() => navigate(NAV_FORGET_PASSWORD)}
-                                                       className="icon-link"
-                                                       style={{
-                                                           cursor: "pointer",
-                                                           textDecoration: "underline",
-                                                           color: "red",
-                                                           display: "inline-flex",
-                                                           alignItems: "center",
-                                                           marginLeft: "100px"
-                                                       }}>
-                                                        <strong>
-                                                            Forgot password&nbsp;
-                                                            <i className="bi bi-question"></i>
-                                                        </strong>
-                                                    </a>
-                                                </div>
                                             </div>
 
                                         </div>
@@ -322,25 +328,46 @@ export default function Login({ onLogin }) {
 
             <div className="right-section">
                 {!isVerification ? (
-                    <div>
-                        <img src={logo} alt="Logo" className="logo"/>
-                        <p className="site-info"
-                           style={{color: "black", fontFamily: 'Brush Script MT', marginLeft: "40px"}}>
-                            Welcome back, log in to continue creating new experiences.
-                        </p>
-                    </div>
+                        <div className="right-content">
+                            <img src={logo} alt="Logo" className="logo"/>
+
+                            <h2 className="welcome-title"> 🎉 Welcome Back!</h2>
+
+                            <p className="site-info">Join a vibrant community and start creating unforgettable
+                                experiences.</p>
+
+                            <div className="features">
+                                <div className="feature-item">
+                                    <i className="bi bi-people"></i> Connect with friends & new people
+                                </div>
+                                <div className="feature-item">
+                                    <i className="bi bi-chat"></i> Engage in meaningful conversations
+                                </div>
+                                <div className="feature-item">
+                                    <i className="bi bi-images"></i> Share moments, photos, and stories
+                                </div>
+                                <div className="feature-item">
+                                    <i className="bi bi-globe"></i> Explore trending topics & discussions
+                                </div>
+                            </div>
+
+                            <p className="cta-text">💡Don’t have an account? <span
+                                onClick={() => navigate(NAV_CREATE_ACCOUNT)} className="signup-link">Sign up now!</span>
+                            </p>
+                        </div>
 
                 ) : (
-                    <div >
+                    <div>
                         <IconLockPassword stroke={1} size={"200px"} color={"black"}/>
-                        <h2 style={{color:"red"}}>Please note!</h2>
+                        <h2 style={{color: "red"}}>Please note!</h2>
                         <p className="site-info-verification">
                             The requested resource requires a <strong>strong level of authentication</strong>.
                         </p>
                         <p className="site-info-verification">
                             In order to verify your
                             identity,
-                            an <strong>SMS</strong> with an <strong>Authentication Code</strong> will be sent to your <strong>mobile phone</strong> (in the next few
+                            an <strong>SMS</strong> with an <strong>Authentication Code</strong> will be sent to
+                            your <strong>mobile phone</strong> (in the next few
                             minutes).
                         </p>
                         <p className="site-info-verification">

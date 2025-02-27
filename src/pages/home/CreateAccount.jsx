@@ -426,7 +426,7 @@ export default function CreateAccount() {
                                             className="btn btn-primary"
                                             type="button"
                                             onClick={createAccount}
-                                            disabled={(!(formData.username && formData.password && formData.passwordConfirm && formData.email && formData.age))}
+                                            /*disabled={(!(formData.username && formData.password && formData.passwordConfirm && formData.email && formData.age))}*/
                                         >
                                             Create Account
                                         </button>
@@ -464,11 +464,40 @@ export default function CreateAccount() {
                             </div>
 
                             <div className="right-section">
-                                <img src={logo} alt="Logo" className="logo"/>
-                                <p className="site-info" style={{color: "black", fontFamily: 'Brush Script MT'}}>
-                                    Welcome to our amazing social network platform! Connect, share, and grow with us.
-                                </p>
+                                <div className="right-content">
+                                    <img src={logo} alt="Logo" className="logo"/>
+
+                                    <h2 className="welcome-title"> 🎉 Join Our Social Network Today!</h2>
+
+                                    <p className="site-info">
+                                        Create an account and start connecting, sharing, and exploring amazing
+                                        content with people worldwide.
+                                    </p>
+
+                                    <div className="features">
+                                        <div className="feature-item">
+                                            <i className="fas fa-user-plus"></i> Build your personal profile and
+                                            showcase your interests
+                                        </div>
+                                        <div className="feature-item">
+                                            <i className="fas fa-users"></i> Discover and connect with like-minded
+                                            people
+                                        </div>
+                                        <div className="feature-item">
+                                            <i className="fas fa-heart"></i> Engage with exciting content and
+                                            communities
+                                        </div>
+                                        <div className="feature-item">
+                                            <i className="fas fa-bolt"></i> Get instant updates on trending topics
+                                        </div>
+                                    </div>
+
+                                    <p className="cta-text">
+                                        🚀 Don't wait – sign up now and be part of the next big thing!
+                                    </p>
+                                </div>
                             </div>
+
                         </>
                     )}
         </div>

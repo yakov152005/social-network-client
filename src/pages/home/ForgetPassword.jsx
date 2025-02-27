@@ -8,12 +8,12 @@ import {
     URL_SERVER_SIDE
 } from "../../utils/Constants";
 import {useNavigate} from "react-router-dom";
-import "../../css/home/LoginAndCreate.css"
 import "../../css/LoadingStyle.css"
 import "../../css/home/ForgetPasswordStyle.css"
 import logo from "../../assets/image/lock-square-rounded_notFill.png";
 import Swal from "sweetalert2";
 import loader from "../../assets/form/loader.png"
+import {IconMailFilled} from "@tabler/icons-react";
 
 
 export default function ForgetPassword() {
@@ -33,6 +33,14 @@ export default function ForgetPassword() {
     };
 
     const handleClick = async () => {
+        if (!username || !emailForReset){
+            await Swal.fire({
+                title: "Error",
+                text: "Please fill all fields.",
+                icon: "error",
+            });
+            return;
+        }
 
         const result = await Swal.fire({
             title: "Are you sure?",
@@ -75,20 +83,37 @@ export default function ForgetPassword() {
                 setLoading(false);
             }
         }
-
     };
 
+    const styleIcon = {
+        left: "0.8rem",
+        top: "50%",
+        transform: "translateY(-50%)",
+        pointerEvents: "none",
+        display: "flex",
+        alignItems: "center",
+    };
+    const styleI = {fontSize: "1.2rem", color: "#6c757d"};
+    const styleFinal = {
+        left: "2.5rem",
+        top: "50%",
+        transform: "translateY(-50%)",
+        height: "1.5rem",
+        width: "1px",
+        backgroundColor: "#ddd",
+    }
+
     return (
-        <div className="auth-container">
-            <div className="left-section">
-                <div className="floating-form">
+        <div className="auth-container-forget-password">
+            <div className="left-section-forget-password">
+                <div className="floating-form-forget-password">
 
                     {loading && (
                         <div className="loading-overlay">
                             <div className="loading-box">
                                 <div className="spinner"></div>
                                 <p>Wait a few seconds while the process is processed...
-                                    <img src={loader} alt="Logo" style={{width:"25px",height:"25px"}}/>
+                                    <img src={loader} alt="Logo" style={{width: "25px", height: "25px"}}/>
                                 </p>
                             </div>
                         </div>
@@ -96,7 +121,7 @@ export default function ForgetPassword() {
 
                     {!loading && (
                         <div>
-                            <h3 className="form-title">Reset Password</h3>
+                            <h3 className="form-title-forget-password">Reset Password</h3>
                             <div className="form-floating mb-3">
                                 <input
                                     type="text"
@@ -105,8 +130,13 @@ export default function ForgetPassword() {
                                     placeholder="Username"
                                     value={username}
                                     onChange={handleChangeUser}
+                                    style={{paddingLeft: "3.5rem"}}
                                 />
-                                <label htmlFor="username">Username</label>
+                                <label htmlFor="username" className="label-user"
+                                       style={{paddingLeft: "3.5rem"}}>Username</label>
+                                <div className="position-absolute icon-container" style={styleIcon}><i
+                                    className="fa-solid fa-user" style={styleI}></i></div>
+                                <div className="position-absolute" style={styleFinal}></div>
                             </div>
                             <div className="form-floating mb-3">
                                 <input
@@ -116,21 +146,26 @@ export default function ForgetPassword() {
                                     placeholder="Email"
                                     value={emailForReset}
                                     onChange={handleChangeMail}
+                                    style={{paddingLeft: "3.5rem"}}
                                 />
-                                <label htmlFor="emailReset">Email</label>
+                                <label htmlFor="email" className="label-user"
+                                       style={{paddingLeft: "3.5rem"}}>Email</label>
+                                <div className="position-absolute icon-container" style={styleIcon}>
+                                    <IconMailFilled stroke={2} style={styleI}/>
+                                </div>
+                                <div className="position-absolute" style={styleFinal}></div>
                             </div>
 
                             {errorMessage && (
-                                <div className="error-message"><strong>{errorMessage}</strong></div>
+                                <div className="error-message-forget-password"><strong>{errorMessage}</strong></div>
                             )}
 
                             <div className="d-grid">
                                 <button className="btn btn-danger"
                                         type="button"
-                                        disabled={!(emailForReset && username)}
+                                    /*disabled={!(emailForReset && username)} */
                                         onClick={handleClick}>
-                                    Reset password&nbsp;
-                                    <i className="bi bi-envelope-at"></i>
+                                    Reset password
                                 </button>
                             </div>
 
@@ -159,8 +194,8 @@ export default function ForgetPassword() {
                                     </a>
                                 </div>
 
-                                <div style={{marginTop:"10px"}}>
-                                    <p style={{color:"green" , fontSize:"15px"}}>Is there any problem?&nbsp;
+                                <div style={{marginTop: "10px"}}>
+                                    <p style={{color: "gray", fontSize: "15px"}}>Is there any problem?&nbsp;
                                         <a
                                             href={MAILTO + MAIL_SERVICE}
                                             className={"a-link-forget"}>
@@ -179,17 +214,44 @@ export default function ForgetPassword() {
                 </div>
             </div>
 
-            <div className="right-section">
-                <img src={logo} alt="Logo" className="logo"/>
-                <h4 className="site-info" style={{color: "black", font: "bold"}}><strong>Having trouble logging
-                    in?</strong></h4>
-                <p className="site-info" style={{color: "white", fontSize: "14px"}}>
-                    <strong>
-                        Enter your username and your email address
-                        and we'll send you a new password to get back into your account.
-                    </strong>
-                </p>
+            <div className="right-section-forget-password">
+                <div className="right-content-forget-password">
+                    <img src={logo} alt="Logo" className="logo-forget-password"/>
+
+                    <h2 className="help-title">🔐 Trouble Logging In?</h2>
+
+                    <p className="help-text">
+                        No worries! Enter your <strong>username</strong> and <strong>email address</strong>, and we'll send you instructions
+                        to <strong>reset your password</strong> and get back to your account in no time.
+                    </p>
+
+                    <div className="steps">
+                        <div className="step-item">
+                            <i className="fas fa-user"></i> Enter your username
+                        </div>
+                        <div className="step-item">
+                            <i className="fas fa-envelope"></i> Provide your email address
+                        </div>
+                        <div className="step-item">
+                            <i className="fas fa-key"></i> Check your inbox
+                            for submit reset instructions
+                        </div>
+                        <div className="step-item">
+                        <i className="fas fa-smile"></i> Receive a new password by email and change it in your personal area after logging in.
+                        </div>
+                    </div>
+
+                    <p className="support-text">
+                        💡 Need extra help?
+                         <a
+                             href={MAILTO + MAIL_SERVICE}
+                             className={"contact-link"}>
+                               Contact Support
+                         </a>
+                    </p>
+                </div>
             </div>
+
         </div>
     )
 };

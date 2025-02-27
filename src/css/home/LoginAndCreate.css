@@ -1,9 +1,9 @@
 .auth-container {
     display: flex;
     height: 100vh;
-    margin: 0;
-    padding: 0 0 0 0;
-    background: linear-gradient(to left, #002f4b, #ffffff);
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to right, #ffffff, #ffffff, #2071d8);
     box-shadow: 10px 0px 10px rgba(0.3, 0.3, 2, 0.3);
     box-shadow: 0px 10px 10px rgba(0.3, 0.3, 2, 0.4);
 }
@@ -17,25 +17,85 @@
 }
 
 .left-section {
-    background: rgba(255, 255, 255, 0.8);
+    background: none;
 }
 
 .right-section {
-    background: linear-gradient(to bottom right,  #002f4b, #ffffff);
     color: white;
     text-align: center;
+    padding: 40px;
 
 }
 
-.logo {
+.logo{
     max-width: 190px;
     margin-bottom: 20px;
 }
 
 .site-info {
-    font-size: 1.7em;
-    max-width: 80%;
+    font-size: 1.2rem;
+    color: #1435f3;
     line-height: 1.6;
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+
+.right-content {
+    max-width: 90%;
+}
+
+.welcome-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #465df1;
+    margin-top: 20px;
+}
+
+.features {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    font-size: 1.1rem;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 10px;
+    border-radius: 10px;
+    width: 80%;
+    text-align: left;
+    margin-bottom: 10px;
+    transition: background 0.3s ease-in-out;
+}
+
+.feature-item i {
+    color: #FFD700;
+    margin-right: 10px;
+    font-size: 1.5rem;
+}
+
+.feature-item:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.cta-text {
+    cursor: pointer;
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #FFD700;
+    margin-top: 20px;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.8; }
+    100% { opacity: 1; }
 }
 
 .site-info-verification {
@@ -65,9 +125,13 @@
 }
 
 .error-message {
+    background: rgba(255, 0, 0, 0.1);
     color: red;
-    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
     text-align: center;
+    transition: all 0.3s ease-in-out;
 }
 
 .custom-arrow-icon {
@@ -140,14 +204,43 @@
 }
 
 
+.forgot-password-link {
+    cursor: pointer;
+    color: blue;
+    display: inline-flex;
+    align-items: center;
+    margin-left: 235px;
+    margin-bottom: 25px;
+    font-size: 14px;
+    text-decoration: none;
+    transition: text-decoration 0.3s ease-in-out;
+}
+
+.forgot-password-link:hover {
+    text-decoration: underline;
+}
+
+
+.btn-primary {
+    background: linear-gradient(90deg, #007BFF, #0056b3);
+    border: none;
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(90deg, #0056b3, #003366);
+    transform: scale(1.05);
+    box-shadow: 0px 0px 10px rgba(0, 91, 255, 0.5);
+}
+
+
 @media (max-width: 768px) {
     .auth-container {
         flex-direction: column;
+        padding: 10px;
         height: auto;
-        min-height: 100vh;
-        border-radius: 5px;
-        padding: 20px;
-        box-shadow: none;
+        border-radius: 10px;
+        background: linear-gradient(to bottom, #ffffff, #ffffff, #4c78b5);
     }
 
     .left-section, .right-section {
@@ -157,12 +250,13 @@
     }
 
     .left-section {
-        background: rgba(255, 255, 255, 0.9);
+        background: none;
         padding: 20px 10px;
     }
 
+
     .right-section {
-        background: linear-gradient(to bottom, #002f4b, #ffffff);
+        background: none;
         color: black;
         padding: 20px;
     }
@@ -179,10 +273,9 @@
 
     .floating-form {
         width: 100%;
-        max-width: 350px;
+        max-width: 90%;
         padding: 15px;
-        border-radius: 10px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+
     }
 
     .form-title {
@@ -195,6 +288,10 @@
         top: 50%;
         width: 20px;
         height: 20px;
+    }
+    .forgot-password-link {
+        margin-left: 190px;
+        font-size: 12px;
     }
 }
 
