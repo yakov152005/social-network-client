@@ -8,12 +8,13 @@ import {
     URL_SERVER_SIDE
 } from "../../utils/Constants";
 import {useNavigate} from "react-router-dom";
-import "../../css/LoadingStyle.css"
+import "../../css/loaders/LoadingGeneralStyle.css"
 import "../../css/home/ForgetPasswordStyle.css"
 import logo from "../../assets/image/lock-square-rounded_notFill.png";
 import Swal from "sweetalert2";
 import loader from "../../assets/form/loader.png"
 import {IconMailFilled} from "@tabler/icons-react";
+import "../../css/PopupStyle.css"
 
 
 export default function ForgetPassword() {
@@ -38,6 +39,15 @@ export default function ForgetPassword() {
                 title: "Error",
                 text: "Please fill all fields.",
                 icon: "error",
+                background: "#1a1a2e",
+                color: "#ffffff",
+                confirmButtonColor: "#5269bc",
+                customClass: {
+                    popup: "swal-custom-popup",
+                    container: "swal2-container",
+                    title: "swal-custom-title",
+                    confirmButton: "swal-custom-confirm",
+                }
             });
             return;
         }
@@ -47,10 +57,19 @@ export default function ForgetPassword() {
             text: "Before you reset your password, make sure you remember your email password and that you are confident in this process.",
             icon: "warning",
             showCancelButton: true,
-            confirmButtonColor: "#d33",
-            cancelButtonColor: "#3085d6",
+            confirmButtonColor: "#5269bc",
+            cancelButtonColor: "#b4c2cf",
             confirmButtonText: "Yes, Reset it!",
             cancelButtonText: "Cancel",
+            background: "#1a1a2e",
+            color: "#ffffff",
+            customClass: {
+                popup: "swal-custom-popup",
+                container: "swal2-container",
+                title: "swal-custom-title",
+                confirmButton: "swal-custom-confirm",
+                cancelButton: "swal-custom-cancel",
+            }
         });
 
         if (result.isConfirmed) {
@@ -59,9 +78,18 @@ export default function ForgetPassword() {
                 const response = await axios.get(URL_SERVER_SIDE + URL_RESET_PASSWORD + `/${emailForReset}&${username}`);
                 if (response.data.success) {
                     Swal.fire({
-                        title: "Success!",
-                        html: "The new password has been sent to your email... <i class='bi bi-envelope-at'></i>",
-                        icon: "success",
+                       title: "Success!",
+                       html: "The new password has been sent to your email... <i class='bi bi-envelope-at'></i>",
+                       icon: "success",
+                       background: "#1a1a2e",
+                       color: "#ffffff",
+                       confirmButtonColor: "#5269bc",
+                       customClass: {
+                           popup: "swal-custom-popup",
+                           container: "swal2-container",
+                           title: "swal-custom-title",
+                           confirmButton: "swal-custom-confirm",
+                       }
                     });
                     console.log(`{success: ${response.data.success}, error:{ ${response.data.error} }}`);
                     setTimeout(() => {
@@ -77,7 +105,7 @@ export default function ForgetPassword() {
                     setLoading(false);
                 }
             } catch (error) {
-                Swal.fire("Error", "Failed to reset password.", "error");
+                 Swal.fire("Error", "Failed to reset password.", "error");
                 setErrorMessage("Failed to reset password.");
                 console.error("Error get request Email", error);
                 setLoading(false);
@@ -221,8 +249,10 @@ export default function ForgetPassword() {
                     <h2 className="help-title">🔐 Trouble Logging In?</h2>
 
                     <p className="help-text">
-                        No worries! Enter your <strong>username</strong> and <strong>email address</strong>, and we'll send you instructions
-                        to <strong>reset your password</strong> and get back to your account in no time.
+                        No worries! Enter your <strong>username</strong> and <strong>email address</strong>,
+                        <p>and we'll send you instructions to <strong>reset your password</strong>
+                            <p> and get back to your account in no time.</p></p>
+
                     </p>
 
                     <div className="steps">

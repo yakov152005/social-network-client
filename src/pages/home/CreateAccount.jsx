@@ -1,14 +1,22 @@
 import React, {useState} from "react";
 import axios from "axios";
-import {NAV_LOGIN, TIME_LOADING, URL_CREATE_USER, URL_SERVER_SIDE} from "../../utils/Constants";
+import {
+    NAV_LOGIN,
+    TIME_LOADING,
+    URL_CREATE_USER,
+    URL_SERVER_SIDE
+} from "../../utils/Constants";
 import "../../css/home/LoginAndCreate.css";
-import "../../css/LoadingStyle.css"
+import "../../css/loaders/LoadingGeneralStyle.css"
 import logo from '../../assets/image/iconSocialNetWorkTheOriginalOne.png';
 import {useNavigate} from "react-router-dom";
 import {IconLockCheck, IconDeviceMobileFilled, IconMailFilled, IconBalloonFilled,IconMoodCheck } from '@tabler/icons-react';
 import showPass from "../../assets/form/show_password.png"
 import hidePass from "../../assets/form/hide_password.png"
 import Swal from "sweetalert2";
+import TermsAgreement from "../../components/home/TermsAgreement";
+import "../../css/PopupStyle.css"
+
 
 
 
@@ -20,6 +28,7 @@ export default function CreateAccount() {
 
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [confirmRadio,setConfirmRadio] = useState(false);
 
     const [formData, setFormData] = useState({
         username: "",
@@ -57,7 +66,7 @@ export default function CreateAccount() {
             case "username":
                 setValidation((prev) => ({
                     ...prev,
-                    username: value.length >= 3,
+                    username: value.length >= 2,
                 }));
                 break;
 
@@ -127,14 +136,52 @@ export default function CreateAccount() {
     const createAccount = async () => {
         const {username, password, passwordConfirm, phoneNumber, email, age} = formData;
 
+
+        if (!confirmRadio){
+            await Swal.fire({
+                title: "Please note",
+                text: "You must agree to the site terms and conditions.",
+                icon: "info",
+                background: "#1a1a2e",
+                color: "#ffffff",
+                confirmButtonColor: "#5269bc",
+                customClass: {
+                    popup: "swal-custom-popup",
+                    container: "swal2-container",
+                    title: "swal-custom-title",
+                    confirmButton: "swal-custom-confirm",
+                }
+            });
+            return;
+        }
+
         if (!username || !password || !passwordConfirm || !phoneNumber || !email || age <= 0) {
             await Swal.fire({
                 title: "Error",
                 text: "Please fill all fields.",
                 icon: "error",
+                background: "#1a1a2e",
+                color: "#ffffff",
+                confirmButtonColor: "#5269bc",
+                customClass: {
+                    popup: "swal-custom-popup",
+                    container: "swal2-container",
+                    title: "swal-custom-title",
+                    confirmButton: "swal-custom-confirm",
+                }
             });
             return;
         }
+
+        if (username.length < 2){
+            setFormData((prevFormData) => ({
+                ...prevFormData,
+                username: "",
+            }));
+            setErrorMessage("Username must be at least 2 characters.");
+            return;
+        }
+
 
         setLoading(true);
 
@@ -164,6 +211,15 @@ export default function CreateAccount() {
                         title: "Good job!",
                         text: "Success to add user. Email has been sent with all your details..",
                         icon: "success",
+                        background: "#1a1a2e",
+                        color: "#ffffff",
+                        confirmButtonColor: "#5269bc",
+                        customClass: {
+                            popup: "swal-custom-popup",
+                            container: "swal2-container",
+                            title: "swal-custom-title",
+                            confirmButton: "swal-custom-confirm",
+                        }
                     });
                     setLoading(false);
                     navigate(NAV_LOGIN);
@@ -186,8 +242,8 @@ export default function CreateAccount() {
                     ...prevFormData,
                     [fieldToClear]: "",
                 }));
+                setConfirmRadio(false);
                 setLoading(false);
-
             }
         } catch (error) {
             console.log("Error creating user", error);
@@ -199,8 +255,8 @@ export default function CreateAccount() {
             });
             */
             setErrorMessage("Failed to create user. Please try again later.");
+            setConfirmRadio(false);
             setLoading(false);
-
         }
     };
 
@@ -276,7 +332,7 @@ export default function CreateAccount() {
                                             className="fa-solid fa-user" style={styleI}></i></div>
                                         <div className="position-absolute" style={styleFinal}></div>
                                         <div className="valid-feedback">Looks good!</div>
-                                        <div className="invalid-feedback">Username must be at least 3 characters.</div>
+                                        <div className="invalid-feedback">Username must be at least 2 characters.</div>
                                     </div>
 
 
@@ -348,7 +404,7 @@ export default function CreateAccount() {
 
                                     <div className="form-floating mb-3 position-relative">
                                         <input
-                                            type="tel"
+                                            type="number"
                                             className={`form-control ${formData.phoneNumber === "" ? "" : validation.phoneNumber ? 'is-valid' : 'is-invalid'}`}
                                             id="phoneNumber"
                                             placeholder="Phone Number"
@@ -421,14 +477,15 @@ export default function CreateAccount() {
                                         </div>
                                     )}
 
+                                    <TermsAgreement setConfirmRadio={setConfirmRadio} />
+
                                     <div className="d-grid">
-                                        <button
-                                            className="btn btn-primary"
-                                            type="button"
-                                            onClick={createAccount}
-                                            /*disabled={(!(formData.username && formData.password && formData.passwordConfirm && formData.email && formData.age))}*/
-                                        >
-                                            Create Account
+                                    <button
+                                        className="btn btn-primary"
+                                        type="button"
+                                        onClick={createAccount}
+                                    >
+                                        Sign Up
                                         </button>
                                     </div>
 
@@ -470,8 +527,8 @@ export default function CreateAccount() {
                                     <h2 className="welcome-title"> 🎉 Join Our Social Network Today!</h2>
 
                                     <p className="site-info">
-                                        Create an account and start connecting, sharing, and exploring amazing
-                                        content with people worldwide.
+                                        Create an account and start connecting, sharing, and
+                                        <p>exploring amazing content with people worldwide.</p>
                                     </p>
 
                                     <div className="features">
@@ -480,7 +537,7 @@ export default function CreateAccount() {
                                             showcase your interests
                                         </div>
                                         <div className="feature-item">
-                                            <i className="fas fa-users"></i> Discover and connect with like-minded
+                                        <i className="fas fa-users"></i> Discover and connect with like-minded
                                             people
                                         </div>
                                         <div className="feature-item">

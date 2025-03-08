@@ -4,8 +4,9 @@ import img_null from "../../assets/navbar/User_Profile_null.png";
 import Post from "./Post";
 import FollowListComponent from "./FollowListComponent";
 import FollowersAPI from "../../api/FollowersAPI";
+import {CircularProgress} from "@mui/material";
 
-export default function ProfileSearchComponent({profileData, isFollowing, onFollowToggle, onSendMessage,username}) {
+export default function ProfileSearchComponent({profileData, isFollowing, onFollowToggle,loadingFollow, onSendMessage,username}) {
     const [getAllFollowers, setGetAllFollowers] = useState([]);
     const [getAllFollowing, setGetAllFollowing] = useState([]);
     const [showFollowers, setShowFollowers] = useState(false);
@@ -45,13 +46,19 @@ export default function ProfileSearchComponent({profileData, isFollowing, onFoll
                     <h1>
                         <strong>{profileData.username ? profileData.username.toLocaleUpperCase() : "Loading..."}</strong>
                         &nbsp; &nbsp;
+
                         <button
                             onClick={onFollowToggle}
                             className={"btn btn-primary"}
-                            style={{fontSize: "12px"}}
+                            style={{fontSize: "12px",width: "70px",}}
+                            disabled={loadingFollow}
                         >
-                            {isFollowing ? "Unfollow" : "Follow"}
+                            <span style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
+                               {loadingFollow ? <CircularProgress size={16} color="inherit"/> : isFollowing ? "Unfollow" : "Follow"}
+                           </span>
                         </button>
+
+
                         &nbsp; &nbsp;
                         <button
                             onClick={onSendMessage}
@@ -68,7 +75,7 @@ export default function ProfileSearchComponent({profileData, isFollowing, onFoll
                         <button
                             className="btn btn-link"
                             onClick={handleShowFollowers}
-                            style={{fontSize: "15px", textDecoration: "none",color:"#555"}}
+                            style={{fontSize: "15px", textDecoration: "none", color: "#555"}}
                         >
                             followers <strong>{profileData.followers}</strong>
                         </button>

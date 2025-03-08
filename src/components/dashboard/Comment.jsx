@@ -11,6 +11,10 @@ import FormatDate from "../../utils/FormatDate"
 import "../../css/components/CommentStyle.css"
 import img_null from "../../assets/navbar/User_Profile_null.png"
 import {useNavigate} from "react-router-dom";
+import { CircularProgress } from "@mui/material";
+import EmojiPicker from "emoji-picker-react";
+import emojiEmpty from "../../assets/form/happiness.png"
+
 
 export default function Comment({ postId, username ,commentCount: initialCommentCount}) {
     const [comments, setComments] = useState([]);
@@ -19,7 +23,8 @@ export default function Comment({ postId, username ,commentCount: initialComment
     const [noShowComments,setNoShowComments] = useState(false);
     const [commentCount, setCommentCount] = useState(initialCommentCount);
     const navigate = useNavigate();
-
+    const [loadingCommentId, setLoadingCommentId] = useState(null);
+    const [showPicker, setShowPicker] = useState(false);
 
     const fetchComments = async () => {
         if (!postId || showComments) {
@@ -46,6 +51,7 @@ export default function Comment({ postId, username ,commentCount: initialComment
             return;
         }
 
+        setLoadingCommentId(postId);
         try {
             const payload = {
                 postId,
@@ -56,17 +62,22 @@ export default function Comment({ postId, username ,commentCount: initialComment
             const response = await axios.post(URL_SERVER_SIDE + URL_ADD_COMMENT, payload);
 
             if (response.data.success) {
-                setComments((prev) => [
+                setTimeout(() => { setComments((prev) => [
                     ...prev,
                     { id: `temp-${Date.now()}`, username, content: newComment, date: new Date() },
                 ]);
                 setCommentCount((prevCount) => prevCount + 1);
                 setNewComment("");
+                setLoadingCommentId(null);
+                }, 1500);
+
             } else {
                 console.error("Error adding comment:", response.data.error);
+                setLoadingCommentId(null);
             }
         } catch (error) {
             console.error("Error adding comment:", error);
+            setLoadingCommentId(null);
         }
     };
 
@@ -130,6 +141,7 @@ export default function Comment({ postId, username ,commentCount: initialComment
                     </ul>
                 </div>
             )}
+
             <div className="comment-input-container">
                 <textarea
                     className="comment-textarea"
@@ -137,6 +149,10 @@ export default function Comment({ postId, username ,commentCount: initialComment
                     onChange={(e) => setNewComment(e.target.value)}
                     placeholder="Write a comment..."
                     onKeyDown={(e) => {
+                        if (loadingCommentId === postId) {
+                            e.preventDefault();
+                            return;
+                        }
                         if (e.key === "Enter" && !e.shiftKey) {
                             e.preventDefault();
                             if (newComment.trim()) {
@@ -144,10 +160,29 @@ export default function Comment({ postId, username ,commentCount: initialComment
                             }
                         }
                     }}
+                    disabled={loadingCommentId === postId}
                 />
+
+                <button className="emoji-button" onClick={() => setShowPicker(!showPicker)}  disabled={loadingCommentId === postId}>
+                    {loadingCommentId === postId ? <CircularProgress size={30} color="inherit" thickness={4} style={{marginBottom:"-5px",marginLeft:"-10px"}}/> :
+                        <img src={emojiEmpty} alt={"emoji"} className="emoji-picker-empty"/>}
+                </button>
+
+                {showPicker && (
+                    <div className="emoji-picker-container">
+                        <EmojiPicker
+                            onEmojiClick={(emoji) => {
+                                setNewComment((prev) => prev + emoji.emoji);
+                                setShowPicker(false);
+                            }}
+                        />
+                    </div>
+                )}
+
                 {newComment.trim() && (
-                    <button className="comment-submit-button" onClick={handleAddComment}>
-                        Post
+                    <button className="comment-submit-button" onClick={handleAddComment}
+                            disabled={loadingCommentId === postId}>
+                        {loadingCommentId === postId ? <div style={{color: "inherit"}}/>  : "Post"}
                     </button>
                 )}
             </div>

@@ -6,7 +6,7 @@
     overflow-y: auto;
     scrollbar-width: thin;
     scrollbar-color: #ffffff #f1f1f1;
-    width: 57%;
+    width: 42%;
     margin: 0 auto;
     padding: 20px;
     box-sizing: border-box;
@@ -58,7 +58,7 @@
     border: 1px solid #ccc;
 }
 
-.img-profile-uploade {
+.img-profile-upload{
     width: 120px;
     height: 120px;
     border-radius: 50%;
@@ -87,9 +87,29 @@
     border-radius: 10px;
 }
 
+@media(max-width: 1750px) {
+    .profile-container {
+        width: 60%;
+    }
+}
+
+@media(max-width: 1450px) {
+    .profile-container {
+        width: 60%;
+    }
+}
+
+@media(max-width: 950px) {
+    .profile-container {
+        width: 70%;
+    }
+}
+
 @media(max-width: 800px) {
     .profile-container {
         width: 90%;
     }
 }
+
+
 

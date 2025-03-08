@@ -17,6 +17,8 @@ import img_null from "../../assets/navbar/User_Profile_null.png"
 import {Badge} from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import { styled } from '@mui/material/styles';
+import EmojiPicker from "emoji-picker-react";
+import emojiEmpty from "../../assets/form/happiness.png"
 
 
 export default function Message() {
@@ -24,7 +26,6 @@ export default function Message() {
     const params = new URLSearchParams(location.search);
     const receiverFromProfileSearch = params.get("receiver");
     const navigate = useNavigate();
-    console.log(receiverFromProfileSearch)
 
     const [chatUsers, setChatUsers] = useState([]);
     const [currentChat, setCurrentChat] = useState(null);
@@ -34,6 +35,8 @@ export default function Message() {
     const [sender, setSender] = useState("");
     const [senderProfilePic,setSenderProfilePic] = useState("");
     const [isChatListOpen, setIsChatListOpen] = useState(false);
+
+
 
     const messagesEndRef = useRef(null);
     const chatBoxRef = useRef(null);
@@ -109,6 +112,8 @@ export default function Message() {
     useEffect(() => {
         scrollToBottom();
     }, [messages]);
+
+    const [showPicker, setShowPicker] = useState(false);
 
 
     useEffect(() => {
@@ -255,27 +260,46 @@ export default function Message() {
 
 
                         <div className="message-input-container">
-                            <textarea
-                                className="message-textarea"
-                                value={messageContent}
-                                onChange={(e) => setMessageContent(e.target.value)}
-                                placeholder="Type a message..."
-                                onKeyDown={(e) => {
-                                    if (e.key === "Enter" && !e.shiftKey) {
-                                        e.preventDefault();
-                                        if (messageContent.trim()) {
-                                            fetchSendMessage(currentChat);
+                            <div className="input-wrapper">
+                                <textarea
+                                    className="message-textarea"
+                                    value={messageContent}
+                                    onChange={(e) => setMessageContent(e.target.value)}
+                                    placeholder="Type a message..."
+                                    onKeyDown={(e) => {
+                                        if (e.key === "Enter" && !e.shiftKey) {
+                                            e.preventDefault();
+                                            if (messageContent.trim()) {
+                                                fetchSendMessage(currentChat);
+                                            }
                                         }
-                                    }
-                                }}
-                            />
-                            {messageContent && (
-                                <button
-                                    className="message-submit-button"
-                                    onClick={() => fetchSendMessage(currentChat)}
-                                >Send
+                                    }}
+                                />
+                                <button className="emoji-button-message" onClick={() => {
+                                    setTimeout(() => setShowPicker(!showPicker), 50);
+                                }} >
+                                    <img src={emojiEmpty} alt={"emoji"} className="emoji-picker-empty-message"/>
                                 </button>
-                            )}
+
+                                {showPicker && (
+                                    <div className="emoji-picker-message">
+                                        <EmojiPicker
+                                            onEmojiClick={(emoji) => {
+                                                setMessageContent((prev) => prev + emoji.emoji);
+                                                setShowPicker(false);
+                                            }}
+                                        />
+                                    </div>
+                                )}
+
+                                {messageContent && (
+                                    <button
+                                        className="message-submit-button"
+                                        onClick={() => fetchSendMessage(currentChat)}
+                                    >Send
+                                    </button>
+                                )}
+                            </div>
                         </div>
                     </>
                 ) : (

@@ -3,9 +3,10 @@
     height: 100vh;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(to right, #ffffff, #ffffff, #2071d8);
+    background: linear-gradient(to right, #ffffff, #ffffff, #b4c2ed);
     box-shadow: 10px 0px 10px rgba(0.3, 0.3, 2, 0.3);
     box-shadow: 0px 10px 10px rgba(0.3, 0.3, 2, 0.4);
+    overflow-y: hidden;
 }
 
 .left-section, .right-section {
@@ -27,10 +28,11 @@
 
 }
 
-.logo{
+.logo {
     max-width: 190px;
     margin-bottom: 20px;
 }
+
 
 .site-info {
     font-size: 1.2rem;
@@ -57,6 +59,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    color: #aab7c1;
 }
 
 .feature-item {
@@ -74,7 +77,7 @@
 }
 
 .feature-item i {
-    color: #FFD700;
+    color: #4458bd;
     margin-right: 10px;
     font-size: 1.5rem;
 }
@@ -87,9 +90,10 @@
     cursor: pointer;
     font-size: 1.3rem;
     font-weight: bold;
-    color: #FFD700;
+    color: #4458bd;
     margin-top: 20px;
     animation: pulse 2s infinite;
+    margin-left: -25px;
 }
 
 @keyframes pulse {
@@ -99,7 +103,7 @@
 }
 
 .verification-section {
-    color: white;
+    color: #35b843;
     text-align: center;
     padding: 30px;
     border-radius: 15px;
@@ -111,8 +115,32 @@
 .verification-title {
     font-size: 1.8rem;
     font-weight: bold;
-    color: #FFD700;
+    color: #5c7e5f;
     margin-top: 15px;
+}
+
+.feature-item-verification {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    font-size: 1.1rem;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 10px;
+    border-radius: 10px;
+    width: 80%;
+    text-align: left;
+    margin-bottom: 10px;
+    transition: background 0.3s ease-in-out;
+}
+
+.feature-item-verification i {
+    color: #5c7e5f;
+    margin-right: 10px;
+    font-size: 1.5rem;
+}
+
+.feature-item-verification:hover {
+    background: rgba(255, 255, 255, 0.2);
 }
 
 .verification-text {
@@ -135,24 +163,25 @@
     margin-top: 20px;
 }
 
-.support-link {
-    color: #FFD700;
+.support-link-verification {
+    margin-left: 5px;
+    color: #5c7e5f;
     font-weight: bold;
     cursor: pointer;
     text-decoration: none;
     transition: color 0.3s ease-in-out;
 }
 
-.support-link:hover {
+.support-link-verification:hover {
     text-decoration: underline;
-    color: #FFC107;
+    color: #5c7e5f;
 }
 
 .floating-form {
     background-color: rgba(255, 255, 255, 0.95);
     padding: 20px;
     border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 5);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     width: 100%;
     max-width: 400px;
     box-sizing: border-box;
@@ -171,7 +200,7 @@
     color: red;
     padding: 10px;
     border-radius: 5px;
-    font-weight: bold;
+    font-size: 12px;
     text-align: center;
     transition: all 0.3s ease-in-out;
 }

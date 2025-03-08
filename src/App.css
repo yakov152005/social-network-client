@@ -53,9 +53,22 @@ html, body {
 }
 
 .content {
-  max-width: 1900px;
+  max-width: 2600px;
   width: 100%;
 
+}
+
+.divider-container-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.divider-nav {
+  flex-grow: 1;
+  border: none;
+  border-top: 1px solid #ccc;
 }
 
 .navbar {
@@ -65,7 +78,7 @@ html, body {
   width: 100%;
   z-index: 1000;
   background-color: #ffffff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
   padding: 10px 20px;
   display: flex;
   justify-content: space-between;
@@ -188,7 +201,7 @@ html, body {
   list-style: none;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 930px) {
   .menu-button {
     display: block;
     position: fixed;
@@ -261,9 +274,6 @@ html, body {
     font-size: 17px;
   }
 }
-
-
-
 
 
 

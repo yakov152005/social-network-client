@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from "react";
 import axios from "axios";
 import {
-    MAX_SCROLL, NAV_PROFILE, NAV_PROFILE_SEARCH_BASE, URL_GET_ALL_LIKES_POST,
+    MAX_SCROLL, NAV_PROFILE, NAV_PROFILE_SEARCH_BASE, TIME_LIKE, URL_GET_ALL_LIKES_POST,
     URL_GET_POST_HOME_FEED,
     URL_LIKE,
     URL_SERVER_SIDE,
@@ -12,13 +12,14 @@ import img_null from "../../assets/navbar/User_Profile_null.png"
 
 import UsernameAPI from "../../api/UsernameAPI";
 import FormatDate from "../../utils/FormatDate";
-import {IconMoodEmpty,IconMoodSmile, IconHeart,IconHeartFilled, IconMessageCircle } from '@tabler/icons-react';
+import { IconCheck, IconAlertCircle ,IconHeart,IconHeartFilled, IconMessageCircle } from '@tabler/icons-react';
 import Comment from "../../components/dashboard/Comment";
 import {useNavigate} from "react-router-dom";
 import Avatar from '@mui/material/Avatar';
 import AvatarGroup from '@mui/material/AvatarGroup';
 import LikeListComponent from "../../components/dashboard/LikeListComponent";
-import {Tooltip} from "@mui/material";
+import {Tooltip,CircularProgress} from "@mui/material";
+import "../../css/loaders/LoadingGeneral.css"
 
 /**
  * לסדר את הסקרולר שיטען יותר מ20 פוסטים
@@ -37,6 +38,9 @@ export default function Dashboard() {
     const [showLikes, setShowLikes] = useState(false);
     const feedContainerRef = useRef(null);
     const navigate = useNavigate();
+    const [loadingLikeId, setLoadingLikeId] = useState(null);
+
+
 
 
     const fetchUserDetails = async () => {
@@ -49,7 +53,8 @@ export default function Dashboard() {
     };
 
 
-    const fetchHomeFeedPosts = async () => {
+    /*
+     const fetchHomeFeedPosts = async () => {
         if (isFetching || !hasMore || !username) {
             return;
         }
@@ -78,6 +83,57 @@ export default function Dashboard() {
             setIsFetching(false);
         }
     };
+     */
+
+    const fetchHomeFeedPosts = async () => {
+        if (isFetching || !hasMore || !username) {
+            return;
+        }
+
+        setIsFetching(true);
+
+        try {
+            const response = await axios.get(
+                URL_SERVER_SIDE + URL_GET_POST_HOME_FEED + `/${username}?page=${page}&size=${MAX_SCROLL}`
+            );
+
+            if (response.data.success) {
+                const postDto = response.data.postList;
+
+                if (postDto.length === 0) {
+                    setTimeout(() => {
+                        setHasMore(false);
+                    }, 1500);
+                } else {
+
+                    const preloadImages = postDto.map(post =>
+                        new Promise((resolve, reject) => {
+                            const img = new Image();
+                            img.src = post.imageUrl;
+                            img.onload = resolve;
+                            img.onerror = reject;
+                        })
+                    );
+
+                    await Promise.all(preloadImages);
+
+                    setPosts((prevPosts) => [...prevPosts, ...postDto]);
+                }
+            } else {
+                console.warn("No more posts to fetch.");
+                setTimeout(() => {
+                    setHasMore(false);
+                }, 1500);
+            }
+        } catch (error) {
+            console.error("Error fetching posts:", error);
+        } finally {
+            setTimeout(() => {
+                setIsFetching(false);
+            }, 1500);
+        }
+    };
+
 
     const fetchAllLikes = async (postId) => {
         try {
@@ -92,6 +148,7 @@ export default function Dashboard() {
     };
 
     const handleLikeToggle = async (postId,likedByUser) => {
+        setLoadingLikeId(postId);
         try {
             if (likedByUser){
                 const response = await axios.delete(URL_SERVER_SIDE + URL_UNLIKE + `/${postId}&${username}`);
@@ -105,21 +162,25 @@ export default function Dashboard() {
             const response = await axios.get(URL_SERVER_SIDE + URL_GET_ALL_LIKES_POST + `/${postId}`);
             if (response.data.success) {
                 const updatedLikes = response.data.likeDtos;
-                setPosts((prevPosts) =>
-                    prevPosts.map((post) => post.id === postId ?
-                        {
-                            ...post,
-                            likedByUser: !likedByUser,
-                            likesCount: post.likedByUser ? post.likesCount - 1 : post.likesCount + 1,
+                setTimeout(() => {
+                    setLoadingLikeId(null);
+                    setPosts((prevPosts) =>
+                        prevPosts.map((post) => post.id === postId ?
+                            {
+                                ...post,
+                                likedByUser: !likedByUser,
+                                likesCount: post.likedByUser ? post.likesCount - 1 : post.likesCount + 1,
                                 likes: updatedLikes,
-                        }
-                        : post
-                    ));
+                            }
+                            : post
+                        ));
+                }, TIME_LIKE);
             }
-
         }catch (error){
             console.error("Error to fetching likes.",error);
+            setLoadingLikeId(null);
         }
+
     }
 
 
@@ -188,30 +249,26 @@ export default function Dashboard() {
     const renderErrorMessage = () => {
         if (isFetching) {
             return (
-                <div style={{textAlign: "center"}}>
-                    <p style={{textAlign: "center", color: "gray" , fontSize: "25px"}}>
-                        Loading more posts...
-                    </p>
-                    <div className="spinner-border text-secondary" role="status">
-                    </div>
+                <div className="loading-container-dash">
+                    <div className="insta-spinner-dash"></div>
+                    <p className="loading-text-dash">Loading new posts...</p>
                 </div>
-
             );
         }
         if (!hasMore && posts.length > 0) {
             return (
-                <div>
-                    <p style={{textAlign: "center", color: "gray" , fontSize: "25px"}}>
-                        No more posts to display. <IconMoodSmile stroke={2} size={"30px"}/>
+                <div className="message-container-dash">
+                    <p className="message-text-dash">
+                        You've reached the end. Enjoy your feed. <IconCheck size={30} stroke={2} className="check-icon" />
                     </p>
                 </div>
             );
         }
         if (!isFetching && posts.length === 0) {
             return (
-                <div>
-                    <p style={{textAlign: "center", color: "gray", fontSize: "25px"}}>
-                        No posts available...<IconMoodEmpty stroke={2} size={"30px"}/>
+                <div className="message-container-dash">
+                    <p className="message-text-dash">
+                        No posts available at the moment. Check back later. <IconAlertCircle size={30} stroke={2} className="alert-icon" />
                     </p>
                 </div>
             );
@@ -219,117 +276,126 @@ export default function Dashboard() {
         return null;
     };
 
+
     const handleNavComment = (postId) => {
         setSelectedPostId((prev) => (prev === postId ? null : postId));
     };
 
 
     return (
-        <div className="feed-container" ref={feedContainerRef}>
-            <br/>
-            <div className="alert alert-link" role="alert">
-                <h1 style={{color: "blue", fontFamily: "Brush Script MT"}}>
-                    <strong>Welcome to your Home Feed, {username || "Guest"}!</strong>
-                </h1>
-            </div>
-            <div className="posts-grid">
-                {(posts && posts.length > 0) && (
-                    posts.map((post, index) => (
-                        <div className="post-card" key={index}>
-                            <div className="post-header">
-                                <div className="post-user-info">
-                                    <img
-                                        src={post.profilePicture || img_null}
-                                        alt="User Profile"
-                                        className="post-profile-picture"
-                                        onClick={() => handleUserClick(post.username)}
-                                    />
-                                    <p><strong
-                                        onClick={() => handleUserClick(post.username)}>{post.username}</strong></p>
-                                </div>
-                                <p className="post-date">{FormatDate(post.date)}</p>
-                            </div>
-                            <div className="post-content">
-                                {post.imageUrl && (
-                                    <img src={post.imageUrl} alt="Post" className="post-image"/>
-                                )}
-                            </div>
+               <div className="feed-container" ref={feedContainerRef}>
+                   <br/>
+                   <div className="alert alert-link" role="alert">
+                       <h1 style={{color: "blue", fontFamily: "Brush Script MT"}}>
+                           <strong>Welcome to your Home Feed, {username || "Guest"}!</strong>
+                       </h1>
+                   </div>
+                   <div className="posts-grid">
+                       {(posts && posts.length > 0) && (
+                           posts.map((post, index) => (
+                               <div className="post-card" key={index}>
+                                   <div className="post-header">
+                                       <div className="post-user-info">
+                                           <img
+                                               src={post.profilePicture || img_null}
+                                               alt="User Profile"
+                                               className="post-profile-picture"
+                                               onClick={() => handleUserClick(post.username)}
+                                           />
+                                           <p><strong
+                                               onClick={() => handleUserClick(post.username)}>{post.username}</strong>
+                                           </p>
+                                       </div>
+                                       <p className="post-date">{FormatDate(post.date)}</p>
+                                   </div>
+                                   <div className="post-content">
+                                       {post.imageUrl && (
+                                           <img src={post.imageUrl} alt="Post" className="post-image"/>
+                                       )}
+                                   </div>
 
-                            <div className="like-section">
-                                {post.likedByUser ? (
-                                    <Tooltip title="Unlike">
-                                        <IconHeartFilled
-                                            style={{cursor: "pointer", color: "red"}}
-                                            onClick={() => handleLikeToggle(post.id, post.likedByUser)}
-                                        />
-                                    </Tooltip>
-                                ) : (
-                                    <Tooltip title="Like">
-                                        <IconHeart
-                                            stroke={2}
-                                            style={{cursor: "pointer", color: "gray"}}
-                                            onClick={() => handleLikeToggle(post.id, post.likedByUser)}
-                                        />
-                                    </Tooltip>
-                                )}
-                                <Tooltip title="Add Comment">
-                                    <IconMessageCircle
-                                        stroke={2}
-                                        style={{cursor: "pointer", color: "gray", marginLeft: "7px"}}
-                                        onClick={() => handleNavComment(post.id)}
-                                    />
-                                </Tooltip>
-                                <br/>
+                                   <div className="like-section">
+                                       {loadingLikeId === post.id ? (
+                                           <CircularProgress size={18} thickness={6}
+                                                             style={{color: "red", marginBottom: "-5px"}}/>
+                                       ) : post.likedByUser ? (
+                                           <Tooltip title="Unlike">
+                                               <IconHeartFilled
+                                                   style={{cursor: "pointer", color: "red"}}
+                                                   onClick={() => handleLikeToggle(post.id, post.likedByUser)}
+                                                   aria-disabled={loadingLikeId === post.id}
+                                               />
+                                           </Tooltip>
+                                       ) : (
+                                           <Tooltip title="Like">
+                                               <IconHeart
+                                                   stroke={2}
+                                                   style={{cursor: "pointer", color: "gray"}}
+                                                   onClick={() => handleLikeToggle(post.id, post.likedByUser)}
+                                                   aria-disabled={loadingLikeId === post.id}
+                                               />
+                                           </Tooltip>
+                                       )}
+                                       <Tooltip title="Add Comment">
+                                           <IconMessageCircle
+                                               stroke={2}
+                                               style={{cursor: "pointer", color: "gray", marginLeft: "7px"}}
+                                               onClick={() => handleNavComment(post.id)}
+                                           />
+                                       </Tooltip>
+                                       <br/>
 
-                                <AvatarGroup
-                                    spacing="small"
-                                    max={3}
-                                    onClick={() => fetchAllLikes(post.id)}
-                                    className="custom-avatar-group"
-                                >
-                                    {post.likes.map((like) => (
-                                        <Avatar
-                                            key={like.id}
-                                            alt={like.username}
-                                            src={like.profilePicture || img_null}
-                                        />
-                                    ))}
-                                </AvatarGroup>
+                                       <AvatarGroup
+                                           spacing="small"
+                                           max={3}
+                                           onClick={() => fetchAllLikes(post.id)}
+                                           className="custom-avatar-group"
+                                       >
+                                           {post.likes.map((like) => (
+                                               <Avatar
+                                                   key={like.id}
+                                                   alt={like.username}
+                                                   src={like.profilePicture || img_null}
+                                               />
+                                           ))}
+                                       </AvatarGroup>
 
-                                <p><strong onClick={() => fetchAllLikes(post.id)} style={{cursor: "pointer"}}>
-                                    {post.likesCount || 0} likes
-                                </strong></p>
+                                       <p><strong onClick={() => fetchAllLikes(post.id)} style={{cursor: "pointer"}}>
+                                           {post.likesCount || 0} likes
+                                       </strong></p>
 
-                                <p><strong
-                                    style={{cursor: "pointer"}}
-                                    onClick={() => handleUserClick(post.username)}>
-                                    {post.username} &nbsp;&nbsp;</strong>
-                                    {post.content}
-                                </p>
-                            </div>
+                                       <p><strong
+                                           style={{cursor: "pointer"}}
+                                           onClick={() => handleUserClick(post.username)}>
+                                           {post.username} &nbsp;&nbsp;</strong>
+                                           {post.content}
+                                       </p>
+                                   </div>
 
-                            {selectedPostId === post.id && (
-                                <Comment
-                                    postId={post.id}
-                                    username={username}
-                                    commentCount={post.commentCount}
-                                />
-                            )}
-                        </div>
-                    ))
-                )}
-            </div>
+                                   {selectedPostId === post.id && (
+                                       <Comment
+                                           postId={post.id}
+                                           username={username}
+                                           commentCount={post.commentCount}
+                                       />
+                                   )}
 
-            {renderErrorMessage()}
+                               </div>
+                           ))
+                       )}
+                   </div>
 
-            {showLikes && (
-                <LikeListComponent
-                    likesList={likesList}
-                    username={username}
-                    onClose={() => setShowLikes(false)}
-                />
-            )}
-        </div>
+                   {renderErrorMessage()}
+
+                   {showLikes && (
+                       <LikeListComponent
+                           likesList={likesList}
+                           username={username}
+                           onClose={() => setShowLikes(false)}
+                       />
+                   )}
+               </div>
+
     );
 }
 

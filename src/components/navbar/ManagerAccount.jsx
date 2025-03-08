@@ -5,6 +5,7 @@ import Creator from "../../pages/home/Creator";
 import Dashboard from "../../pages/dashboard/Dashboard";
 import Cookies from "universal-cookie";
 import {
+    NAV_ABOUT,
     NAV_ACCESSIBILITY,
     NAV_CHANGE_PASSWORD,
     NAV_CREATE_ACCOUNT,
@@ -32,6 +33,7 @@ import ConfirmResetPasswordPage from "../../pages/home/ConfirmResetPasswordPage"
 import Footer from "./Footer";
 import AccessibilityStatement from "../websiteRegulations/AccessibilityStatement";
 import TermsAndPrivacy from "../websiteRegulations/TermsAndPrivacy";
+import LoadingScreen from "../dashboard/LoadingScreen";
 
 
 export default function ManagerAccount() {
@@ -41,6 +43,8 @@ export default function ManagerAccount() {
     const location = useLocation();
     console.log("home page token check", token);
     const [username, setUsername] = useState("");
+    const [isLoadedDash, setIsLoadedDash] = useState(false);
+
 
     const fetchToken = async ()=> {
         try {
@@ -74,6 +78,8 @@ export default function ManagerAccount() {
             <div className="background"> </div>
                 <NavBar isLoggedIn={!!token} onLogout={handleLogout}/>
 
+            {!isLoadedDash && <LoadingScreen onLoaded={() => setIsLoadedDash(true)} />}
+
             <div className="content-wrapper">
                 <div className="content">
                     <Routes>
@@ -94,7 +100,7 @@ export default function ManagerAccount() {
                         )}
                         {token && (
                             <>
-                                <Route path={NAV_DASHBOARD} element={<Dashboard/>}/>
+                                <Route path={NAV_DASHBOARD} element={ isLoadedDash && <Dashboard/> }/>
                                 <Route path={NAV_PROFILE} element={<Profile/>}/>
                                 <Route path={NAV_SEARCH} element={<Search/>}/>
                                 <Route path={NAV_PROFILE_SEARCH} element={<ProfileSearch/>}/>

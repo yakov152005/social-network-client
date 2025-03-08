@@ -32,8 +32,8 @@ export default function Profile() {
     const [getAllFollowing, setGetAllFollowing] = useState([]);
     const [showFollowers, setShowFollowers] = useState(false);
     const [showFollowing, setShowFollowing] = useState(false);
-    const [showUploadeProfilePic, setShowUploadeProfilePic] = useState(false);
-    const [showUploadePost, setShowUploadePost] = useState(false);
+    const [showUploadProfilePic, setShowUploadProfilePic] = useState(false);
+    const [showUploadPost, setShowUploadPost] = useState(false);
 
 
     const fetchDetails = async () => {
@@ -87,6 +87,15 @@ export default function Profile() {
                 title: "Error",
                 text: "Please choose a post picture.",
                 icon: "error",
+                background: "#1a1a2e",
+                color: "#ffffff",
+                confirmButtonColor: "#5269bc",
+                customClass: {
+                    popup: "swal-custom-popup",
+                    container: "swal2-container",
+                    title: "swal-custom-title",
+                    confirmButton: "swal-custom-confirm",
+                }
             });
             return;
         }
@@ -105,6 +114,15 @@ export default function Profile() {
                 title: "Error",
                 text: "Invalid post picture format.",
                 icon: "error",
+                background: "#1a1a2e",
+                color: "#ffffff",
+                confirmButtonColor: "#5269bc",
+                customClass: {
+                    popup: "swal-custom-popup",
+                    container: "swal2-container",
+                    title: "swal-custom-title",
+                    confirmButton: "swal-custom-confirm",
+                }
             });
             return;
         }
@@ -121,6 +139,15 @@ export default function Profile() {
                     title: "Good job!",
                     text: "Post added successfully!",
                     icon: "success",
+                    background: "#1a1a2e",
+                    color: "#ffffff",
+                    confirmButtonColor: "#5269bc",
+                    customClass: {
+                        popup: "swal-custom-popup",
+                        container: "swal2-container",
+                        title: "swal-custom-title",
+                        confirmButton: "swal-custom-confirm",
+                    }
                 });
                 console.log(response.data.error);
                 setNewPost({content: "", imageUrl: ""});
@@ -131,14 +158,32 @@ export default function Profile() {
                     title: "Error",
                     text: "The post must have image, try again.",
                     icon: "error",
+                    background: "#1a1a2e",
+                    color: "#ffffff",
+                    confirmButtonColor: "#5269bc",
+                    customClass: {
+                        popup: "swal-custom-popup",
+                        container: "swal2-container",
+                        title: "swal-custom-title",
+                        confirmButton: "swal-custom-confirm",
+                    }
                 });
                 console.error(response.data.error);
             }
         } catch (error) {
             await Swal.fire({
                 title: "Error",
-                text: "An unexpected error occurred. Please try again later.",
+                text: "The image is too large for the format, try choosing a different image.",
                 icon: "error",
+                background: "#1a1a2e",
+                color: "#ffffff",
+                confirmButtonColor: "#5269bc",
+                customClass: {
+                    popup: "swal-custom-popup",
+                    container: "swal2-container",
+                    title: "swal-custom-title",
+                    confirmButton: "swal-custom-confirm",
+                }
             });
             console.error("Failed to add post", error);
         }
@@ -170,6 +215,15 @@ export default function Profile() {
                 title: "Error",
                 text: "Please choose a profile picture.",
                 icon: "error",
+                background: "#1a1a2e",
+                color: "#ffffff",
+                confirmButtonColor: "#5269bc",
+                customClass: {
+                    popup: "swal-custom-popup",
+                    container: "swal2-container",
+                    title: "swal-custom-title",
+                    confirmButton: "swal-custom-confirm",
+                }
             });
             return;
         }
@@ -187,6 +241,15 @@ export default function Profile() {
                 title: "Error",
                 text: "Invalid profile picture format.",
                 icon: "error",
+                background: "#1a1a2e",
+                color: "#ffffff",
+                confirmButtonColor: "#5269bc",
+                customClass: {
+                    popup: "swal-custom-popup",
+                    container: "swal2-container",
+                    title: "swal-custom-title",
+                    confirmButton: "swal-custom-confirm",
+                }
             });
             return;
         }
@@ -204,6 +267,15 @@ export default function Profile() {
                     title: "Success!",
                     text: "Profile picture updated successfully.",
                     icon: "success",
+                    background: "#1a1a2e",
+                    color: "#ffffff",
+                    confirmButtonColor: "#5269bc",
+                    customClass: {
+                        popup: "swal-custom-popup",
+                        container: "swal2-container",
+                        title: "swal-custom-title",
+                        confirmButton: "swal-custom-confirm",
+                    }
                 });
                 setSelectedFile(null);
                 setProfilePicture("");
@@ -212,14 +284,32 @@ export default function Profile() {
                     title: "Error",
                     text: "Failed to upload profile picture.",
                     icon: "error",
+                    background: "#1a1a2e",
+                    color: "#ffffff",
+                    confirmButtonColor: "#5269bc",
+                    customClass: {
+                        popup: "swal-custom-popup",
+                        container: "swal2-container",
+                        title: "swal-custom-title",
+                        confirmButton: "swal-custom-confirm",
+                    }
                 });
             }
         } catch (error) {
             console.error("Error uploading profile picture:", error);
             await Swal.fire({
                 title: "Error",
-                text: "An unexpected error occurred.",
+                text: "The image is too large for the format, try choosing a different image.",
                 icon: "error",
+                background: "#1a1a2e",
+                color: "#ffffff",
+                confirmButtonColor: "#5269bc",
+                customClass: {
+                    popup: "swal-custom-popup",
+                    container: "swal2-container",
+                    title: "swal-custom-title",
+                    confirmButton: "swal-custom-confirm",
+                }
             });
         }
         setLoadingAddPost(false);
@@ -313,10 +403,10 @@ export default function Profile() {
 
 
 
-            {showUploadeProfilePic ? (
+            {showUploadProfilePic ? (
                 <>
                     <button className={"btn btn-outline-success"} onClick={() => {
-                        setShowUploadeProfilePic(false)
+                        setShowUploadProfilePic(false)
                     }}>
                         Hide Add Profile Picture
                     </button>
@@ -351,7 +441,7 @@ export default function Profile() {
                             <img
                                 src={selectedFile ? URL.createObjectURL(selectedFile) : profilePicture}
                                 alt="Preview"
-                                className={"img-profile-uploade"}
+                                className={"img-profile-upload"}
                             />
                         )}
 
@@ -367,7 +457,7 @@ export default function Profile() {
                 </>
             ) : (
                 <button className={"btn btn-outline-success"} onClick={() => {
-                    setShowUploadeProfilePic(true)
+                    setShowUploadProfilePic(true)
                 }}>
                     Add Profile Picture
                 </button>
@@ -375,10 +465,10 @@ export default function Profile() {
 
             <br/><br/>
 
-            {showUploadePost ? (
+            {showUploadPost ? (
                 <>
                     <button className={"btn btn-outline-success"} onClick={() => {
-                        setShowUploadePost(false)
+                        setShowUploadPost(false)
                     }}>
                         Hide Add Post
                     </button>
@@ -421,7 +511,7 @@ export default function Profile() {
             ) : (
                 <>
                     <button className={"btn btn-outline-success"} onClick={() => {
-                        setShowUploadePost(true)
+                        setShowUploadPost(true)
                     }}>
                         Add Post
                     </button>

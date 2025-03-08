@@ -79,11 +79,32 @@ export default function NavBar({ isLoggedIn, onLogout }) {
                     <img
                         src={logo} alt="NetWork" width="35" height="30"
                         className="d-inline-block align-text-top rounded"/>
-                    <strong style={{color: "white", fontFamily: 'Brush Script MT'}}>Social-Network</strong>
+                    <strong style={{color: "white", fontFamily: 'Brush Script MT',fontSize:"25px"}}>Social-Network</strong>
                 </a>
 
                 <button className="menu-button" onClick={toggleMenu}>
-                    {menuOpen ? <IconX size={30}/> : <IconMenu2 size={30}/>}
+                    {menuOpen ?
+                        <>
+                            <a className="navbar-brand disabled" href={isLoggedIn ? NAV_DASHBOARD : NAV_LOGIN}
+                               aria-disabled="true"
+                               style={{margin: "auto", marginRight: "15px"}}
+                            >
+                                <img
+                                    src={logo} alt="NetWork" width="35" height="30"
+                                    className="d-inline-block align-text-top rounded"/>
+                                <strong style={{
+                                    color: "white",
+                                    fontFamily: 'Brush Script MT',
+                                    fontSize: "25px"
+                                }}>Social-Network</strong>
+                            </a>
+
+                            <IconX size={30}/>
+                            <div className={"divider-container-nav"}>
+                                <hr className={"divider-nav"}/>
+                            </div>
+                        </>
+                        : <IconMenu2 size={30}/>}
                 </button>
 
                 <ul className={`nav-menu ${menuOpen ? "open" : ""}`}>
@@ -91,8 +112,8 @@ export default function NavBar({ isLoggedIn, onLogout }) {
                         {!isLoggedIn ? (
                             <>
                                 <Tooltip title="Sign Up">
-                                    <li className="nav-item">
-                                        <NavLink
+                                <li className="nav-item">
+                                    <NavLink
                                             className={({isActive}) => `nav-link ${isActive ? "active-nav" : ""}`}
                                             to={NAV_CREATE_ACCOUNT}
                                             onClick={handleNavClick}

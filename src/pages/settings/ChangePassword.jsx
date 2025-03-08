@@ -6,6 +6,8 @@ import {useNavigate} from "react-router-dom";
 import UsernameAPI from "../../api/UsernameAPI";
 import {IconCloudLock } from "@tabler/icons-react";
 import Swal from "sweetalert2";
+import "../../css/PopupStyle.css"
+
 
 export default function ChangePassword() {
     const navigate = useNavigate();
@@ -72,22 +74,45 @@ export default function ChangePassword() {
 
     const changePassword = async () => {
         if (formData.newPassword !== formData.confirmPassword) {
-            alert("The new password and its confirmation do not match, try again.")
+            await Swal.fire({
+                title: "Error",
+                text: "The new password and its confirmation do not match, try again.",
+                icon: "error",
+                background: "#1a1a2e",
+                color: "#ffffff",
+                confirmButtonColor: "#5269bc",
+                customClass: {
+                    popup: "swal-custom-popup",
+                    container: "swal2-container",
+                    title: "swal-custom-title",
+                    confirmButton: "swal-custom-confirm",
+                }
+            });
             setFormData(prevState => ({
                 ...prevState, newPassword: "", confirmPassword: "",
             }))
             return;
         }
 
+
         const result = await Swal.fire({
             title: "Are you sure?",
             text: "Before you change your password, make sure you have saved it in a secure place and that you remember it.",
             icon: "warning",
             showCancelButton: true,
-            confirmButtonColor: "#d33",
-            cancelButtonColor: "#3085d6",
-            confirmButtonText: "Yes, change it!",
+            confirmButtonColor: "#5269bc",
+            cancelButtonColor: "#b4c2cf",
+            confirmButtonText: "Yes, Reset it!",
             cancelButtonText: "Cancel",
+            background: "#1a1a2e",
+            color: "#ffffff",
+            customClass: {
+                popup: "swal-custom-popup",
+                container: "swal2-container",
+                title: "swal-custom-title",
+                confirmButton: "swal-custom-confirm",
+                cancelButton: "swal-custom-cancel",
+            }
         });
 
         if (result.isConfirmed){
@@ -99,7 +124,20 @@ export default function ChangePassword() {
                 });
 
                 if (response.data.success) {
-                    Swal.fire("Changed!",response.data.error,"success");
+                    Swal.fire({
+                        title: "Changed!",
+                        text: response.data.error,
+                        icon: "success",
+                        background: "#1a1a2e",
+                        color: "#ffffff",
+                        confirmButtonColor: "#5269bc",
+                        customClass: {
+                            popup: "swal-custom-popup",
+                            container: "swal2-container",
+                            title: "swal-custom-title",
+                            confirmButton: "swal-custom-confirm",
+                        }
+                    });
                     setFormData({
                         username: "",
                         currentPassword: "",
@@ -108,7 +146,20 @@ export default function ChangePassword() {
                     });
                     navigate(NAV_SETTINGS);
                 } else {
-                    Swal.fire("Error",response.data.error,"error");
+                    Swal.fire({
+                        title: "Error",
+                        text: response.data.error,
+                        icon: "error",
+                        background: "#1a1a2e",
+                        color: "#ffffff",
+                        confirmButtonColor: "#5269bc",
+                        customClass: {
+                            popup: "swal-custom-popup",
+                            container: "swal2-container",
+                            title: "swal-custom-title",
+                            confirmButton: "swal-custom-confirm",
+                        }
+                    });
                     setFormData({
                         username: formData.username,
                         currentPassword: "",
@@ -118,7 +169,20 @@ export default function ChangePassword() {
                 }
             } catch (error) {
                 console.log("Error to fetch change password");
-                Swal.fire("Error", "Failed to delete user.", "error");
+                Swal.fire({
+                    title: "Oops!",
+                    text: "Something went wrong. Please try again.",
+                    icon: "error",
+                    background: "#1a1a2e",
+                    color: "#ffffff",
+                    confirmButtonColor: "#5269bc",
+                    customClass: {
+                        popup: "swal-custom-popup",
+                        container: "swal2-container",
+                        title: "swal-custom-title",
+                        confirmButton: "swal-custom-confirm",
+                    }
+                });
             }
         }
     };

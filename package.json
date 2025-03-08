@@ -10,10 +10,14 @@
     "@mui/material": "^6.3.1",
     "@tabler/icons-preact": "^3.26.0",
     "@tabler/icons-react": "^3.26.0",
+    "autoprefixer": "^10.4.20",
     "axios": "^1.7.9",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
     "cra-template": "1.2.0",
+    "emoji-picker-react": "^4.12.0",
+    "framer-motion": "^12.4.10",
+    "postcss": "^8.5.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-dropzone": "^14.3.5",
@@ -50,6 +54,9 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "cross-env": "^7.0.3"
+    "@tailwindcss/postcss": "^4.0.9",
+    "cross-env": "^7.0.3",
+    "postcss-loader": "^8.1.1",
+    "tailwindcss": "^4.0.9"
   }
 }

@@ -17,8 +17,10 @@ import showPass from "../../assets/form/show_password.png"
 import hidePass from "../../assets/form/hide_password.png"
 import { IconMoodCheck,IconLockPassword  } from '@tabler/icons-react';
 import "../../css/home/LoginAndCreate.css"
-import "../../css/LoadingStyle.css"
+import "../../css/loaders/LoadingGeneralStyle.css"
 import Swal from "sweetalert2";
+import "../../css/PopupStyle.css"
+
 
 
 
@@ -57,6 +59,15 @@ export default function Login({ onLogin }) {
                 title: "Error",
                 text: "Please fill all fields.",
                 icon: "error",
+                background: "#1a1a2e",
+                color: "#ffffff",
+                confirmButtonColor: "#5269bc",
+                customClass: {
+                    popup: "swal-custom-popup",
+                    container: "swal2-container",
+                    title: "swal-custom-title",
+                    confirmButton: "swal-custom-confirm",
+                }
             });
             return;
         }
@@ -96,6 +107,15 @@ export default function Login({ onLogin }) {
                 title: "Error",
                 text: "Please enter the verification code.",
                 icon: "error",
+                background: "#1a1a2e",
+                color: "#ffffff",
+                confirmButtonColor: "#5269bc",
+                customClass: {
+                    popup: "swal-custom-popup",
+                    container: "swal2-container",
+                    title: "swal-custom-title",
+                    confirmButton: "swal-custom-confirm",
+                }
             });
             return;
         }
@@ -119,6 +139,15 @@ export default function Login({ onLogin }) {
                         title: "Verified!!",
                         text: "Success to login.",
                         icon: "success",
+                        background: "#1a1a2e",
+                        color: "#ffffff",
+                        confirmButtonColor: "#5269bc",
+                        customClass: {
+                            popup: "swal-custom-popup",
+                            container: "swal2-container",
+                            title: "swal-custom-title",
+                            confirmButton: "swal-custom-confirm",
+                        }
                     });
                     setLoadingVerification(false);
                     onLogin();
@@ -369,18 +398,18 @@ export default function Login({ onLogin }) {
                         </p>
 
                         <div className="features">
-                            <div className="feature-item">
+                            <div className="feature-item-verification">
                                 <i className="fas fa-sms"></i> You will receive an SMS with a Verification code
                                 shortly.
                             </div>
-                            <div className="feature-item">
+                            <div className="feature-item-verification">
                                 <i className="fas fa-clock"></i> This process may take up to 2 minutes, depending on
                                 your provider.
                             </div>
-                            <div className="feature-item">
+                            <div className="feature-item-verification">
                                 <i className="fas fa-key"></i> Enter the CODE as soon as you receive it.
                             </div>
-                            <div className="feature-item">
+                            <div className="feature-item-verification">
                                 <i className="fas fa-shield-alt"></i> Your security is our top priority! 🔐
                             </div>
                         </div>
@@ -388,7 +417,7 @@ export default function Login({ onLogin }) {
                             💡 Need help?
                             <a
                             href={MAILTO + MAIL_SERVICE}
-                            className={"contact-link"}>
+                            className={"support-link-verification"}>
                             Contact Support
                             </a>
                         </p>

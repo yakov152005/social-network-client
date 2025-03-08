@@ -81,10 +81,19 @@ export default function DeleteUser(){
             text: "Deleting your account will remove all your data permanently.",
             icon: "warning",
             showCancelButton: true,
-            confirmButtonColor: "#d33",
-            cancelButtonColor: "#3085d6",
-            confirmButtonText: "Yes, delete it!",
+            confirmButtonColor: "#5269bc",
+            cancelButtonColor: "#b4c2cf",
+            confirmButtonText: "Yes, Reset it!",
             cancelButtonText: "Cancel",
+            background: "#1a1a2e",
+            color: "#ffffff",
+            customClass: {
+                popup: "swal-custom-popup",
+                container: "swal2-container",
+                title: "swal-custom-title",
+                confirmButton: "swal-custom-confirm",
+                cancelButton: "swal-custom-cancel",
+            }
         });
 
         if (result.isConfirmed) {
@@ -94,15 +103,54 @@ export default function DeleteUser(){
                         URL_SERVER_SIDE + URL_DELETE_USER + `/${formData.username}&${formData.password}`
                     );
                 if (response.data.success) {
-                    Swal.fire("Deleted!", response.data.error, "success");
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: response.data.error,
+                        icon: "success",
+                        background: "#1a1a2e",
+                        color: "#ffffff",
+                        confirmButtonColor: "#5269bc",
+                        customClass: {
+                            popup: "swal-custom-popup",
+                            container: "swal2-container",
+                            title: "swal-custom-title",
+                            confirmButton: "swal-custom-confirm",
+                        }
+                    });
                     cookies.remove("token", { path: PATH });
                     navigate(NAV_CREATE_ACCOUNT);
                 } else {
-                    Swal.fire("Error", "Failed to delete user.", "error");
+                    Swal.fire({
+                        title: "Error",
+                        text: "Failed to delete user.",
+                        icon: "error",
+                        background: "#1a1a2e",
+                        color: "#ffffff",
+                        confirmButtonColor: "#5269bc",
+                        customClass: {
+                            popup: "swal-custom-popup",
+                            container: "swal2-container",
+                            title: "swal-custom-title",
+                            confirmButton: "swal-custom-confirm",
+                        }
+                    });
                 }
             } catch (error) {
                 console.error("Error deleting user:", error);
-                Swal.fire("Error", "Failed to delete user.", "error");
+                Swal.fire({
+                    title: "Oops!",
+                    text: "Something went wrong. Please try again.",
+                    icon: "error",
+                    background: "#1a1a2e",
+                    color: "#ffffff",
+                    confirmButtonColor: "#5269bc",
+                    customClass: {
+                        popup: "swal-custom-popup",
+                        container: "swal2-container",
+                        title: "swal-custom-title",
+                        confirmButton: "swal-custom-confirm",
+                    }
+                });
             }
         }
     };

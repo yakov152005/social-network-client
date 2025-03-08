@@ -15,6 +15,7 @@ export default function ProfileSearch() {
     const { usernameSearch } = useParams();
     const navigate = useNavigate();
 
+    const [loadingFollow, setLoadingFollow] = useState(false);
     const [currentUsername, setCurrentUsername] = useState(null);
     const [isFollowing, setIsFollowing] = useState(false);
     const [profileData, setProfileData] = useState({
@@ -60,6 +61,7 @@ export default function ProfileSearch() {
 
 
     const handleFollowToggle = async () => {
+        setLoadingFollow(true);
         try {
             if (isFollowing) {
                 const response = await axios.delete(URL_SERVER_SIDE + URL_UNFOLLOW + `/${usernameSearch}&${currentUsername}`);
@@ -77,6 +79,9 @@ export default function ProfileSearch() {
         } catch (error) {
             console.error("Error toggling follow state", error);
         }
+        setTimeout(() =>
+            setLoadingFollow(false),1500
+        )
     };
 
     const handleSendMessage = () => {
@@ -100,6 +105,7 @@ export default function ProfileSearch() {
             isFollowing={isFollowing}
             onFollowToggle={handleFollowToggle}
             onSendMessage={handleSendMessage}
+            loadingFollow={loadingFollow}
         />
     );
 }

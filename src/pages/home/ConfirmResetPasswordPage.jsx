@@ -3,6 +3,7 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 import {NAV_LOGIN, URL_CONFIRM_RESET_PASS, URL_SERVER_SIDE} from "../../utils/Constants";
+import "../../css/PopupStyle.css"
 
 export default function ConfirmResetPasswordPage() {
     const [searchParams] = useSearchParams();
@@ -12,7 +13,20 @@ export default function ConfirmResetPasswordPage() {
 
     useEffect(() => {
         if (!token) {
-            Swal.fire("Error", "Invalid token.", "error");
+            Swal.fire({
+                title: "Error",
+                text: "Invalid token.",
+                icon: "error",
+                background: "#1a1a2e",
+                color: "#ffffff",
+                confirmButtonColor: "#5269bc",
+                customClass: {
+                    popup: "swal-custom-popup",
+                    container: "swal2-container",
+                    title: "swal-custom-title",
+                    confirmButton: "swal-custom-confirm",
+                }
+            });
             navigate(NAV_LOGIN);
         }
     }, [token, navigate]);
@@ -25,14 +39,53 @@ export default function ConfirmResetPasswordPage() {
             });
 
             if (response.data.success) {
-                Swal.fire("Success!", "Your password has been reset. Check your email for the new password.", "success");
+                 Swal.fire({
+                    title: "Success!",
+                    text: "Your password has been reset. Check your email for the new password.",
+                    icon:"success",
+                    background: "#1a1a2e",
+                    color: "#ffffff",
+                    confirmButtonColor: "#5269bc",
+                    customClass: {
+                        popup: "swal-custom-popup",
+                        container: "swal2-container",
+                        title: "swal-custom-title",
+                        confirmButton: "swal-custom-confirm",
+                    }
+                });
                 navigate(NAV_LOGIN);
             } else {
-                Swal.fire("Error", response.data.error, "error");
+                 Swal.fire({
+                    title: "Error",
+                    text: response.data.error,
+                    icon: "error",
+                    background: "#1a1a2e",
+                    color: "#ffffff",
+                    confirmButtonColor: "#5269bc",
+                    customClass: {
+                        popup: "swal-custom-popup",
+                        container: "swal2-container",
+                        title: "swal-custom-title",
+                        confirmButton: "swal-custom-confirm",
+                    }
+                });
                 navigate(NAV_LOGIN);
             }
         } catch (error) {
-            Swal.fire("Error", "Something went wrong.", "error");
+             Swal.fire({
+                title: "Oops!",
+                text: "Something went wrong. Please try again.",
+                icon: "error",
+                background: "#1a1a2e",
+                color: "#ffffff",
+                confirmButtonColor: "#5269bc",
+                customClass: {
+                    popup: "swal-custom-popup",
+                    container: "swal2-container",
+                    title: "swal-custom-title",
+                    confirmButton: "swal-custom-confirm",
+                }
+            });
         }
         setLoading(false);
     };

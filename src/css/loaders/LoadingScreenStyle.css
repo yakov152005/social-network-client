@@ -1,0 +1,66 @@
+.loading-overlay-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    z-index: 9999;
+    transition: opacity 0.5s ease-in-out;
+}
+
+
+.logo-container-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    animation: fadeIn-screen 1s ease-in-out;
+}
+
+.logo-img-screen {
+    width: 80px;
+    height: auto;
+    animation: popUp-screen 1s ease-in-out;
+}
+
+.from-text-screen {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #888;
+    font-family: "Arial", sans-serif;
+    font-weight: bold;
+}
+
+
+.insta-loader-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    animation: fadeIn-screen 1s ease-in-out;
+}
+
+
+.loading-text-insta-screen {
+    margin-top: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #777;
+    font-family: "Arial", sans-serif;
+}
+
+
+@keyframes fadeIn-screen {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes popUp-screen {
+    from { transform: scale(0.7); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}

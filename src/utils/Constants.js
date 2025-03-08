@@ -56,6 +56,7 @@ const PATH = "/";
 const MAILTO = "mailto:"
 
 const TIME_LOADING = 1000;
+const TIME_LIKE = 1500;
 const TIME_LOADING_FAST = 50;
 const MAX_SCROLL = 5;
 
@@ -116,5 +117,6 @@ export {
     MAX_SCROLL,
     TIME_LOADING,
     TIME_LOADING_FAST,
+    TIME_LIKE
 
 };

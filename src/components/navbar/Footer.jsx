@@ -1,15 +1,17 @@
-import { NavLink } from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import "../../css/websiteRegulations/FooterStyle.css";
 import { FaFacebookF, FaGithub, FaLinkedin } from "react-icons/fa";
-import {NAV_ACCESSIBILITY, NAV_TERM_AND_PRIVACY} from "../../utils/Constants.js";
+import {NAV_ABOUT, NAV_ACCESSIBILITY, NAV_TERM_AND_PRIVACY} from "../../utils/Constants.js";
+import logo from "../../assets/image/iconSocialNetWorkTheOriginalOne.png"
+
 
 export default function Footer() {
     return (
         <footer className="footer-container">
             <div className="footer-content">
                 <div className="footer-links">
-                    <NavLink to={NAV_TERM_AND_PRIVACY} className="footer-link">תקנון ותנאי שימוש</NavLink>
-                    <NavLink to={NAV_ACCESSIBILITY} className="footer-link">הצהרת נגישות</NavLink>
+                    <NavLink to={NAV_TERM_AND_PRIVACY} className="footer-link">Term&Privacy</NavLink>
+                    <NavLink to={NAV_ACCESSIBILITY} className="footer-link">Accessibility</NavLink>
                 </div>
 
                 <div className="social-links">
@@ -31,7 +33,7 @@ export default function Footer() {
                     <span>Developed By Yakov Ben-Hemo ©2025 Social Network System</span>
                 </div>
 
-                <img src={"/iconSocialNetWorkTheOriginalOne.png"} alt={"Logo Social NetWork"} width={"45px"} height={"45px"}
+                <img src={logo} alt={"Logo Social NetWork"} width={"45px"} height={"45px"}
                      style={{borderRadius: "15px", marginLeft: "-145px"}}/>
             </div>
         </footer>

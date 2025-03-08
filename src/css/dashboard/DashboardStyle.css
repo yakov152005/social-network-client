@@ -4,7 +4,7 @@
     padding: 20px;
     max-width: 800px;
     margin-top: -60px;
-    margin-left: 550px;
+    margin-left: 850px;
     background-color: #ffffff;
     border-radius: 10px;
     scrollbar-width: thin;
@@ -80,7 +80,19 @@
     font-size: 14px;
 }
 
+@media (max-width: 2200px){
+    .feed-container {
+        margin-left: 600px;
+    }
+}
+
 @media (max-width: 1800px){
+    .feed-container {
+        margin-left: 550px;
+    }
+}
+
+@media (max-width: 1700px){
     .feed-container {
         margin-left: 450px;
     }
