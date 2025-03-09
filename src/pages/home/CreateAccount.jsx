@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import axios from "axios";
 import {
+    NAV_CREATE_ACCOUNT,
     NAV_LOGIN,
     TIME_LOADING,
     URL_CREATE_USER,
@@ -537,7 +538,7 @@ export default function CreateAccount() {
                                             showcase your interests
                                         </div>
                                         <div className="feature-item">
-                                        <i className="fas fa-users"></i> Discover and connect with like-minded
+                                            <i className="fas fa-users"></i> Discover and connect with like-minded
                                             people
                                         </div>
                                         <div className="feature-item">
@@ -549,8 +550,9 @@ export default function CreateAccount() {
                                         </div>
                                     </div>
 
-                                    <p className="cta-text">
-                                        🚀 Don't wait – sign up now and be part of the next big thing!
+                                    <p className="cta-text">🚀 Don't wait –  <span
+                                        onClick={() => navigate(NAV_CREATE_ACCOUNT)} className="signup-link">
+                                        sign up now and be part of the next big thing!</span>
                                     </p>
                                 </div>
                             </div>

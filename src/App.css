@@ -93,6 +93,7 @@ html, body {
   position: relative;
   text-decoration: none;
   color: gray;
+  font-weight: bold;
   transition: color 0.3s ease;
 }
 

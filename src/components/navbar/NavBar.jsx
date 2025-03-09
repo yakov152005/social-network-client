@@ -118,7 +118,7 @@ export default function NavBar({ isLoggedIn, onLogout }) {
                                             to={NAV_CREATE_ACCOUNT}
                                             onClick={handleNavClick}
                                         >
-                                            <strong> Register</strong><br/>&nbsp; &nbsp; &nbsp;
+                                             Register<br/>&nbsp; &nbsp; &nbsp;
                                             <i className="bi bi-person-vcard"></i>
                                         </NavLink>
                                     </li>
@@ -130,7 +130,7 @@ export default function NavBar({ isLoggedIn, onLogout }) {
                                             to={NAV_LOGIN}
                                             onClick={handleNavClick}
                                         >
-                                            <strong>Login</strong><br/>&nbsp; &nbsp;&nbsp;
+                                            Login<br/>&nbsp; &nbsp;&nbsp;
                                             <i className="bi bi-box-arrow-right"></i>
                                         </NavLink>
                                     </li>
@@ -142,7 +142,7 @@ export default function NavBar({ isLoggedIn, onLogout }) {
                                             to={NAV_CREATOR}
                                             onClick={handleNavClick}
                                         >
-                                            <strong>Creator</strong><br/>&nbsp; &nbsp; &nbsp;
+                                            Creator<br/>&nbsp; &nbsp; &nbsp;
                                             <i className="bi bi-code"></i>
                                         </NavLink>
                                     </li>
