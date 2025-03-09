@@ -5,7 +5,7 @@ import {
     URL_ADD_COMMENT,
     URL_SHOW_ALL_COMMENT_POST,
     NAV_PROFILE,
-    NAV_PROFILE_SEARCH_BASE
+    NAV_PROFILE_SEARCH_BASE, TIME_COMMENT
 } from "../../utils/Constants"
 import FormatDate from "../../utils/FormatDate"
 import "../../css/components/CommentStyle.css"
@@ -69,7 +69,7 @@ export default function Comment({ postId, username ,commentCount: initialComment
                 setCommentCount((prevCount) => prevCount + 1);
                 setNewComment("");
                 setLoadingCommentId(null);
-                }, 1500);
+                }, TIME_COMMENT);
 
             } else {
                 console.error("Error adding comment:", response.data.error);

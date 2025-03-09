@@ -75,8 +75,8 @@
 }
 
 .custom-avatar-group .MuiAvatarGroup-avatar {
-    width: 34px;
-    height: 34px;
+    width: 18px;
+    height: 18px;
     font-size: 14px;
 }
 
@@ -166,8 +166,8 @@
     }
 
     .custom-avatar-group .MuiAvatarGroup-avatar {
-        width: 30px;
-        height: 30px;
+        width: 15px;
+        height: 15px;
         font-size: 12px;
     }
 }

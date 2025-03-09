@@ -130,6 +130,8 @@ html, body {
   background-color: #007bff;
 }
 
+
+
 @media (max-width: 768px) {
   .navbar {
     flex-direction: column;

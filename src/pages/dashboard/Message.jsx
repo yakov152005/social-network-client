@@ -19,6 +19,7 @@ import Avatar from "@mui/material/Avatar";
 import { styled } from '@mui/material/styles';
 import EmojiPicker from "emoji-picker-react";
 import emojiEmpty from "../../assets/form/happiness.png"
+import {FiSend} from "react-icons/fi";
 
 
 export default function Message() {
@@ -296,7 +297,7 @@ export default function Message() {
                                     <button
                                         className="message-submit-button"
                                         onClick={() => fetchSendMessage(currentChat)}
-                                    >Send
+                                    ><FiSend size={20} />
                                     </button>
                                 )}
                             </div>
