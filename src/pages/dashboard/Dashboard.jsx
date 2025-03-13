@@ -103,7 +103,7 @@ export default function Dashboard() {
                 if (postDto.length === 0) {
                     setTimeout(() => {
                         setHasMore(false);
-                    }, 1500);
+                    }, 150);
                 } else {
 
                     const preloadImages = postDto.map(post =>
@@ -123,14 +123,14 @@ export default function Dashboard() {
                 console.warn("No more posts to fetch.");
                 setTimeout(() => {
                     setHasMore(false);
-                }, 1500);
+                }, 150);
             }
         } catch (error) {
             console.error("Error fetching posts:", error);
         } finally {
             setTimeout(() => {
                 setIsFetching(false);
-            }, 1500);
+            }, 150);
         }
     };
 
@@ -259,8 +259,12 @@ export default function Dashboard() {
             return (
                 <div className="message-container-dash">
                     <p className="message-text-dash">
-                        You've reached the end. Enjoy your feed. <IconCheck size={30} stroke={2} className="check-icon" />
+                        You've reached the end. Enjoy your feed. <IconCheck size={30} stroke={2}
+                                                                            className="check-icon"/>
                     </p>
+                    <div className="end">
+                        Looks Like You Have Reached Till End <span className="top"><a href="#top">↻</a></span>
+                    </div>
                 </div>
             );
         }
@@ -285,11 +289,13 @@ export default function Dashboard() {
     return (
                <div className="feed-container" ref={feedContainerRef}>
                    <br/>
+                   {/*
                    <div className="alert alert-link" role="alert">
                        <h1 style={{color: "blue", fontFamily: "Brush Script MT"}}>
                            <strong>Welcome to your Home Feed, {username || "Guest"}!</strong>
                        </h1>
                    </div>
+                    */}
                    <div className="posts-grid">
                        {(posts && posts.length > 0) && (
                            posts.map((post, index) => (

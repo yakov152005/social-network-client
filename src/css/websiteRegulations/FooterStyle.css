@@ -1,3 +1,4 @@
+
 .footer-container {
     background: linear-gradient(to right, #e6e9f0, #eef1f5);
     color: #333;
@@ -85,7 +86,7 @@
 }
 
 .facebook {
-
+    color: #1877f2;
 }
 .facebook:hover {
     background-color: #1877f2;

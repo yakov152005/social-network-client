@@ -1,8 +1,8 @@
 const URL_SERVER_PRODUCTION = "https://social-network-server-m0ef.onrender.com";
 const URL_SERVER_LOCAL = "http://localhost:8080";
-const URL_SERVER_SIDE = URL_SERVER_PRODUCTION + "/social-network";
-const URL_SSE_DATE =  URL_SERVER_PRODUCTION + "/sse/stream/date";
-const URL_SSE_USER = URL_SERVER_PRODUCTION + "/sse/stream/user";
+const URL_SERVER_SIDE = URL_SERVER_LOCAL + "/social-network";
+const URL_SSE_DATE =  URL_SERVER_LOCAL + "/sse/stream/date";
+const URL_SSE_USER = URL_SERVER_LOCAL + "/sse/stream/user";
 const MAIL_SERVICE = "servicenetwork62@gmail.com";
 const URL_CREATE_USER = "/add-user";
 const URL_LOGIN_USER = "/login-user";
@@ -35,8 +35,8 @@ const URL_GET_NUM_OF_USERS = "/get-num-of-users";
 const URL_CONFIRM_RESET_PASS = "/confirm-reset-password";
 
 const NAV_LOGIN = "/login";
-const NAV_CREATE_ACCOUNT = "/createAccount";
-const NAV_SETTINGS = "/settingsPage";
+const NAV_CREATE_ACCOUNT = "/register";
+const NAV_SETTINGS = "/settings";
 const NAV_SEARCH = "/search";
 const NAV_PROFILE_SEARCH = "/profileSearch/:usernameSearch"
 const NAV_PROFILE_SEARCH_BASE = "/profileSearch";
@@ -56,8 +56,10 @@ const PATH = "/";
 const MAILTO = "mailto:"
 
 const TIME_LOADING = 1000;
-const TIME_LIKE = 50;
+const TIME_LIKE = 150;
+const TIME_NOTI = 150;
 const TIME_COMMENT = 150;
+const TIME_PROFILE = 150;
 const TIME_LOADING_FAST = 50;
 const MAX_SCROLL = 5;
 
@@ -119,6 +121,8 @@ export {
     TIME_LOADING,
     TIME_LOADING_FAST,
     TIME_LIKE,
-    TIME_COMMENT
+    TIME_COMMENT,
+    TIME_NOTI,
+    TIME_PROFILE
 
 };

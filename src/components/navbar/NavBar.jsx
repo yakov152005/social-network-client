@@ -73,13 +73,16 @@ export default function NavBar({ isLoggedIn, onLogout }) {
     }));
 
     return (
-        <nav className="navbar bg-body-tertiary">
+        <nav className="navbar">
+            {/*navbar bg-body-tertiary */}
             <div className="container-fluid">
                 <a className="navbar-brand disabled" href={isLoggedIn ? NAV_DASHBOARD : NAV_LOGIN} aria-disabled="true">
                     <img
                         src={logo} alt="NetWork" width="35" height="30"
-                        className="d-inline-block align-text-top rounded"/>
-                    <strong style={{color: "white", fontFamily: 'Brush Script MT',fontSize:"25px"}}>Social-Network</strong>
+                        className="d-inline-block align-text-top rounded"
+                        style={{marginLeft:"5px", marginRight:"6px"}}
+                    />
+                    <strong style={{color: "white", fontStyle:"oblique",fontSize:"20px", marginRight:"10px"}}>Social Network</strong>
                 </a>
 
                 <button className="menu-button" onClick={toggleMenu}>
@@ -91,12 +94,11 @@ export default function NavBar({ isLoggedIn, onLogout }) {
                             >
                                 <img
                                     src={logo} alt="NetWork" width="35" height="30"
-                                    className="d-inline-block align-text-top rounded"/>
-                                <strong style={{
-                                    color: "white",
-                                    fontFamily: 'Brush Script MT',
-                                    fontSize: "25px"
-                                }}>Social-Network</strong>
+                                    className="d-inline-block align-text-top rounded"
+                                    style={{marginLeft:"5px", marginRight:"6px"}}
+                                />
+                                <strong style={{color: "white", fontStyle:"oblique",fontSize:"20px", marginRight:"10px"}}>
+                                    Social-Network</strong>
                             </a>
 
                             <IconX size={30}/>
@@ -112,13 +114,13 @@ export default function NavBar({ isLoggedIn, onLogout }) {
                         {!isLoggedIn ? (
                             <>
                                 <Tooltip title="Sign Up">
-                                <li className="nav-item">
-                                    <NavLink
+                                    <li className="nav-item">
+                                        <NavLink
                                             className={({isActive}) => `nav-link ${isActive ? "active-nav" : ""}`}
                                             to={NAV_CREATE_ACCOUNT}
                                             onClick={handleNavClick}
                                         >
-                                             Register<br/>&nbsp; &nbsp; &nbsp;
+                                            Register<br/>&nbsp; &nbsp; &nbsp;
                                             <i className="bi bi-person-vcard"></i>
                                         </NavLink>
                                     </li>
@@ -242,5 +244,5 @@ export default function NavBar({ isLoggedIn, onLogout }) {
                 </ul>
             </div>
         </nav>
-);
+    );
 }

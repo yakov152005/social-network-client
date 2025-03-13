@@ -76,7 +76,7 @@ export default function ManagerAccount() {
     return (
         <div className="App">
             <div className="background"> </div>
-                <NavBar isLoggedIn={!!token} onLogout={handleLogout}/>
+            <NavBar isLoggedIn={!!token} onLogout={handleLogout}/>
 
             {!isLoadedDash && <LoadingScreen onLoaded={() => setIsLoadedDash(true)} />}
 
@@ -116,11 +116,11 @@ export default function ManagerAccount() {
                 </div>
 
             </div>
-           <>
-               {!token &&
-                   <Footer />
-               }
-           </>
+            <>
+                {!token &&
+                    <Footer />
+                }
+            </>
         </div>
     );
 }

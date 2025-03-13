@@ -1,6 +1,7 @@
 import React, {useCallback, useEffect, useState} from "react";
 import axios from "axios";
 import {
+    TIME_PROFILE,
     URL_ADD_POST,
     URL_ADD_PROFILE_PIC, URL_ALL_FOLLOW_NUM,
     URL_GET_POST_PROFILE,
@@ -15,6 +16,8 @@ import FollowersAPI from "../../api/FollowersAPI";
 import FollowListComponent from "../../components/dashboard/FollowListComponent";
 import {useDropzone} from "react-dropzone";
 import "../../css/home/ForgetPasswordStyle.css"
+import { motion } from "framer-motion";
+
 
 
 export default function Profile() {
@@ -26,8 +29,8 @@ export default function Profile() {
     const [loadingAddPost, setLoadingAddPost] = useState(false);
     const [profilePicture, setProfilePicture] = useState("");
     const [selectedFile, setSelectedFile] = useState(null);
-    const [followers, setFollowers] = useState(-1);
-    const [following, setFollowing] = useState(-1);
+    const [followers, setFollowers] = useState(0);
+    const [following, setFollowing] = useState(0);
     const [getAllFollowers, setGetAllFollowers] = useState([]);
     const [getAllFollowing, setGetAllFollowing] = useState([]);
     const [showFollowers, setShowFollowers] = useState(false);
@@ -47,8 +50,9 @@ export default function Profile() {
 
 
     const fetchPosts = async () => {
+        setLoading(true);
+
         try {
-            setLoading(true);
             const response = await axios.get(URL_SERVER_SIDE + URL_GET_POST_PROFILE + `/${username}`);
             if (response.data.success) {
                 console.log(response.data.postList)
@@ -59,7 +63,9 @@ export default function Profile() {
         } catch (error) {
             console.error("Failed to load posts", error);
         } finally {
-            setLoading(false);
+            setTimeout(()=>{
+                setLoading(false);
+            },TIME_PROFILE)
         }
     };
 
@@ -350,16 +356,34 @@ export default function Profile() {
 
     if (loading) {
         return (
-            <div style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-                height: "100vh",
-                color: "gray",
-            }}>
-                <strong style={{ fontSize: "24px", marginBottom: "20px" }}>Loading...</strong>
-                <div className="spinner-border text-secondary" role="status" style={{ width: "3rem", height: "3rem" }}></div>
+            <div className="flex flex-col justify-center items-center h-screen bg-gradient-to-r from-blue-50 to-blue-200">
+
+                <motion.h2
+                    className="text-2xl font-bold text-blue-600 mb-5"
+                    animate={{ opacity: [0.5, 1, 0.5] }}
+                    transition={{ duration: 1.5, repeat: Infinity }}
+                >
+                    Loading Profile...
+                </motion.h2>
+
+
+                <motion.div
+                    className="w-16 h-16 border-4 border-solid border-blue-400 border-t-transparent rounded-full"
+                    animate={{ rotate: 360 }}
+                    transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
+                    style={{
+                        boxShadow: "0px 0px 15px rgba(59, 130, 246, 0.5)"
+                    }}
+                />
+
+
+                <motion.div
+                    className="mt-5 text-sm text-blue-600 mb-5"
+                    animate={{ opacity: [0.6, 1, 0.6] }}
+                    transition={{ duration: 1, repeat: Infinity }}
+                >
+                    Please wait while we load your profile...
+                </motion.div>
             </div>
         );
     }
@@ -367,11 +391,11 @@ export default function Profile() {
 
     return (
         <div className="profile-container">
-            <div className="alert alert-link" role="alert">
+            {/* <div className="alert alert-link" role="alert">
                 <h1 style={{color: "blue", fontFamily: 'Brush Script MT'}}><strong>
                     Welcome to your Profile, {username || "Guest"}!
                 </strong></h1>
-            </div>
+            </div> */}
             <div className="profile-header">
                 <div className="profile-picture">
                     <img

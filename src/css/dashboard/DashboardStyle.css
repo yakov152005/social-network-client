@@ -1,7 +1,18 @@
 .feed-container {
     height: 100vh;
     overflow-y: auto;
-    padding: 20px;
+    padding: 40px;
+    max-width: 800px;
+    margin-top: -60px;
+    margin-left: 850px;
+    scrollbar-width: thin;
+    scrollbar-color: #ffffff #f1f1f1;
+}
+
+{/*.feed-container {
+    height: 100vh;
+    overflow-y: auto;
+    padding: 40px;
     max-width: 800px;
     margin-top: -60px;
     margin-left: 850px;
@@ -12,7 +23,7 @@
     -ms-overflow-style: none;
     box-shadow: 10px 0px 10px rgba(0.3, 0.3, 2, 0.3);
     box-shadow: 0px 10px 10px rgba(0.3, 0.3, 2, 0.4);
-}
+} */}
 
 .feed-container::-webkit-scrollbar {
     display: none;
@@ -29,7 +40,9 @@
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 5px;
 }
+
 
 .post-header {
     padding: 10px;
@@ -72,6 +85,8 @@
     align-items: center;
     gap: 5px;
     cursor: pointer;
+    margin: 10px 0 5px 0;
+
 }
 
 .custom-avatar-group .MuiAvatarGroup-avatar {

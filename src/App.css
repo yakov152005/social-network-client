@@ -77,7 +77,7 @@ html, body {
   left: 0;
   width: 100%;
   z-index: 1000;
-  background-color: #ffffff;
+  background-color: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
   padding: 10px 20px;
   display: flex;
@@ -219,7 +219,7 @@ html, body {
     right: -70%;
     width: 70%;
     height: 100vh;
-    background-color: #ffffff;
+    background-color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
     display: flex;
     flex-direction: column;

@@ -27,6 +27,7 @@ export default function TermsAndPrivacy() {
                 <li>לא נעשה שימוש במידע לצרכים מסחריים ללא הסכמת המשתמש.</li>
                 <li>למרות מאמצי האבטחה, אין האתר יכול להבטיח הגנה מוחלטת מפני חדירות לא מורשות.</li>
                 <li>אנו משתמשים בקובצי **Cookies** כדי לשפר את חוויית המשתמש ולבצע התאמות אישיות באתר.</li>
+                <li>בלחיצה על הסכם הרשמה, אני מסכים שישלחו אלי פרסומים למייל, והודעות SMS לאימות דו שלבי.</li>
             </ul>
 
             <h2>📌 שימוש באתר</h2>
