@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {
     URL_SERVER_SIDE,
@@ -8,15 +8,15 @@ import {
     NAV_PROFILE_SEARCH_BASE, TIME_COMMENT
 } from "../../utils/Constants"
 import FormatDate from "../../utils/FormatDate"
-import "../../css/components/CommentStyle.css"
+import "../../styles/components/CommentStyle.css"
 import img_null from "../../assets/navbar/User_Profile_null.png"
 import {useNavigate} from "react-router-dom";
-import { CircularProgress } from "@mui/material";
+import {Avatar, CircularProgress} from "@mui/material";
 import EmojiPicker from "emoji-picker-react";
 import emojiEmpty from "../../assets/form/happiness.png"
 
 
-export default function Comment({ postId, username ,commentCount: initialCommentCount}) {
+export default function Comment({ postId, username, profilePicture,commentCount: initialCommentCount, onCommentAdded}) {
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState("");
     const [showComments, setShowComments] = useState(false);
@@ -45,6 +45,7 @@ export default function Comment({ postId, username ,commentCount: initialComment
         }
     };
 
+
     const handleAddComment = async () => {
         if (!newComment.trim()) {
             alert("Comment cannot be empty.");
@@ -69,6 +70,10 @@ export default function Comment({ postId, username ,commentCount: initialComment
                 setCommentCount((prevCount) => prevCount + 1);
                 setNewComment("");
                 setLoadingCommentId(null);
+                if (onCommentAdded) {
+                    onCommentAdded();
+                }
+
                 }, TIME_COMMENT);
 
             } else {
@@ -94,8 +99,8 @@ export default function Comment({ postId, username ,commentCount: initialComment
         <div className="comment-section">
             {!showComments ? (
                 <div className={"comment-btn-show-comment"}>
-                    <button className="btn btn-link" onClick={fetchComments} style={{color: "gray",fontSize:"15px",textDecoration: "none"}}>
-                        {commentCount > 0 && (<div>Show all {commentCount} comments</div>)}
+                    <button className="btn btn-link" onClick={fetchComments} style={{color: "gray",fontSize:"14px",textDecoration: "none"}}>
+                        {commentCount > 0 && (<div>View all {commentCount} comments</div>)}
                     </button>
                 </div>
             ) : (
@@ -103,7 +108,7 @@ export default function Comment({ postId, username ,commentCount: initialComment
 
                     <div className={"comment-btn-show-comment"}>
                     <button className="btn btn-link" onClick={() => setShowComments(false)}
-                            style={{color: "gray", fontSize: "15px", textDecoration: "none"}}>
+                            style={{color: "gray",fontSize:"14px",textDecoration: "none", }}>
                         {!noShowComments && commentCount > 0 && (<div>Hide all {commentCount} comments</div>)}
                     </button>
                     </div>
@@ -143,6 +148,7 @@ export default function Comment({ postId, username ,commentCount: initialComment
             )}
 
             <div className="comment-input-container">
+                <Avatar src={profilePicture} alt={img_null} className="w-2 h-2 rounded-full cursor-pointer"/>
                 <textarea
                     className="comment-textarea"
                     value={newComment}
@@ -164,7 +170,7 @@ export default function Comment({ postId, username ,commentCount: initialComment
                 />
 
                 <button className="emoji-button" onClick={() => setShowPicker(!showPicker)}  disabled={loadingCommentId === postId}>
-                    {loadingCommentId === postId ? <CircularProgress size={30} color="inherit" thickness={4} style={{marginBottom:"-5px",marginLeft:"-10px"}}/> :
+                    {loadingCommentId === postId ? <CircularProgress size={30} color="inherit" thickness={3} style={{marginBottom:"-15px",marginLeft:"-10px"}}/> :
                         <img src={emojiEmpty} alt={"emoji"} className="emoji-picker-empty"/>}
                 </button>
 

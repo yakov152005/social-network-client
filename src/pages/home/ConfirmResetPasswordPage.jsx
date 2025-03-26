@@ -3,7 +3,7 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 import {NAV_LOGIN, URL_CONFIRM_RESET_PASS, URL_SERVER_SIDE} from "../../utils/Constants";
-import "../../css/PopupStyle.css"
+import "../../styles/PopupStyle.css"
 
 export default function ConfirmResetPasswordPage() {
     const [searchParams] = useSearchParams();
@@ -91,12 +91,17 @@ export default function ConfirmResetPasswordPage() {
     };
 
     return (
-        <div className={"box-drop-zone"}>
-            <h2>Confirm Password Reset</h2>
-            <p><strong>Click the button below to reset your password.</strong></p>
-            <button className={"btn btn-secondary"} onClick={handleConfirm} disabled={loading}>
-                {loading ? "Processing...⌛" : "Confirm Reset ✅"}
-            </button>
+        <div className="wrapper-center">
+            <div className="box-drop-zone">
+                <h2>Confirm Password Reset</h2>
+                <p><strong>Click the button below to reset your password.</strong></p>
+                <button className="btn btn-secondary" onClick={handleConfirm} disabled={loading}>
+                    {loading ? "Processing...⌛" : "Confirm Reset ✅"}
+                </button>
+            </div>
         </div>
     );
+
+
+
 }

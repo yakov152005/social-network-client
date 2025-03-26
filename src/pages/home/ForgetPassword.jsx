@@ -1,21 +1,16 @@
 import React, {useState} from "react";
 import axios from "axios";
 import {
-    MAIL_SERVICE,
-    MAILTO,
     NAV_LOGIN,
     URL_RESET_PASSWORD,
     URL_SERVER_SIDE
 } from "../../utils/Constants";
 import {useNavigate} from "react-router-dom";
-import "../../css/loaders/LoadingGeneralStyle.css"
-import "../../css/home/ForgetPasswordStyle.css"
-import logo from "../../assets/image/lock-square-rounded_notFill.png";
 import Swal from "sweetalert2";
-import loader from "../../assets/form/loader.png"
-import {IconMailFilled} from "@tabler/icons-react";
-import "../../css/PopupStyle.css"
-
+import {IconKey, IconLock, IconMailFilled, IconUser} from "@tabler/icons-react";
+import "../../styles/PopupStyle.css"
+import LoadingOverlay from "../../components/loaders/LoadingOverlay";
+import {motion} from "framer-motion";
 
 export default function ForgetPassword() {
     const [username, setUserName] = useState("");
@@ -25,13 +20,6 @@ export default function ForgetPassword() {
 
     const navigate = useNavigate();
 
-    const handleChangeMail = (event) => {
-        setEmailForReset(event.target.value);
-    };
-
-    const handleChangeUser = (event) => {
-        setUserName(event.target.value);
-    };
 
     const handleClick = async () => {
         if (!username || !emailForReset){
@@ -113,175 +101,136 @@ export default function ForgetPassword() {
         }
     };
 
-    const styleIcon = {
-        left: "0.8rem",
-        top: "50%",
-        transform: "translateY(-50%)",
-        pointerEvents: "none",
-        display: "flex",
-        alignItems: "center",
-    };
-    const styleI = {fontSize: "1.2rem", color: "#6c757d"};
-    const styleFinal = {
-        left: "2.5rem",
-        top: "50%",
-        transform: "translateY(-50%)",
-        height: "1.5rem",
-        width: "1px",
-        backgroundColor: "#ddd",
-    }
 
     return (
-        <div className="auth-container-forget-password">
-            <div className="left-section-forget-password">
-                <div className="floating-form-forget-password">
-
-                    {loading && (
-                        <div className="loading-overlay">
-                            <div className="loading-box">
-                                <div className="spinner"></div>
-                                <p>Wait a few seconds while the process is processed...
-                                    <img src={loader} alt="Logo" style={{width: "25px", height: "25px"}}/>
-                                </p>
-                            </div>
-                        </div>
-                    )}
-
-                    {!loading && (
-                        <div>
-                            <h3 className="form-title-forget-password">Reset Password</h3>
-                            <div className="form-floating mb-3">
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    id="username"
-                                    placeholder="Username"
-                                    value={username}
-                                    onChange={handleChangeUser}
-                                    style={{paddingLeft: "3.5rem"}}
-                                />
-                                <label htmlFor="username" className="label-user"
-                                       style={{paddingLeft: "3.5rem"}}>Username</label>
-                                <div className="position-absolute icon-container" style={styleIcon}><i
-                                    className="fa-solid fa-user" style={styleI}></i></div>
-                                <div className="position-absolute" style={styleFinal}></div>
-                            </div>
-                            <div className="form-floating mb-3">
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    id="emailReset"
-                                    placeholder="Email"
-                                    value={emailForReset}
-                                    onChange={handleChangeMail}
-                                    style={{paddingLeft: "3.5rem"}}
-                                />
-                                <label htmlFor="email" className="label-user"
-                                       style={{paddingLeft: "3.5rem"}}>Email</label>
-                                <div className="position-absolute icon-container" style={styleIcon}>
-                                    <IconMailFilled stroke={2} style={styleI}/>
-                                </div>
-                                <div className="position-absolute" style={styleFinal}></div>
-                            </div>
-
-                            {errorMessage && (
-                                <div className="error-message-forget-password"><strong>{errorMessage}</strong></div>
-                            )}
-
-                            <div className="d-grid">
-                                <button className="btn btn-danger"
-                                        type="button"
-                                    /*disabled={!(emailForReset && username)} */
-                                        onClick={handleClick}>
-                                    Reset password
-                                </button>
-                            </div>
+        <div className="min-h-screen bg-gradient-to-b from-white to-blue-50 flex flex-col md:flex-row items-center justify-center p-4">
 
 
-                            <div style={{marginTop: "30px", textAlign: "center"}}>
-                                <div className={"divider-container"}>
-                                    <hr className={"divider"}/>
-                                    <p className={"or-text"}>or</p>
-                                    <hr className={"divider"}/>
-                                </div>
+            {loading && <LoadingOverlay text="Sending you a link to your email, please wait..." />}
 
-                                <div style={{color: "green"}}>
-                                    <a onClick={() => navigate(NAV_LOGIN)}
-                                       className="custom-link"
-                                       style={{
-                                           cursor: "pointer",
-                                           textDecoration: "underline",
-                                           color: "green",
-                                           display: "inline-flex",
-                                           alignItems: "center",
-                                       }}>
-                                        <strong>
-                                            Back to login&nbsp;
-                                            <i className="bi bi-arrow-right custom-arrow-icon"></i>
-                                        </strong>
-                                    </a>
-                                </div>
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                className="w-full md:w-1/2 flex justify-center mb-8 md:mb-0"
+            >
+                <div className="w-full max-w-md bg-white/80 backdrop-blur-md p-8 rounded-lg shadow-lg sm:shadow-xl login-card">
+                    <h2 className="text-2xl font-bold text-blue-600 mb-4 text-center">Reset Password</h2>
+                    <p className="text-gray-600 text-center mb-6">Enter your username and email to reset your
+                        password.</p>
 
-                                <div style={{marginTop: "10px"}}>
-                                    <p style={{color: "gray", fontSize: "15px"}}>Is there any problem?&nbsp;
-                                        <a
-                                            href={MAILTO + MAIL_SERVICE}
-                                            className={"a-link-forget"}>
-                                            <strong>
-                                                Contact us!
-                                            </strong>
-                                        </a>
-                                    </p>
-                                </div>
-                            </div>
-
-
-                        </div>
-                    )}
-
-                </div>
-            </div>
-
-            <div className="right-section-forget-password">
-                <div className="right-content-forget-password">
-                    <img src={logo} alt="Logo" className="logo-forget-password"/>
-
-                    <h2 className="help-title">🔐 Trouble Logging In?</h2>
-
-                    <p className="help-text">
-                        No worries! Enter your <strong>username</strong> and <strong>email address</strong>,
-                        <p>and we'll send you instructions to <strong>reset your password</strong>
-                            <p> and get back to your account in no time.</p></p>
-
-                    </p>
-
-                    <div className="steps">
-                        <div className="step-item">
-                            <i className="fas fa-user"></i> Enter your username
-                        </div>
-                        <div className="step-item">
-                            <i className="fas fa-envelope"></i> Provide your email address
-                        </div>
-                        <div className="step-item">
-                            <i className="fas fa-key"></i> Check your inbox
-                            for submit reset instructions
-                        </div>
-                        <div className="step-item">
-                        <i className="fas fa-smile"></i> Receive a new password by email and change it in your personal area after logging in.
+                    <div className="relative mb-4">
+                        <input
+                            type="text"
+                            value={username}
+                            onChange={(e) => setUserName(e.target.value)}
+                            placeholder="Enter your username"
+                            className="w-full border border-gray-300 rounded-lg py-3 pl-12 pr-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        />
+                        <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+                            <IconUser stroke={1.5}/>
                         </div>
                     </div>
 
-                    <p className="support-text">
-                        💡 Need extra help?
-                         <a
-                             href={MAILTO + MAIL_SERVICE}
-                             className={"contact-link"}>
-                               Contact Support
-                         </a>
-                    </p>
-                </div>
-            </div>
+                    <div className="relative mb-4">
+                        <input
+                            type="email"
+                            value={emailForReset}
+                            onChange={(e) => setEmailForReset(e.target.value)}
+                            placeholder="Enter your email"
+                            className="w-full border border-gray-300 rounded-lg py-3 pl-12 pr-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        />
+                        <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+                            <IconMailFilled stroke={1.5}/>
+                        </div>
+                    </div>
 
+                    {errorMessage && (
+                        <div className="bg-red-50 text-red-600 p-2 rounded-lg text-center text-sm mb-4">
+                            <strong>{errorMessage}</strong>
+                        </div>
+                    )}
+
+                    <motion.button
+                        whileHover={{scale: 1.05}}
+                        whileTap={{scale: 0.95}}
+                        onClick={handleClick}
+                        disabled={loading}
+                        className="relative overflow-hidden w-full py-3 bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-lg shadow-md transition text-center"
+                    >
+                        <span className="relative z-10"> {loading ? 'Processing...' : 'Send Reset Link'}</span>
+
+                        <span
+                            className="absolute top-0 left-[-75%] w-[50%] h-full bg-white opacity-10 rotate-45 transform animate-shine"></span>
+                    </motion.button>
+
+
+                    <div className="flex justify-center mt-4 group relative w-full">
+                        <motion.button
+                            whileHover={{scale: 1.05}}
+                            onClick={() => navigate(NAV_LOGIN)}
+                            className="text-blue-500 font-medium relative z-10"
+                        >
+                            <span className="text-gray-600">Remember your password? </span>
+                            <span
+                                className="bg-gradient-to-r from-blue-500 via-purple-500 to-blue-400 bg-clip-text text-transparent"> Sign in.</span>
+                        </motion.button>
+                        <span
+                            className="absolute bottom-0 h-0.5 w-full scale-x-0 bg-gradient-to-r from-blue-500 via-purple-500 to-blue-400 transition-transform duration-300 origin-left group-hover:scale-x-100">
+
+                        </span>
+                    </div>
+                </div>
+            </motion.div>
+
+
+            <motion.div
+                initial={{opacity: 0, x: 20}}
+                animate={{opacity: 1, x: 0}}
+                transition={{duration: 1}}
+                className="w-full md:w-1/2 flex flex-col items-center space-y-6 px-4"
+            >
+                <h2 className="text-2xl font-bold text-gray-800 mb-2">🔐 Trouble Logging In?</h2>
+                <p className="text-gray-600 text-center mb-4 max-w-md"> No worries! Enter
+                    your <strong>username</strong> and <strong>email address</strong>,
+                    <p>and we'll send you instructions to <strong>reset your password</strong>
+                        <p> and get back to your account in no time.</p></p></p>
+
+
+                <div className="space-y-4 w-full max-w-sm">
+                    {[
+                        {
+                            title: 'Email Recovery',
+                            desc: 'Receive a recovery link in your inbox.',
+                            icon: <IconMailFilled stroke={1.5}/>
+                        },
+                        {
+                            title: 'Secure Reset',
+                            desc: 'Check your inbox for reset instructions.',
+                            icon: <IconKey stroke={1.5}/>
+                        },
+                        {
+                            title: 'Instant Access',
+                            desc: 'Receive a new password and change it after login.',
+                            icon: <IconLock stroke={1.5}/>
+                        }
+                    ].map((box, idx) => (
+                        <motion.div
+                            key={idx}
+                            whileHover={{ scale: 1.05 }}
+                            className="flex items-center gap-4 bg-white/70 backdrop-blur-md p-4 rounded-lg shadow-md"
+                        >
+                            <div className="text-blue-500 bg-white p-3 rounded-full shadow-md">
+                                {box.icon}
+                            </div>
+                            <div>
+                                <h4 className="font-semibold text-gray-800 mb-1">{box.title}</h4>
+                                <p className="text-gray-600 text-sm">{box.desc}</p>
+                            </div>
+                        </motion.div>
+                    ))}
+                </div>
+            </motion.div>
         </div>
-    )
-};
+    );
+}

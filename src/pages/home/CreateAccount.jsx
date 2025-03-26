@@ -1,35 +1,44 @@
-import React, {useState} from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import {
-    NAV_CREATE_ACCOUNT,
-    NAV_LOGIN,
-    TIME_LOADING,
-    URL_CREATE_USER,
-    URL_SERVER_SIDE
-} from "../../utils/Constants";
-import "../../css/home/LoginAndCreate.css";
-import "../../css/loaders/LoadingGeneralStyle.css"
-import logo from '../../assets/image/iconSocialNetWorkTheOriginalOne.png';
-import {useNavigate} from "react-router-dom";
-import {IconLockCheck, IconDeviceMobileFilled, IconMailFilled, IconBalloonFilled,IconMoodCheck } from '@tabler/icons-react';
-import showPass from "../../assets/form/show_password.png"
-import hidePass from "../../assets/form/hide_password.png"
 import Swal from "sweetalert2";
+import { Checkbox } from "@mui/material";
+import { motion, AnimatePresence } from "framer-motion";
+
+import { useNavigate } from "react-router-dom";
 import TermsAgreement from "../../components/home/TermsAgreement";
-import "../../css/PopupStyle.css"
+import LoadingOverlay from "../../components/loaders/LoadingOverlay";
+import {
+    NAV_LOGIN,
+    URL_CREATE_USER,
+    URL_SERVER_SIDE,
+    TIME_LOADING,
+} from "../../utils/Constants";
+import {UserIcon} from "@heroicons/react/24/outline";
+import {LockClosedIcon} from "@heroicons/react/16/solid";
+import {AlertTriangleIcon, CheckIcon, EyeIcon, EyeOffIcon, MailIcon, PhoneIcon} from "lucide-react";
+import {IconLockCheck} from "@tabler/icons-react";
+import {FaBirthdayCake} from "react-icons/fa";
+import WelcomeScreen from "../../components/home/WelcomeScreen";
 
-
-
+const steps = [
+    { title: "Account" },
+    { title: "Password" },
+    { title: "Confirm" },
+];
 
 export default function CreateAccount() {
     const navigate = useNavigate();
-
-    const [errorMessage, setErrorMessage] = useState("");
+    const [currentStep, setCurrentStep] = useState(0);
     const [loading, setLoading] = useState(false);
-
+    const [confirmRadio, setConfirmRadio] = useState(false);
+    const [confirmTwoFactor, setConfirmTwoFactor] = useState(false);
+    const [checked, setChecked] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-    const [confirmRadio,setConfirmRadio] = useState(false);
+    const [showAlert, setShowAlert] = useState(false);
+
+    const [showIntro, setShowIntro] = useState(true);
 
     const [formData, setFormData] = useState({
         username: "",
@@ -37,7 +46,9 @@ export default function CreateAccount() {
         passwordConfirm: "",
         phoneNumber: "",
         email: "",
+        fullName: "",
         age: 0,
+        twoFactor: "disabled",
     });
 
     const [validation, setValidation] = useState({
@@ -49,28 +60,23 @@ export default function CreateAccount() {
         age: false,
     });
 
-    const handleShowPassword = () => {
-        setShowPassword((prevState) => !prevState);
-    };
-
-    const handleShowConfirmPassword = () =>{
-        setShowConfirmPassword(prevState => !prevState);
-    }
-
+    useEffect(() => {
+        if (errorMessage) {
+            setShowAlert(true);
+            const timer = setTimeout(() => setShowAlert(false), 8000);
+            return () => clearTimeout(timer);
+        }
+    }, [errorMessage]);
 
     const handleChange = (event) => {
-        const {id, value} = event.target;
-        setFormData({...formData, [id]: value});
-
+        const { id, value } = event.target;
+        setFormData({ ...formData, [id]: value });
 
         switch (id) {
-            case "username":
-                setValidation((prev) => ({
-                    ...prev,
-                    username: value.length >= 2,
-                }));
+            case "username":{
+                setValidation((prev) => ({ ...prev, username: value.length >= 2 }));
                 break;
-
+            }
             case "password": {
                 const hasSpecialChar = /[!@#$%^&*()-+=_]/.test(value);
                 const letterUpper = /[A-Z]/.test(value);
@@ -79,29 +85,27 @@ export default function CreateAccount() {
 
                 setValidation((prev) => ({
                     ...prev,
-                    password: value.length >= 8 && ((letterLower || letterUpper) && hasSpecialChar && numbers),
+                    password:
+                        value.length >= 8 &&
+                        (letterLower || letterUpper) &&
+                        hasSpecialChar &&
+                        numbers,
                 }));
                 break;
             }
-
-            case "passwordConfirm": {
+            case "passwordConfirm":{
                 setValidation((prev) => ({
                     ...prev,
-                    passwordConfirm: value === formData.password
+                    passwordConfirm: value === formData.password,
                 }));
                 break;
             }
-
-            case "phoneNumber": {
+            case "phoneNumber":{
                 const isValidPhone = value.startsWith("05") && value.length === 10;
-                setValidation((prev) => ({
-                    ...prev,
-                    phoneNumber: isValidPhone,
-                }));
+                setValidation((prev) => ({ ...prev, phoneNumber: isValidPhone }));
                 break;
             }
-
-            case "email": {
+            case "email":{
                 const validDomains = [
                     "@walla.co.il",
                     "@walla.com",
@@ -111,34 +115,61 @@ export default function CreateAccount() {
                     "@aac.ac.com",
                 ];
                 const isValidEmail = validDomains.some((domain) => value.includes(domain));
-                setValidation((prev) => ({
-                    ...prev,
-                    email: isValidEmail,
-                }));
+                setValidation((prev) => ({ ...prev, email: isValidEmail }));
                 break;
             }
-
-            case "age": {
+            case "age":{
                 const ageNumber = parseInt(value, 10);
                 const isValidAge = ageNumber > 0 && ageNumber <= 120;
-                setValidation((prev) => ({
-                    ...prev,
-                    age: isValidAge,
-                }));
+                setValidation((prev) => ({ ...prev, age: isValidAge }));
                 break;
             }
-
             default:
                 break;
         }
     };
 
+    const handleCheck = () => {
+        const newChecked = !checked;
+        setChecked(newChecked);
+        const newConfirmTwoFactor = !confirmTwoFactor;
+        setConfirmTwoFactor(newConfirmTwoFactor);
+        setFormData((prevFormData) => ({
+            ...prevFormData,
+            twoFactor: newConfirmTwoFactor ? "enabled" : "disabled",
+        }));
+    };
+
+    const switchError = (errorCode) => {
+        switch (errorCode) {
+            case 2:
+                return "username";
+            case 3:
+                return "password";
+            case 4:
+                return "passwordConfirm";
+            case 5:
+                return "phoneNumber";
+            case 6:
+                return "email";
+            default:
+                return null;
+        }
+    };
 
     const createAccount = async () => {
-        const {username, password, passwordConfirm, phoneNumber, email, age} = formData;
+        const {
+            username,
+            password,
+            passwordConfirm,
+            phoneNumber,
+            email,
+            age,
+            twoFactor,
+            fullName,
+        } = formData;
 
-
-        if (!confirmRadio){
+        if (!confirmRadio) {
             await Swal.fire({
                 title: "Please note",
                 text: "You must agree to the site terms and conditions.",
@@ -156,7 +187,14 @@ export default function CreateAccount() {
             return;
         }
 
-        if (!username || !password || !passwordConfirm || !phoneNumber || !email || age <= 0) {
+        if (
+            !username ||
+            !password ||
+            !passwordConfirm ||
+            !phoneNumber ||
+            !email ||
+            age <= 0
+        ) {
             await Swal.fire({
                 title: "Error",
                 text: "Please fill all fields.",
@@ -174,7 +212,7 @@ export default function CreateAccount() {
             return;
         }
 
-        if (username.length < 2){
+        if (username.length < 2) {
             setFormData((prevFormData) => ({
                 ...prevFormData,
                 username: "",
@@ -182,7 +220,6 @@ export default function CreateAccount() {
             setErrorMessage("Username must be at least 2 characters.");
             return;
         }
-
 
         setLoading(true);
 
@@ -194,17 +231,20 @@ export default function CreateAccount() {
                 phoneNumber,
                 email,
                 age: parseInt(age, 10),
+                twoFactor,
+                fullName,
             });
-            if (response.data.success) {
 
-                console.log(`{success: ${response.data.success}, error:{ ${response.data.error} }`);
+            if (response.data.success) {
                 setFormData({
                     username: "",
                     password: "",
                     passwordConfirm: "",
                     phoneNumber: "",
                     email: "",
+                    fullName: "",
                     age: 0,
+                    twoFactor: "disabled",
                 });
 
                 setTimeout(() => {
@@ -225,340 +265,378 @@ export default function CreateAccount() {
                     setLoading(false);
                     navigate(NAV_LOGIN);
                 }, TIME_LOADING);
-
             } else {
                 const errorCode = response.data.errorCode;
                 const fieldToClear = switchError(errorCode);
-               /*
-                await Swal.fire({
-                    title: "Error",
-                    text: response.data.error,
-                    icon: "error",
-                });
-                */
-                setErrorMessage(response.data.error);
-                console.log(`{success: ${response.data.success}, error:{ ${response.data.error} } , errorCode: { ${errorCode}`);
-
                 setFormData((prevFormData) => ({
                     ...prevFormData,
                     [fieldToClear]: "",
                 }));
                 setConfirmRadio(false);
                 setLoading(false);
+                setShowAlert(false);
+                setTimeout(() => {
+                    setErrorMessage(response.data.error);
+                    setShowAlert(true);
+                }, 50);
+
             }
         } catch (error) {
             console.log("Error creating user", error);
-           /*
-            await Swal.fire({
-                title: "Error",
-                text: "Failed to create user. Please try again later.",
-                icon: "error",
-            });
-            */
-            setErrorMessage("Failed to create user. Please try again later.");
             setConfirmRadio(false);
             setLoading(false);
+            setShowAlert(false);
+            setTimeout(() => {
+                setErrorMessage("Failed to register user. Please try again later.");
+                setShowAlert(true);
+            }, 50);
+
         }
     };
 
-    const switchError = (errorCode) => {
-        switch (errorCode) {
-            case 2:
-                return "username";
-            case 3:
-                return "password";
-            case 4:
-                return "passwordConfirm";
-            case 5:
-                return "phoneNumber";
-            case 6:
-                return "email";
-            default:
-                return null;
-        }
+    const nextStep = () => {
+        if (currentStep < steps.length - 1) setCurrentStep(currentStep + 1);
     };
 
-    const styleIcon = {
-        left: "0.8rem",
-        top: "50%",
-        transform: "translateY(-50%)",
-        pointerEvents: "none",
-        display: "flex",
-        alignItems: "center",
+    const prevStep = () => {
+        if (currentStep > 0) setCurrentStep(currentStep - 1);
     };
-    const styleI = {fontSize: "1.2rem", color: "#6c757d"};
-    const styleFinal = {
-        left: "2.5rem",
-        top: "50%",
-        transform: "translateY(-50%)",
-        height: "1.5rem",
-        width: "1px",
-        backgroundColor: "#ddd",
-    }
+
 
 
     return (
-        <div className="auth-container">
+        <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-white to-blue-50 p-6">
+            {loading && <LoadingOverlay text="Creating your account, please wait..." />}
 
-                    {loading && (
-                        <div className="loading-overlay">
-                            <div className="loading-box">
-                                <div className="spinner"></div>
-                                <p>Creating your account, please wait...
-                                    <IconMoodCheck stroke={2}/>
-                                </p>
+            {!loading && showIntro && (
+                <WelcomeScreen setShowIntro={setShowIntro} />
+            )}
+
+            {!loading && !showIntro && (
+                <motion.div
+                    className="w-full max-w-xl bg-white p-8 rounded-lg shadow-lg"
+                    initial={{opacity: 0, x: -100}}
+                    animate={{opacity: 1, x: 0}}
+                    transition={{duration: 0.6}}
+                >
+
+                    <h2 className="text-3xl font-bold text-center mb-1 text-gray-600">
+                        Create your account on
+                    </h2>
+                    <div className="relative text-center mb-6">
+                        <h2 className="text-3xl font-bold inline-block bg-gradient-to-r from-blue-600 via-blue-500 to-blue-400 bg-clip-text text-transparent relative z-10">
+                            SocialNetwork
+                        </h2>
+
+                        <div
+                            className="absolute left-1/2 transform -translate-x-1/2 bottom-0 w-52 h-1 bg-blue-200 rounded-md z-0"></div>
+                    </div>
+
+
+                    <div className="flex items-center w-full relative justify-between mb-16"
+                         style={{marginTop: "44px"}}>
+                        {steps.map((step, index) => (
+                            <div key={index} className="relative flex-1 flex justify-center">
+                                {index !== 0 && (
+                                    <div
+                                        className={`absolute top-6 left-0 w-1/2 h-0.5 z-0 transition-all duration-500 ${
+                                            index <= currentStep ? "bg-blue-500" : "bg-gray-300"
+                                        }`}
+                                    ></div>
+                                )}
+
+                                <div
+                                    className={`flex items-center justify-center w-12 h-12 rounded-full border-2 transition-all duration-500 ${
+                                        index <= currentStep
+                                            ? "bg-blue-500 border-blue-500 text-white"
+                                            : "bg-gray-200 border-gray-300 text-gray-600"
+                                    } z-10`}
+                                >
+                                    {index === 0 && <UserIcon className="w-5 h-5"/>}
+                                    {index === 1 && <LockClosedIcon className="w-5 h-5"/>}
+                                    {index === 2 && <CheckIcon className="w-5 h-5"/>}
+                                </div>
+
+                                {index !== steps.length - 1 && (
+                                    <div
+                                        className={`absolute top-6 right-0 w-1/2 h-0.5 z-0 transition-all duration-500 ${
+                                            index < currentStep ? "bg-blue-500" : "bg-gray-300"
+                                        }`}
+                                    ></div>
+                                )}
+
+                                <div className="absolute top-16 text-center">
+                                    <p
+                                        className={`text-sm transition-colors duration-500 ${
+                                            index <= currentStep ? "text-blue-700" : "text-gray-400"
+                                        }`}
+                                    >
+                                        {step.title}
+                                    </p>
+                                </div>
                             </div>
-                        </div>
-                    )}
+                        ))}
+                    </div>
 
-                    {!loading && (
-                        <>
-                            <div className="left-section">
-                                <div className="floating-form">
-                                    <h3 className="form-title">Create Account</h3>
 
-                                    <div className="form-floating mb-3 position-relative">
+                    <AnimatePresence mode="wait">
+                        <motion.div
+                            key={currentStep}
+                            initial={{opacity: 0, x: 50}}
+                            animate={{opacity: 1, x: 0}}
+                            exit={{opacity: 0, x: -50}}
+                            transition={{duration: 0.4}}
+                            className="space-y-4"
+                        >
+
+                            {currentStep === 0 && (
+                                <>
+                                    <div className="relative">
+                                        <UserIcon
+                                            className="w-5 h-5 absolute left-3 top-1/3 transform -translate-y-1/2 text-gray-400"/>
                                         <input
                                             type="text"
-                                            className={`form-control ${formData.username === "" ? "" : validation.username ? 'is-valid' : 'is-invalid'}`}
                                             id="username"
-                                            placeholder="Username"
                                             value={formData.username}
                                             onChange={handleChange}
-                                            style={{paddingLeft: "3.5rem"}}
+                                            placeholder="Username"
+                                            className="w-full py-3 pl-12 pr-4 border rounded focus:outline-none"
                                         />
-                                        <label htmlFor="username" className="label-user"
-                                               style={{paddingLeft: "3.5rem"}}>Username</label>
-                                        <div className="position-absolute icon-container" style={styleIcon}><i
-                                            className="fa-solid fa-user" style={styleI}></i></div>
-                                        <div className="position-absolute" style={styleFinal}></div>
-                                        <div className="valid-feedback">Looks good!</div>
-                                        <div className="invalid-feedback">Username must be at least 2 characters.</div>
-                                    </div>
-
-
-                                    <div className="form-floating mb-3 position-relative">
-                                        <input
-                                            style={{paddingLeft: "3.5rem"}}
-                                            type={!showPassword ? "password" : "text"}
-                                            className={`form-control ${formData.password === "" ? "" : validation.password ? 'is-valid' : 'is-invalid'}`}
-                                            id="password"
-                                            placeholder="Password"
-                                            value={formData.password}
-                                            onChange={handleChange}
-                                        />
-                                        <label htmlFor="password" className="label-user"
-                                               style={{paddingLeft: "3.5rem"}}>Password</label>
-                                        <div className="position-absolute icon-container" style={styleIcon}>
-                                            <i className="fa-sharp-duotone fa-solid fa-lock" style={styleI}></i>
-                                        </div>
-                                        <div className="position-absolute" style={styleFinal}></div>
-
-                                        {formData.password.length > 0 && (
-                                            <img
-                                                src={!showPassword ? showPass : hidePass}
-                                                alt="Toggle Password Visibility"
-                                                className="toggle-password-icon"
-                                                onClick={handleShowPassword}
-                                            />
-                                        )}
-
-                                        <div className="valid-feedback">Looks good!</div>
-                                        <div className="invalid-feedback">
-                                            Password must be at least 8 characters and contain a mix of letters,
-                                            numbers,
-                                            and special characters.
-                                        </div>
-                                    </div>
-
-                                    <div className="form-floating mb-3 position-relative">
-                                        <input
-                                            type={!showConfirmPassword ? "password" : "text"}
-                                            className={`form-control ${formData.passwordConfirm === "" ? "" : validation.passwordConfirm ? 'is-valid' : 'is-invalid'}`}
-                                            id="passwordConfirm"
-                                            placeholder="Password Confirm"
-                                            value={formData.passwordConfirm}
-                                            onChange={handleChange}
-                                            style={{paddingLeft: "3.5rem"}}
-                                        />
-                                        <label htmlFor="passwordConfirm" className="label-user"
-                                               style={{paddingLeft: "3.5rem"}}>Password Confirm</label>
-                                        <div className="position-absolute icon-container" style={styleIcon}>
-                                            <IconLockCheck stroke={2} style={styleI}/>
-                                        </div>
-                                        <div className="position-absolute" style={styleFinal}></div>
-
-                                        {formData.passwordConfirm.length > 0 && (
-                                            <img
-                                                src={!showConfirmPassword ? showPass : hidePass}
-                                                alt={"Toggle Password Visibility"}
-                                                className="toggle-password-icon"
-                                                onClick={handleShowConfirmPassword}
-                                            />
-                                        )}
-
-                                        <div className="valid-feedback">Looks good!</div>
-                                        <div className="invalid-feedback">
-                                            The confirmation password you entered does not match the original.
-                                        </div>
-                                    </div>
-
-                                    <div className="form-floating mb-3 position-relative">
-                                        <input
-                                            type="number"
-                                            className={`form-control ${formData.phoneNumber === "" ? "" : validation.phoneNumber ? 'is-valid' : 'is-invalid'}`}
-                                            id="phoneNumber"
-                                            placeholder="Phone Number"
-                                            value={formData.phoneNumber}
-                                            onChange={handleChange}
-                                            style={{paddingLeft: "3.5rem"}}
-                                        />
-                                        <label htmlFor="phoneNumber" className="label-user"
-                                               style={{paddingLeft: "3.5rem"}}>Phone
-                                            Number</label>
-                                        <div className="position-absolute icon-container" style={styleIcon}>
-                                            <IconDeviceMobileFilled style={styleI}/>
-                                        </div>
-                                        <div className="position-absolute" style={styleFinal}></div>
-                                        <div className="valid-feedback">Looks good!</div>
-                                        <div className="invalid-feedback">
-                                            The phone number must be exactly 10 digits, must start with the prefix 05.
+                                        <div className="h-5 mt-1">
+                                            {!validation.username && formData.username && (
+                                                <div className="text-red-500 text-sm flex items-center">
+                                                    <AlertTriangleIcon className="w-4 h-4 text-yellow-400 mr-1"/>
+                                                    Username must be at least 2 characters.
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
 
 
-                                    <div className="form-floating mb-3 position-relative">
+                                    <div className="relative">
+                                        <MailIcon
+                                            className="w-5 h-5 absolute left-3 top-1/3 transform -translate-y-1/2 text-gray-400"/>
                                         <input
                                             type="email"
-                                            className={`form-control ${formData.email === "" ? "" : validation.email ? 'is-valid' : 'is-invalid'}`}
                                             id="email"
-                                            placeholder="Email"
                                             value={formData.email}
                                             onChange={handleChange}
-                                            style={{paddingLeft: "3.5rem"}}
+                                            placeholder="Email"
+                                            className="w-full py-3 pl-12 pr-4 border rounded focus:outline-none"
                                         />
-                                        <label htmlFor="email" className="label-user"
-                                               style={{paddingLeft: "3.5rem"}}>Email</label>
-                                        <div className="position-absolute icon-container" style={styleIcon}>
-                                            <IconMailFilled stroke={2} style={styleI}/>
-                                        </div>
-                                        <div className="position-absolute" style={styleFinal}></div>
-                                        <div className="valid-feedback">Looks good!</div>
-                                        <div className="invalid-feedback">
-                                            The email must end with the extension @example.com / .co.il
+                                        <div className="h-5 mt-1">
+                                            {!validation.email && formData.email && (
+                                                <div className="text-red-500 text-sm flex items-center mt-1">
+                                                    <AlertTriangleIcon className="w-4 h-4 text-yellow-400 mr-1"/>
+                                                    Invalid email domain.
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
 
-
-                                    <div className="form-floating mb-3 position-relative">
+                                    <div className="relative">
+                                        <PhoneIcon
+                                            className="w-5 h-5 absolute left-3 top-1/3 transform -translate-y-1/2 text-gray-400"/>
                                         <input
                                             type="number"
-                                            className={`form-control ${formData.age === 0 ? "" : validation.age ? 'is-valid' : 'is-invalid'}`}
+                                            id="phoneNumber"
+                                            value={formData.phoneNumber}
+                                            onChange={handleChange}
+                                            placeholder="Phone Number"
+                                            className="w-full py-3 pl-12 pr-4 border rounded focus:outline-none"
+                                        />
+                                        <div className="h-5 mt-1">
+                                            {!validation.phoneNumber && formData.phoneNumber && (
+                                                <div className="text-red-500 text-sm flex items-center mt-1">
+                                                    <AlertTriangleIcon className="w-4 h-4 text-yellow-400 mr-1"/>
+                                                    Must start with 05 and be 10 digits.
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                </>
+                            )}
+
+
+                            {currentStep === 1 && (
+                                <>
+                                    <div className="relative">
+                                        <LockClosedIcon
+                                            className="w-5 h-5 absolute left-3 top-1/3 transform -translate-y-1/2 text-gray-400"/>
+                                        <input
+                                            type={showPassword ? "text" : "password"}
+                                            id="password"
+                                            value={formData.password}
+                                            onChange={handleChange}
+                                            placeholder="Password"
+                                            className="w-full py-3 pl-12 pr-4 border rounded focus:outline-none"
+                                        />
+                                        {formData.password && (
+                                            <div
+                                                className="absolute right-3 top-4 cursor-pointer"
+                                                onClick={() => setShowPassword(!showPassword)}
+                                            >
+                                                {showPassword ? (
+                                                    <EyeOffIcon className="w-5 h-5 text-gray-500"/>
+                                                ) : (
+                                                    <EyeIcon className="w-5 h-5 text-gray-500"/>
+                                                )}
+                                            </div>
+                                        )}
+                                        <div className="h-5 mt-1">
+                                            {!validation.password && formData.password && (
+                                                <div className="text-red-500 text-sm flex items-center mt-1">
+                                                    <AlertTriangleIcon className="w-4 h-4 text-yellow-400 mr-1"/>
+                                                    Min 8 chars, uppercase, number & special char.
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    <div className="relative">
+                                        <IconLockCheck
+                                            className="w-5 h-5 absolute left-3 top-1/3 transform -translate-y-1/2 text-gray-400"/>
+                                        <input
+                                            type={showConfirmPassword ? "text" : "password"}
+                                            id="passwordConfirm"
+                                            value={formData.passwordConfirm}
+                                            onChange={handleChange}
+                                            placeholder="Confirm Password"
+                                            className="w-full py-3 pl-12 pr-4 border rounded focus:outline-none"
+                                        />
+                                        {formData.passwordConfirm && (
+                                            <div
+                                                className="absolute right-3 top-4 cursor-pointer"
+                                                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                            >
+                                                {showConfirmPassword ? (
+                                                    <EyeOffIcon className="w-5 h-5 text-gray-500"/>
+                                                ) : (
+                                                    <EyeIcon className="w-5 h-5 text-gray-500"/>
+                                                )}
+                                            </div>
+                                        )}
+                                        <div className="h-5 mt-1">
+                                            {!validation.passwordConfirm && formData.passwordConfirm && (
+                                                <div className="text-red-500 text-sm flex items-center mt-1">
+                                                    <AlertTriangleIcon className="w-4 h-4 text-yellow-400 mr-1"/>
+                                                    Passwords do not match.
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    <div className="flex items-center">
+                                        <Checkbox checked={checked} onClick={handleCheck}/>
+                                        <span className="text-sm">Enable Two-Factor Authentication</span>
+                                    </div>
+                                </>
+                            )}
+
+
+                            {currentStep === 2 && (
+                                <>
+                                    <div className="relative">
+                                        <UserIcon
+                                            className="w-5 h-5 absolute left-3 top-1/3 transform -translate-y-1/2 text-gray-400"/>
+                                        <input
+                                            type="text"
+                                            id="fullName"
+                                            value={formData.fullName}
+                                            onChange={handleChange}
+                                            placeholder="Full Name (Optional)"
+                                            className="w-full py-3 pl-12 pr-4 border rounded focus:outline-none"
+                                        />
+                                        <div className="h-5 mt-1"></div>
+                                    </div>
+
+                                    <div className="relative">
+                                        <FaBirthdayCake
+                                            className="w-5 h-5 absolute left-3 top-1/3 transform -translate-y-1/2 text-gray-400"/>
+                                        <input
+                                            type="number"
                                             id="age"
-                                            placeholder="Age"
                                             value={formData.age}
                                             onChange={handleChange}
-                                            style={{paddingLeft: "3.5rem"}}
+                                            placeholder="Age"
+                                            className="w-full py-3 pl-12 pr-4 border rounded focus:outline-none"
                                         />
-                                        <label htmlFor="age" className="label-user"
-                                               style={{paddingLeft: "3.5rem"}}>Age</label>
-                                        <div className="position-absolute icon-container" style={styleIcon}>
-                                            <IconBalloonFilled style={styleI}/>
-                                        </div>
-                                        <div className="position-absolute" style={styleFinal}></div>
-                                        <div className="valid-feedback">Looks good!</div>
-                                        <div className="invalid-feedback">
-                                            The age need to be 1-120.
+                                        <div className="h-5 mt-1">
+                                            {!validation.age && (formData.age < 0 || formData.age > 120) && (
+                                                <div className="text-red-500 text-sm flex items-center mt-1">
+                                                    <AlertTriangleIcon className="w-4 h-4 text-yellow-400 mr-1"/>
+                                                    Age must be between 1-120.
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
 
-                                    {errorMessage && (
-                                        <div className="error-message">
-                                            <strong>{errorMessage}</strong>
-                                        </div>
-                                    )}
 
-                                    <TermsAgreement setConfirmRadio={setConfirmRadio} />
-
-                                    <div className="d-grid">
-                                    <button
-                                        className="btn btn-primary"
-                                        type="button"
-                                        onClick={createAccount}
-                                    >
-                                        Sign Up
-                                        </button>
-                                    </div>
+                                    <TermsAgreement setConfirmRadio={setConfirmRadio}/>
+                                </>
+                            )}
+                        </motion.div>
+                    </AnimatePresence>
 
 
-                                    <div style={{marginTop: "10px"}}>
-                                        <br/>
-
-                                        <div className={"divider-container"}>
-                                            <hr className={"divider"}/>
-                                            <p className={"or-text"}>or</p>
-                                            <hr className={"divider"}/>
-                                        </div>
-
-                                        <div style={{color: "gray", margin: "10px", marginLeft: "40px"}}>
-                                            Do you have an account? &nbsp;
-                                            <a onClick={() => navigate(NAV_LOGIN)}
-                                               className="custom-link"
-                                               style={{
-                                                   cursor: "pointer",
-                                                   textDecoration: "underline",
-                                                   color: "blue",
-                                                   display: "inline-flex",
-                                                   alignItems: "center",
-                                               }}>
-                                                <strong>
-                                                    Sign in&nbsp;
-                                                    <i className="bi bi-arrow-right custom-arrow-icon"></i>
-                                                </strong>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="right-section">
-                                <div className="right-content">
-                                    <img src={logo} alt="Logo" className="logo"/>
-
-                                    <h2 className="welcome-title"> 🎉 Join Our Social Network Today!</h2>
-
-                                    <p className="site-info">
-                                        Create an account and start connecting, sharing, and
-                                        <p>exploring amazing content with people worldwide.</p>
-                                    </p>
-
-                                    <div className="features">
-                                        <div className="feature-item">
-                                            <i className="fas fa-user-plus"></i> Build your personal profile and
-                                            showcase your interests
-                                        </div>
-                                        <div className="feature-item">
-                                            <i className="fas fa-users"></i> Discover and connect with like-minded
-                                            people
-                                        </div>
-                                        <div className="feature-item">
-                                            <i className="fas fa-heart"></i> Engage with exciting content and
-                                            communities
-                                        </div>
-                                        <div className="feature-item">
-                                            <i className="fas fa-bolt"></i> Get instant updates on trending topics
-                                        </div>
-                                    </div>
-
-                                    <p className="cta-text">🚀 Don't wait –  <span
-                                        onClick={() => navigate(NAV_CREATE_ACCOUNT)} className="signup-link">
-                                        sign up now and be part of the next big thing!</span>
-                                    </p>
-                                </div>
-                            </div>
-
-                        </>
+                    {showAlert && (
+                        <motion.div
+                            initial={{opacity: 0}}
+                            animate={{opacity: 1}}
+                            exit={{opacity: 0}}
+                            className="mt-6 p-3 rounded bg-red-100 text-red-700 flex items-center justify-center"
+                        >
+                            <AlertTriangleIcon className="w-5 h-5 text-yellow-500 mr-2"/>
+                            {errorMessage}
+                        </motion.div>
                     )}
+
+
+                    <div className="flex flex-col-reverse md:flex-row justify-between items-center gap-4 mt-10">
+
+                        <motion.button
+                            whileTap={{scale: 0.95}}
+                            onClick={() => {
+                                if (currentStep === 0) {
+                                    setShowIntro(true);
+                                } else {
+                                    prevStep();
+                                }
+                            }}
+                            className="w-full md:w-40 py-3 bg-gray-400 text-white rounded text-center"
+                        >
+                            {currentStep === 0 ? "Return back" : "Previous"}
+                        </motion.button>
+
+                        {currentStep < steps.length - 1 ? (
+                            <motion.button
+                                whileHover={{scale: 1.05}}
+                                whileTap={{scale: 0.95}}
+                                onClick={nextStep}
+                                className="relative overflow-hidden w-full md:w-40 bg-gradient-to-r from-blue-500 to-blue-400 text-white py-3 shadow-md transition text-center rounded"
+                            >
+                                <span className="relative z-10">Next</span>
+                                <span
+                                    className="absolute top-0 left-[-95%] w-full h-full bg-white opacity-10 rotate-45 transform animate-shine"></span>
+                            </motion.button>
+                        ) : (
+                            <motion.button
+                                whileHover={{scale: 1.05}}
+                                whileTap={{scale: 0.95}}
+                                onClick={createAccount}
+                                className="relative overflow-hidden w-full md:w-52 bg-gradient-to-r from-green-500 to-green-400 text-white py-3 shadow-md transition text-center rounded"
+                            >
+                                <span className="relative z-10">Sign Up</span>
+                                <span
+                                    className="absolute top-0 left-[-75%] w-[90%] h-full bg-white opacity-10 rotate-45 transform animate-shine"></span>
+                            </motion.button>
+                        )}
+                    </div>
+
+
+                </motion.div>
+            )}
         </div>
     );
 }

@@ -1,0 +1,7 @@
+.custom-post:hover img {
+    transform: scale(1.1);
+}
+
+.custom-post:hover div {
+    opacity: 1 !important;
+}
