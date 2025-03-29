@@ -33,7 +33,7 @@ From secure authentication to dynamic dashboards, stories, chat, and notificatio
 
 | **PC Signup** | **Mobile Signup**                                    |
 |----------------|------------------------------------------------------|
-| ![Signup PC](https://res.cloudinary.com/doy0rkaci/image/upload/v1743263932/e63pw1qpomvxhbqblk9t.gif) | ![Signup Mobile](src/assets/gif/signUpMobile.gif) |
+| ![Signup PC](src/assets/gif/signUpDesktop.gif) | ![Signup Mobile](src/assets/gif/signUpMobile.gif) |
 
 > ⚠️ *Note: The GIF previews may appear with reduced resolution due to GIF compression.*
 

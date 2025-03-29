@@ -1,8 +1,8 @@
 const URL_SERVER_PRODUCTION = "https://social-network-server-m0ef.onrender.com";
 const URL_SERVER_LOCAL = "http://localhost:8080";
-const URL_SERVER_SIDE = URL_SERVER_LOCAL + "/social-network";
-const URL_SSE_DATE =  URL_SERVER_LOCAL + "/sse/stream/date";
-const URL_SSE_USER = URL_SERVER_LOCAL + "/sse/stream/user";
+const URL_SERVER_SIDE = URL_SERVER_PRODUCTION + "/social-network";
+const URL_SSE_DATE =  URL_SERVER_PRODUCTION + "/sse/stream/date";
+const URL_SSE_USER = URL_SERVER_PRODUCTION + "/sse/stream/user";
 const MAIL_SERVICE = "servicenetwork62@gmail.com";
 const URL_CREATE_USER = "/add-user";
 const URL_LOGIN_USER = "/login-user";
