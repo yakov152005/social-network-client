@@ -26,7 +26,7 @@ import {Badge} from "@mui/material";
 import img_null from "../../assets/navbar/User_Profile_null.png"
 
 export default function SidebarDesktop({
-                                           username, userProfilePic,
+                                           username, userProfilePic,fullName,
                                            followers, following, hovered, setHovered,
                                            onLogout, navigate, isSearchOpen, setIsSearchOpen,
                                            setIsNotificationOpen,isNotificationOpen
@@ -168,7 +168,7 @@ export default function SidebarDesktop({
                             />
                         </StyledBadge>
                         <div>
-                            <p className="profile-name">{username}</p>
+                            <p className="profile-name">{fullName ? fullName : username}</p>
                             <p className="profile-username">@{username?.toLowerCase().replace(/\s/g, '')}</p>
                         </div>
                     </div>

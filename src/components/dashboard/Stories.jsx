@@ -3,9 +3,9 @@ import { ScrollArea, ScrollBar } from "../ui/ScrollArea";
 import { Avatar } from "../ui/Avatar";
 import { Dialog } from "../ui/Dialog";
 import { motion, AnimatePresence } from "framer-motion";
-import {AlertTriangleIcon, Camera, ChevronLeft, ChevronRight, Image, X} from 'lucide-react';
+import {AlertTriangleIcon, Camera, ChevronLeft, ChevronRight, Heart, Image, MessageCircle, Send, X} from 'lucide-react';
 import axios from 'axios';
-import {URL_ADD_STORIES, URL_GET_ALL_STORIES, URL_SERVER_SIDE} from "../../utils/Constants";
+import {TIME_STORIES, URL_ADD_STORIES, URL_GET_ALL_STORIES, URL_SERVER_SIDE} from "../../utils/Constants";
 import FormatDate from "../../utils/FormatDate";
 import img_null from "../../assets/navbar/User_Profile_null.png"
 
@@ -103,51 +103,74 @@ export default function Stories({ username }) {
         setSelectedImage(stories[prev]);
     };
 
+    useEffect(() => {
+        if (previewOpen) {
+            const timer = setTimeout(() => {
+                if (stories.length > 1) {
+                    const next = (selectedIndex + 1) % stories.length;
+                    setSelectedIndex(next);
+                    setSelectedImage(stories[next]);
+                }
+            }, TIME_STORIES);
+
+
+            return () => clearTimeout(timer);
+        }
+    }, [selectedIndex, previewOpen]);
+
     return (
-        <div className="bg-white rounded-xl shadow-sm p-4 mb-4">
+        <div className="rounded-xl p-4 mb-4">
             <h3 className="font-semibold mb-4 text-gray-900">Stories</h3>
-            <ScrollArea className="w-full whitespace-nowrap">
-                <div className="flex space-x-4">
-                    <div
+            <ScrollArea className="w-full overflow-x-auto pb-2">
+                <div className="flex space-x-4 px-2 mt-2">
+                    <motion.div
+                        whileHover={{scale: 1.1}}
+                        whileTap={{scale: 0.95}}
                         className="flex flex-col items-center space-y-2 cursor-pointer"
                         onClick={() => setUploadOpen(true)}
                     >
-                        <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-gray-300 to-gray-100 flex items-center justify-center shadow-inner">
-                            <Camera className="w-6 h-6 text-gray-700" />
+                        <div
+                            className="w-16 h-16 rounded-full bg-gradient-to-tr from-gray-300 to-gray-100 flex items-center justify-center shadow-inner">
+                            <Camera className="w-6 h-6 text-gray-700"/>
                         </div>
                         <span className="text-xs text-gray-600">Add Story</span>
-                    </div>
+                    </motion.div>
 
                     {stories.map((story, index) => (
-                        <div
+                        <motion.div
                             key={story.id}
-                            className="flex flex-col items-center space-y-2 cursor-pointer"
                             onClick={() => openPreview(index)}
+                            initial={{opacity: 0, scale: 0.9}}
+                            whileInView={{opacity: 1, scale: 1}}
+                            viewport={{once: false, amount: 0.3}}
+                            transition={{duration: 0.4, delay: index * 0.05}}
+                            className="flex flex-col items-center space-y-2 cursor-pointer"
                         >
-                            <div className="p-0.5 bg-gradient-to-tr from-yellow-400 to-fuchsia-600 rounded-full">
+                            <div
+                                className="relative w-16 h-16 rounded-full ring-2 ring-pink-500 ring-offset-2 overflow-hidden">
                                 <Avatar
-                                    className="w-16 h-16 border-2 border-white"
+                                    className="w-full h-full rounded-full object-cover"
                                     src={story.profilePicture || img_null}
                                     alt={story.username}
                                 />
                             </div>
                             <span className="text-xs text-gray-600">{story.username}</span>
-                        </div>
+                        </motion.div>
                     ))}
                 </div>
-                <ScrollBar orientation="horizontal" />
+                <ScrollBar orientation="horizontal"/>
             </ScrollArea>
 
-
             <Dialog open={uploadOpen} onClose={() => setUploadOpen(false)}>
-                <div className="p-6 w-full max-w-md bg-gradient-to-b from-white to-blue-50 rounded-2xl shadow-2xl space-y-5 animate-fade-in">
+                <div
+                    className="p-6 w-full max-w-md bg-gradient-to-b from-white to-blue-50 rounded-2xl shadow-2xl space-y-5 animate-fade-in">
                     <h2 className="text-2xl font-extrabold text-gray-800 text-center">📸 Upload Your Story</h2>
                     <p className="text-sm text-gray-500 text-center italic">
                         Note: Story will disappear after at least 24 hours.
                     </p>
 
                     <div className="relative">
-                        <Camera className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 opacity-60" />
+                        <Camera className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 opacity-60"/>
                         <input
                             type="file"
                             onChange={handleFileChange}
@@ -158,7 +181,7 @@ export default function Stories({ username }) {
                     </div>
 
                     <div className="relative">
-                        <Image className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 opacity-60" />
+                        <Image className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 opacity-60"/>
                         <input
                             type="text"
                             placeholder="or paste image URL..."
@@ -229,46 +252,97 @@ export default function Stories({ username }) {
                 <AnimatePresence>
                     {selectedImage && (
                         <motion.div
-                            className="relative w-full max-w-4xl mx-auto bg-black rounded-xl overflow-hidden animate-fade-in"
-                            initial={{opacity: 0}}
-                            animate={{opacity: 1}}
-                            exit={{opacity: 0}}
+                            className="fixed inset-0 bg-black z-50 flex items-center justify-center"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
                         >
-                            <img
-                                src={selectedImage.imageStories}
-                                alt="story"
-                                className="w-full h-auto max-h-[92vh] object-contain"
-                            />
+                            <div className="relative w-full max-w-sm sm:max-w-3xl h-[85dvh] bg-black flex flex-col justify-between rounded-none sm:rounded-xl overflow-hidden">
+
+                                {/* 🟦 Progress Bar */}
+                                {/* 🟦 Colorful Progress Bar */}
+                                <div className="absolute top-0 left-0 w-full h-1 bg-gray-700 z-20">
+                                    <motion.div
+                                        key={selectedIndex}
+                                        className="h-full bg-gradient-to-r from-yellow-400 via-blue-500 to-purple-600"
+                                        initial={{ width: 0 }}
+                                        animate={{ width: "100%" }}
+                                        transition={{ duration: 5, ease: "linear" }}
+                                    />
+                                </div>
 
 
-                            <div className="absolute top-4 left-4 text-white text-sm bg-black bg-opacity-60 px-4 py-1 rounded-full shadow-md">
-                                {FormatDate(selectedImage.date)}
+                                {/* 🧑‍ Top Bar */}
+                                <div className="flex items-center justify-between px-4 py-2 bg-black bg-opacity-70 z-10">
+                                    <div className="flex items-center gap-2 overflow-hidden">
+                                        <Avatar
+                                            src={selectedImage.profilePicture || img_null}
+                                            className="w-8 h-8 rounded-full shrink-0"
+                                        />
+                                        <span className="text-white text-sm font-semibold truncate">{selectedImage.username}</span>
+                                        <span className="text-gray-400 text-xs whitespace-nowrap">{FormatDate(selectedImage.date)}</span>
+                                    </div>
+                                    <button
+                                        onClick={() => setPreviewOpen(false)}
+                                        className="p-2 bg-white rounded-full hover:bg-gray-200 shadow"
+                                    >
+                                        <X className="w-5 h-5 text-gray-700" />
+                                    </button>
+                                </div>
+
+                                {/* 🖼️ Image */}
+                                <div className="flex-grow flex items-center justify-center overflow-hidden px-1 py-1">
+                                    <img
+                                        src={selectedImage.imageStories}
+                                        alt="story"
+                                        className="max-h-full max-w-full object-contain"
+                                    />
+                                </div>
+
+                                {/* ❤️💬 Bottom Bar */}
+                                <div className="px-4 pt-3 pb-4 bg-black bg-opacity-70 border-t border-gray-800">
+                                    <div className="flex items-center gap-4 mb-3">
+                                        <button className="text-white hover:scale-110 transition">
+                                            <Heart className="w-5 h-5" />
+                                        </button>
+                                        <button className="text-white hover:scale-110 transition">
+                                            <MessageCircle className="w-5 h-5" />
+                                        </button>
+                                    </div>
+
+                                    <div className="flex items-center gap-2 bg-gray-800/30 rounded-full px-4 py-2">
+                                        <input
+                                            type="text"
+                                            placeholder="Reply to this story..."
+                                            className="bg-transparent text-sm text-white flex-1 outline-none placeholder-gray-400"
+                                        />
+                                        <Send className="w-4 h-4 text-white cursor-pointer" />
+                                    </div>
+                                </div>
+
+                                {/* 🔁 Navigation Arrows */}
+                                {stories.length > 1 && (
+                                    <>
+                                        <button
+                                            onClick={prevStory}
+                                            className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full hover:bg-gray-200 shadow"
+                                        >
+                                            <ChevronLeft className="w-5 h-5 text-gray-700" />
+                                        </button>
+                                        <button
+                                            onClick={nextStory}
+                                            className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full hover:bg-gray-200 shadow"
+                                        >
+                                            <ChevronRight className="w-5 h-5 text-gray-700" />
+                                        </button>
+                                    </>
+                                )}
                             </div>
-
-
-                            <button
-                                onClick={prevStory}
-                                className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white hover:bg-gray-200 p-2 rounded-full shadow"
-                            >
-                                <ChevronLeft className="text-gray-700 w-5 h-5" />
-                            </button>
-                            <button
-                                onClick={nextStory}
-                                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white hover:bg-gray-200 p-2 rounded-full shadow"
-                            >
-                                <ChevronRight className="text-gray-700 w-5 h-5" />
-                            </button>
-
-                            <button
-                                onClick={() => setPreviewOpen(false)}
-                                className="absolute top-4 right-4 bg-white hover:bg-gray-200 p-2 rounded-full shadow"
-                            >
-                                <X className="text-gray-700 w-5 h-5"/>
-                            </button>
                         </motion.div>
                     )}
                 </AnimatePresence>
             </Dialog>
+
         </div>
     );
 }

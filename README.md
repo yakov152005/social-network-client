@@ -1,88 +1,85 @@
 # 🌐 Social Network - Client Side
-🔹 **Production Version**  
+
+🎯 **Production Version**  
 [Click here to access the live production version](https://social-network-client-k8fp.onrender.com/login)
 
-🔹 **Server Side**  
-[Click here to go server side](https://github.com/yakov152005/social-network-server)
+🖥️ **Server Repository**  
+[Click here to go Server Repository](https://github.com/yakov152005/social-network-server)
+
+---
 
 ## 🎯 Overview
-🔹Social Network is a modern social networking platform built with React, focusing on **performance, security, and an interactive user experience**. The application supports **user registration with validation, password reset via unique email token, real-time chat, and notifications via SSE**.
+🔹**Social Network** is a cutting-edge platform built with **React, Java, Spring Boot,JavaScript, TypeScript, and SQL**, 
+offering a fully interactive, real-time social experience.  
+From secure authentication to dynamic dashboards, stories, chat, and notifications — everything is crafted with a strong focus on **performance, security, and user experience**.
 
+![React](https://img.shields.io/badge/Frontend-React-blue?logo=react)
+![Spring Boot](https://img.shields.io/badge/Backend-SpringBoot-green?logo=springboot)
+![Tailwind](https://img.shields.io/badge/Style-TailwindCSS-06b6d4?logo=tailwindcss)
+![SSE](https://img.shields.io/badge/Realtime-SSE-orange)
+![JWT](https://img.shields.io/badge/Auth-JWT-yellow?logo=jsonwebtokens)
+
+---
 
 ## 🎥 Live Demo
 
-🔹 **Login & Signup**
+### 🔐 Login
 
-| **PC Login & Signup** | **Mobile Login & Signup** |
+| **PC Login** | **Mobile Login** |
 |----------------------|----------------------|
 | ![PC Login](https://i.imgur.com/izwFZsx.png) | ![Mobile Login](https://i.imgur.com/TFqUIWU.png)|
 
+### 📝 Signup Demo (GIF Previews)
 
-🔹 **Dashboard & Chat**
+| **PC Signup** | **Mobile Signup** |
+|----------------|------------------|
+| ![Signup PC](https://i.imgur.com/ZJxRbQX.gif) | ![Signup Mobile](https://i.imgur.com/K2QKnJi.gif) |
+
+> ⚠️ *Note: The GIF previews may appear with reduced resolution due to GIF compression.*
+
+### 🖥️ Dashboard & Chat Demo
 
 | **PC Dashboard** | **Mobile Dashboard** |
-|------------------|------------------|
+|------------------|----------------------|
+| [![PC Demo](https://i.imgur.com/F6QGv3x.png)](https://youtu.be/cJJtyqjgJQk) | [![Mobile Demo](https://i.imgur.com/x1cGPuK.png)](https://youtu.be/Y-Hf3_CKtlw) |
+
+> ▶️ Click the image to play the demo on YouTube.
 
 
 ---
 
-## 🚀 Features
-✅ **Dashboard** – View the stories of people you follow, their posts, comments and likes, comment and like, see online friends, suggest friends.
-
-✅ **Profile** - Change profile picture, view posts you've uploaded, likes and comments, list of followers and followers, bio, full name, username.
-
-✅ **Settings** - You can change personal details such as gender, relationship status, bio, full-name, change password & two-factor sms, delete user.
-
-✅ **Dynamic NavBar** - Changes for each screen - home, notifications, messages, search, profile, settings, profile picture. When you hover over it,
-a popup opens with a list of followers and followed people and an option to disconnect, navigate to profile, navigate to settings.
-
-✅ **Profile Search** -  profile you were looking for - option to follow him/her and/or send him/her a message, see followers and followers,
-see posts and number of likes and comments, bio, profile picture, full name, and navigate from him/her to other people.
-
-✅ **Message** - Real-time messages, a modern message box that includes the option to send emojis, see a list of friends and chat history, access the profile through messages, see when messages were sent, 
-and in the list you can see what the last message was sent and when, and search for users in the message box.
-
-✅ **Notification** - Real-time notifications about likes, comments and followers
-
-✅ **Search** - Quick search for users, access profiles through search, see users I recently searched for, and an option to clear history.
-
-✅ **PopUp Profile** - A quick menu when hovering over it shows the number of followers and followers, profile picture, username, full name, bio,
-and an option to enter the profile, settings, or log out.
-
-✅ **Authentication & Authorization** – Registration, login, validation, and password reset via email token.  
-✅ **Hard Authentication** - Every transition between pages is secured by authentication, verified and managed by the course administrator.
-
-✅ **State Management & Hooks** – Utilizing `useState`, `useEffect`, `useCallback`, `useRef`, `useContext`,`useDropZon`,`custom hooks`.  
-✅ **API Communication** – Managed via `Axios` and `Fetch`.  
-✅ **Real-Time Updates** – Notifications/Messaging/Online friends/Stories/Comments using **SSE (Server-Sent Events)**.  
-✅ **Advanced UI** – Styled with **Tailwind (custom config), MUI, Bootstrap, SweetAlert, Custom Components UI Style shadcn**.  
-✅ **Image Upload** – Implemented with **Dropzone** & Custom upload.  
-✅ **Popups & Notifications** – Handled using SweetAlert & Custom toast.  
-✅ **Custom CSS per page** – Unique styling for each screen.  
-✅ **Lazy Loading for Images** – Optimized performance with image lazy loading.  
-✅ **Scrolling Support** – Smooth scrolling experience.  
-✅ **Emoji Support** – Users can send emojis in messages.  
-✅ **User Navigation** – Navigate to user profiles from comments, likes, followers, search, notification, message.  
-✅ **User Search by Name** – Find users quickly With a Search Query.  
-✅ **Social Interactions** – Like, comment, follow, share stories, posts, notification and send messages.  
-✅ **Easy Password Reset & Account Deletion** – Users can change their password and two factor password Or delete their account directly from settings.  
-✅ **Activity Notifications** – Users receive real-time updates on likes, follows, and comments on their posts.
-
-
+## ⚙️ Features
+- 🏠 **Dashboard** – Upload posts/stories, View on dashboard of people you follow on them: stories, posts, likes/comments, online friends, and friend suggestions
+- 👤 **Profile** – Full user details, bio, posts, likes/comments, profile pic updates, followers/following
+- ⚙️ **Settings** – Manage personal info, change password, enable 2FA, delete account and more.
+- 📬 **Messages** – Real-time chat with emojis, last message preview, profile links, mobile support via **SSE**
+- 🔔 **Notifications** – Instant updates on likes, comments, and follows via **SSE**
+- 🔍 **Search** – Quick user lookup with recent history and follow/message options
+- 🧑‍🤝‍🧑 **Pop-up Profile Preview** – Hover view with quick actions (profile/settings/logout)
+- 🛡 **Authentication & Security** – JWT, hashed passwords, email reset tokens, 2FA
+- 🧠 **Dynamic NavBar** – Adapts to screen with hover popups and profile actions
+- 📸 **Post & Stories & Profile Pic Upload Dialog** – Includes image preview, emoji picker, zoom/pan
+- 📱 **Responsive UI** – Optimized across all screen sizes with smooth scroll & page transitions
+- ⚡ **Real-Time with SSE** – Chat, notifications, online users, stories, comments
+- ✅ **Social Interactions** – Like, comment, follow, share stories, posts, notification and send messages.
 
 ---
+
 
 ## 🏗 Tech Stack
-🛠 **Frontend:** React, JavaScript, typeScript
-🎨 **Styling:** Tailwind CSS (with custom config) & motion,Custom Components UI Style shadcn, Material UI, Bootstrap, 
-🔁 **State Management:** Hooks (`useState`, `useEffect`, `useCallback`, `useRef`, `useContext`,`useDropZon`,`custom hooks`)  
-🌍 **Networking:** `Axios` and `Fetch`.
-🔑 **Authentication:** JWT token, Email Token Reset, hash&salt
-📡 **Real-Time Updates:** SSE  
-🚀 **CI/CD:** GitHub Actions (Deploy to GitHub Pages)
-🔁 **Radix UI + Shadcn/ui**
+- 🛠 **Frontend:** React, JavaScript, typeScript.
+- 👤**Backend:** Java, Spring Boot.
+- 🧩 **Tools** SSE | SQL | DOCKER | JPA | CACHING | CronJob | scheduled | hibernate | and more.
+- 🎨 **Styling:** Tailwind CSS (with custom config), Framer Motion, Custom Components UI Style shadcn, MUI, Bootstrap,
+- 🔁 **State Management:** Hooks (`useState`, `useEffect`, `useCallback`, `useRef`, `useContext`,`useDropZon`,`custom hooks`)  
+- 🌍 **Networking:** `Axios` and `Fetch`.
+- 🔑 **Authentication:** JWT token, Email Token Reset, hash&salt, 2FA
+- 📡 **Real-Time Updates:** SSE  
+- 🚀 **CI/CD:** GitHub Actions (Deploy to GitHub Pages)
+- 🔁 **SEO & Meta:** Full SEO optimization with OG, Twitter tags, robots, canonical, and more
 
 ---
+
 ## 🔍 SEO Optimization
 
 The project is fully optimized for search engines and social media sharing:
@@ -146,7 +143,7 @@ social-network-client/
 ├──📂 public/
 │   ├── images/
 │   ├── socialNetworkIcon.png
-│   ├── socialNetworkLogo.png
+│   ├── skeleton-register-preview.png
 │   ├── index.html  # SEO Optimization, Meta Tags, Canonical URL and more.
 │   ├── static.json
 │   ├── preview-image.png
@@ -182,10 +179,12 @@ social-network-client/
     │   │   ├──TermsAgreement.jsx
     │   │   └──WelcomeScreen.jsx
     │   ├──📂loaders
+    │   │   ├──LoadingHome.jsx
     │   │   ├──LoadingOverlay.jsx
     │   │   ├──LoadingScreen.jsx
     │   │   ├──PostSkeleton.jsx
-    │   │   └──ProfileSkeleton.jsx
+    │   │   ├──ProfileSkeleton.jsx
+    │   │   └──SettingsSkeleton.jsx
     │   ├──📂navbar
     │   │   ├──Footer.jsx
     │   │   ├──HomeSpeedDial.jsx
@@ -285,20 +284,15 @@ export const login = async (email, password) => {
 
 ---
 
-## 🎨 UI & Animations & Components
-🎭 **Framer Motion** and `react-icons`, `lucide-react` are used for smooth animations.  
-🔄 **Page transitions** are handled with **React Router**.  
-🌙 **UI Styling via Tailwind CSS, Bootstrap, MUI, Custom Ui Components and more..**
-
-🔹 **Advanced Custom UI** – The project uses a mix of:
-
-🔹 **Radix UI Primitives**, styled via [**Shadcn/ui**](https://ui.shadcn.com/) ensuring accessibility and consistent behavior across browsers.
-
-🔹 **Custom-built UI Components** – Some components like buttons, dialogs, popups, inputs, and settings forms were **handcrafted** for full control and a clean design.
-
-🔹 **Responsive design (mobile + desktop)**
-
-🔹 **Tailwind CSS Custom Configuration** – Tailwind is extended with:
+## 🎨 UI, Animations & Accessibility
+- **Framer Motion** and `react-icons`, `lucide-react` are used for smooth animations.  
+- **Page transitions** are handled with **React Router**.  
+- **UI Styling via Tailwind CSS, Bootstrap, MUI, Custom Ui Components and more..**
+- **Advanced Custom UI** – The project uses a mix of:
+- **Radix UI Primitives**, styled via [**Shadcn/ui**](https://ui.shadcn.com/) ensuring accessibility and consistent behavior across browsers.
+- **Custom Components:** Avatar, Dialog, AlertDialog, Tabs, Buttons, Inputs, ScrollArea, etc.
+- **Responsive design (mobile + desktop)**
+- 🔹 **Tailwind CSS Custom Configuration** – Tailwind is extended with:
 
 - Custom colors & font sizes
 - Custom breakpoints for mobile-first design
@@ -309,55 +303,55 @@ export const login = async (email, password) => {
 
 ---
 
-## 🧩 Customizations & Additional Highlights
-
-- 📄 **Reusable UI Component Library** – Built with a mix of Radix primitives and custom logic.
-- 🖼️ **Post Upload Dialog** – With image preview, zoom/pan, and emoji picker.
-- 🔄 **Responsive Tabs & Sidebar** – Scrollable tabs with motion transitions.
-- 🎯 **Accessibility** – All components support keyboard navigation and screen readers.
-- 🎨 **Page-level styling** – Every screen has unique, tailored CSS.
-
----
-
-## ⚙️ Settings System
-
-The **Settings page** provides a fully interactive user management system:
-- ✏️ **Update profile details** – Change bio, gender, relationship status
-- 🔐 **Change password** – Secure password update via validation
-- ❌ **Delete account** – Complete account removal with confirmation prompt
-- 🔗 **Manage social media links** – Add/update links to Facebook, Github, LinkedIn, Twitter
-- 🔕 **Notifications & Privacy (coming soon)** – Toggle real-time alerts and privacy preferences
-
-All actions include validation, confirmation dialogs (via SweetAlert), and smooth transitions.
+## 🛡️ Security Highlights
+- JWT with expiration & refresh handling
+- Email token for password reset
+- Passwords hashed + salted
+- 2FA via SMS (optional)
+- CORS, Helmet, Rate limiting on backend
 
 ---
 
-## 🛠 CI/CD Pipeline - GitHub Actions
-The project includes a **complete CI/CD pipeline** with GitHub Actions, enabling:  
-🚀 **Automatic deployment** to GitHub Pages (`deploy-react.yml`).  
-✅ **Automated tests before merging pull requests**.
+## 🧠 SEO & Optimization
+- Meta tags for description, Open Graph, Twitter Cards
+- Canonical URLs, favicon support, robots.txt
+- Localization with `<html lang="he">`
+- Lazy loading for images
+- Smooth scroll and route transitions
 
 ---
 
-## 🔐 Security Measures
-🔑 **JWT with Expiration**  
-🚦 **Rate Limiting on API Calls**  
-🔒 **Hash & Salt for Passwords**  
-🛡 **CORS & Helmet for Server Protection**
+## 🔄 CI/CD Pipeline - GitHub Actions
+- GitHub Actions Workflow (`deploy-react.yml`)
+- Auto deployment + test runs
+- GitHub Pages compatible
 
 ---
 
-## 🎯 Roadmap - Future Enhancements
+
+## 🔮 Future Enhancements
 📌 [ ] **Video Upload Support in Chat** 🎥  
-📌 [ ] **AI-Based Content Moderation** 🤖  
-📌 [ ] **Advanced User Notification System** 📢
+📌 [ ] **Option to delete posts/comments and Like/replay comments** ✅  
+📌 [ ] **Enhanced Notification Settings** ⚙️  
 📌 [ ] **And more!** 📢
+
 ---
 
-## 📩 Contact & Contribute
-💡 Contributions are welcome via **Pull Requests**. Feel free to reach out via email: 📧 yakovbenhemo5@gmail.com
+## 🤝 Contribute
+**Pull Requests welcome!**
+- 📧 Contact: yakovbenhemo5@gmail.com
+
+> Built with ❤️ by a passionate full-stack dev – from backend logic to UI animations, everything is handcrafted for performance and beauty.
+
+---
+
+## 🔗 Explore
+- 🖥️ [Backend GitHub Repo](https://github.com/yakov152005/social-network-server)
+- 🌐 [Live Demo](https://social-network-client-k8fp.onrender.com/login)
+
 
 🚀 **Enjoy the Social Network Experience!** 🌍
+
 
 
 

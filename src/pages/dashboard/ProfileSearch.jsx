@@ -182,13 +182,13 @@ export default function ProfileSearch() {
                                 <div className="font-bold">{profileData.posts.length}</div>
                                 <div className="text-sm text-gray-500">Posts</div>
                             </button>
-                            <button className="text-center" onClick={() => {fetchFollowersAndFollowing(); setShowFollowing(true);}}>
-                                <div className="font-bold">{profileData.following}</div>
-                                <div className="text-sm text-gray-500">Following</div>
-                            </button>
-                            <button className="text-center" onClick={() => {fetchFollowersAndFollowing(); setShowFollowers(true);}}>
+                            <button className="text-center" onClick={() => {fetchFollowersAndFollowing();setShowFollowers(true);}}>
                                 <div className="font-bold">{profileData.followers}</div>
                                 <div className="text-sm text-gray-500">Followers</div>
+                            </button>
+                            <button className="text-center" onClick={() => {fetchFollowersAndFollowing();setShowFollowing(true);}}>
+                                <div className="font-bold">{profileData.following}</div>
+                                <div className="text-sm text-gray-500">Following</div>
                             </button>
                         </div>
                     </div>
@@ -196,8 +196,8 @@ export default function ProfileSearch() {
 
                 <Tabs value={activeTab} onValueChange={setActiveTab} className="mt-8">
                     <TabsList className="grid w-full md:w-auto grid-cols-3 border-b rounded-none bg-transparent h-auto">
-                        <TabsTrigger value="posts" >
-                            <Grid className="w-4 h-4 mr-2" /> Posts
+                        <TabsTrigger value="posts">
+                        <Grid className="w-4 h-4 mr-2" /> Posts
                         </TabsTrigger>
                         <TabsTrigger value="reels" >
                             <Film className="w-4 h-4 mr-2" /> Reels

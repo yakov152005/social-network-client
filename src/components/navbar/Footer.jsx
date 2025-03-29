@@ -16,13 +16,19 @@ export default function Footer() {
 
                 <div className="flex flex-col gap-6 max-w-md">
                     <div className="flex items-center gap-2">
-                        <img src={logo} alt="Social Network Logo" className="w-8 h-8 rounded-lg" />
-                        <span className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-blue-500 bg-clip-text text-transparent">
-                            Social<span className="bg-gradient-to-r from-blue-500 to-blue-400 bg-clip-text text-transparent">network</span>
+                        <img src={logo} alt="Social Network Logo" className="w-8 h-8 rounded-lg"/>
+                        <span
+                            className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-blue-500 bg-clip-text text-transparent">
+                            Social<span
+                            className="bg-gradient-to-r from-blue-500 to-blue-400 bg-clip-text text-transparent">network</span>
                         </span>
                     </div>
+                    <div
+                        className="w-44 h-0.5 bg-gradient-to-r from-blue-500 via-blue-400 to-indigo-400 rounded-full -mt-4 mb-1"></div>
+
                     <p className="leading-relaxed font-medium text-lg text-gray-600">
-                        Welcome to my social networking site. Here you can enjoy online chat, share posts, follow friends, comment, like and just have fun.
+                        Welcome to my social networking site. Here you can enjoy online chat, share posts, follow
+                        friends, comment, like and just have fun.
                     </p>
                 </div>
 

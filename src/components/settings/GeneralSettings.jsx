@@ -8,7 +8,6 @@ import axios from "axios";
 import {URL_CHANGE_USER_SETTINGS, URL_SERVER_SIDE} from "../../utils/Constants";
 import {ChevronDown} from "lucide-react";
 import img_null from "../../assets/navbar/User_Profile_null.png"
-import LoadingOverlay from "../loaders/LoadingOverlay";
 
 export default function GeneralSettings({ userData,fetchUserData }) {
     const [formData, setFormData] = useState({});
@@ -72,11 +71,6 @@ export default function GeneralSettings({ userData,fetchUserData }) {
         }
     };
 
-    if (!userData) return (
-        <div>
-            <LoadingOverlay text="Loading your details, Wait a few moments..."/>
-        </div>
-    );
 
     return (
         <Card>

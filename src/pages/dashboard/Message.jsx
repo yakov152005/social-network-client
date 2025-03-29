@@ -7,7 +7,7 @@ import {Avatar} from "../../components/ui/Avatar";
 import {ScrollArea} from "../../components/ui/ScrollArea";
 import {ChevronLeft, Phone, Video, Info, Smile, SearchIcon} from "lucide-react";
 import {
-    NAV_PROFILE_SEARCH_BASE,
+    NAV_PROFILE_SEARCH_BASE, TIME_SEND,
     URL_GET_CHAT_USERS,
     URL_MESSAGE_HISTORY,
     URL_SEND_MESSAGE,
@@ -40,6 +40,8 @@ export default function Messages() {
     const [showPicker, setShowPicker] = useState(false);
     const messagesEndRef = useRef(null);
     const [isFirstLoad, setIsFirstLoad] = useState(true);
+    const [pendingMessage, setPendingMessage] = useState("");
+    const [sendingChats, setSendingChats] = useState({});
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({behavior: "smooth"});
@@ -90,6 +92,10 @@ export default function Messages() {
 
     const fetchSendMessage = async (currentChat) => {
         if (!messageContent.trim()) return;
+
+        setPendingMessage(messageContent);
+        setSendingChats((prev) => ({ ...prev, [currentChat]: true }));
+
         try {
             const data = new URLSearchParams();
             data.append("senderUsername", sender);
@@ -102,13 +108,24 @@ export default function Messages() {
 
             const newMessage = response.data.messageDto;
             setMessages((prevMessages) => [...prevMessages, newMessage]);
+            setPendingMessage("");
             setMessageContent("");
 
             await fetchLoadChatMessages(currentChat);
         } catch (error) {
             console.error("Error sending message", error);
+        } finally {
+            setTimeout(() => {
+                setSendingChats((prev) => {
+                    const copy = { ...prev };
+                    delete copy[currentChat];
+                    return copy;
+                });
+            },TIME_SEND)
         }
     };
+
+    const isSending = !!sendingChats[currentChat];
 
     useEffect(() => {
         scrollToBottom();
@@ -288,43 +305,57 @@ export default function Messages() {
                             </ScrollArea>
                         </div>
 
-                        <div className="p-4 border-t">
+                        {isSending && (
+                            <div className="absolute top-0 left-0 right-0 h-0.5 bg-gray-300 animate-pulse rounded-t-md" />
+                        )}
+
+                        <div className="p-4 border-t relative">
                             <div className="relative w-full">
                                 <Input2
                                     placeholder="Write your message..."
-                                    value={messageContent}
+                                    value={isSending ? pendingMessage : messageContent}
                                     onChange={(e) => setMessageContent(e.target.value)}
                                     onKeyDown={(e) => {
-                                        if (e.key === "Enter" && !e.shiftKey) {
+                                        if (!isSending && e.key === "Enter" && !e.shiftKey) {
                                             e.preventDefault();
                                             fetchSendMessage(currentChat);
                                         }
                                     }}
-                                    className="w-full rounded-xl bg-gray-50 pl-10 pr-10"
+                                    disabled={isSending}
+                                    className={`w-full rounded-xl bg-gray-50 pl-10 pr-10 transition-opacity duration-200 ${
+                                        isSending ? "opacity-60 cursor-not-allowed" : ""
+                                    }`}
                                 />
-
 
 
                                 <button
                                     type="button"
                                     className="absolute left-3 top-1/2 transform -translate-y-1/2 text-yellow-500"
-                                    onClick={() => setShowPicker(!showPicker)}
+                                    onClick={() => !isSending && setShowPicker(!showPicker)}
+                                    disabled={isSending}
                                 >
                                     <Smile className="w-5 h-5"/>
                                 </button>
 
 
-                                <button
-                                    type="button"
-                                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-blue-500 disabled:opacity-50"
-                                    onClick={() => fetchSendMessage(currentChat)}
-                                    disabled={!messageContent.trim()}
-                                >
-                                    <FiSend size={20}/>
-                                </button>
+                                {isSending ? (
+                                    <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                                        <div
+                                            className="w-4 h-4 border-2 border-gray-300 border-t-transparent rounded-full animate-spin"/>
+                                    </div>
+                                ) : (
+                                    <button
+                                        type="button"
+                                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-blue-500 disabled:opacity-50"
+                                        onClick={() => fetchSendMessage(currentChat)}
+                                        disabled={!messageContent.trim()}
+                                    >
+                                        <FiSend size={20}/>
+                                    </button>
+                                )}
 
                                 {showPicker && (
-                                    <div className="absolute bottom-12 left-0">
+                                    <div className="absolute bottom-12 left-0 z-50">
                                         <EmojiPicker
                                             onEmojiClick={(emoji) => {
                                                 setMessageContent((prev) => prev + emoji.emoji);

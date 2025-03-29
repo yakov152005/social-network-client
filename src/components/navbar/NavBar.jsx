@@ -29,6 +29,7 @@ export default function NavBar({ isLoggedIn, onLogout }) {
     const [isNotificationOpen, setIsNotificationOpen] = useState(false);
     const navigate = useNavigate();
     const eventSourceRef = useRef(null);
+    const [fullName, setFullName] = useState("");
 
 
     const handleUserClick = (usernameSearch) => {
@@ -46,7 +47,7 @@ export default function NavBar({ isLoggedIn, onLogout }) {
     const fetchDetails = async () => {
         try {
             const api = new UsernameAPI();
-            await api.fetchUserDetails(setUsername, setUserProfilePic);
+            await api.fetchUserDetails(setUsername, setUserProfilePic,null,null,setFullName);
         } catch (error) {
             console.log("Error fetching user details", error);
         }
@@ -497,6 +498,7 @@ export default function NavBar({ isLoggedIn, onLogout }) {
                     <MobileNavBar
                         username={username}
                         userProfilePic={userProfilePic}
+                        fullName={fullName}
                         followers={followers}
                         following={following}
                         onLogout={onLogout}
@@ -510,6 +512,7 @@ export default function NavBar({ isLoggedIn, onLogout }) {
                     <SidebarDesktop
                         username={username}
                         userProfilePic={userProfilePic}
+                        fullName={fullName}
                         followers={followers}
                         following={following}
                         hovered={hovered}

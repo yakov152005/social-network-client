@@ -2,11 +2,23 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {Avatar} from "../ui/Avatar";
 import {Badge} from "../ui/Badge";
-import {URL_DISCONNECT_ONLINE, URL_LIST, URL_SERVER_SIDE, URL_SSE_ONLINE} from "../../utils/Constants";
+import {
+    NAV_PROFILE_SEARCH_BASE,
+    URL_DISCONNECT_ONLINE,
+    URL_LIST,
+    URL_SERVER_SIDE,
+    URL_SSE_ONLINE
+} from "../../utils/Constants";
 import img_null from "../../assets/navbar/User_Profile_null.png";
+import {useNavigate} from "react-router-dom";
 
 export default function OnlineFriends({username}) {
     const [onlineFriends, setOnlineFriends] = useState([]);
+    const navigate = useNavigate();
+
+    const handleUserClick = (usernameSearch) => {
+        navigate(NAV_PROFILE_SEARCH_BASE + `/${usernameSearch}`);
+    };
 
 
     useEffect(() => {
@@ -65,7 +77,7 @@ export default function OnlineFriends({username}) {
             </div>
             <div className="space-y-4">
                 {onlineFriends.map((friend) => (
-                    <div key={friend.id} className="flex items-center space-x-3">
+                    <div key={friend.id} className="flex items-center space-x-3 cursor-pointer" onClick={() => handleUserClick(friend.username)}>
                         <div className="relative">
                             <Avatar src={friend.profilePicture || img_null} alt={friend.username} className="object-cover"/>
                             <span

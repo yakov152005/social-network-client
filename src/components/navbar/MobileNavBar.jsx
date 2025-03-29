@@ -26,6 +26,7 @@ import img_null from "../../assets/navbar/User_Profile_null.png"
 export default function MobileNavBar({
                                          username,
                                          userProfilePic,
+                                         fullName,
                                          followers,
                                          following,
                                          onLogout,
@@ -173,7 +174,7 @@ export default function MobileNavBar({
                                 />
                             </StyledBadge>
                             <div>
-                                <p className="profile-name">{username}</p>
+                                <p className="profile-name">{fullName ? fullName : username}</p>
                                 <p className="profile-username">@{username?.toLowerCase().replace(/\s/g, '')}</p>
                             </div>
                         </div>

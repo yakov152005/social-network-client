@@ -280,13 +280,13 @@ export default function Profile() {
                                 <div className="font-bold">{posts.length}</div>
                                 <div className="text-sm text-gray-500">Posts</div>
                             </button>
-                            <button className="text-center" onClick={handleShowFollowing}>
-                                <div className="font-bold">{following}</div>
-                                <div className="text-sm text-gray-500">Following</div>
-                            </button>
                             <button className="text-center" onClick={handleShowFollowers}>
                                 <div className="font-bold">{followers}</div>
                                 <div className="text-sm text-gray-500">Followers</div>
+                            </button>
+                            <button className="text-center" onClick={handleShowFollowing}>
+                                <div className="font-bold">{following}</div>
+                                <div className="text-sm text-gray-500">Following</div>
                             </button>
                         </div>
                     </div>
@@ -294,7 +294,7 @@ export default function Profile() {
 
                 <Tabs value={activeTab} onValueChange={setActiveTab} className="mt-8">
                     <TabsList className="grid w-full md:w-auto grid-cols-3 border-b rounded-none bg-transparent h-auto">
-                        <TabsTrigger value="posts" >
+                    <TabsTrigger value="posts" >
                             <Grid className="w-4 h-4 mr-2" /> Posts
                         </TabsTrigger>
                         <TabsTrigger value="reels" >

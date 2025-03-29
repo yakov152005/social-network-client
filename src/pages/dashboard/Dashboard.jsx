@@ -311,7 +311,7 @@ export default function Dashboard() {
                                                             onClick={() => handleUserClick(post.username)}
                                                         />
                                                         <div>
-                                                            <p className="font-semibold text-base cursor-pointer hover:underline"
+                                                            <p className="font-semibold text-base mb-1 cursor-pointer hover:text-gray-700"
                                                                onClick={() => handleUserClick(post.username)}>
                                                                 {post.username}
                                                             </p>

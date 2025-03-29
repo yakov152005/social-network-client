@@ -26,6 +26,13 @@ export default class UsernameAPI {
                 return response.data.username && response.data.profilePicture && response.data.bio && response.data.fullName;
             }
 
+            if (setUsername && setProfilePicture && setFullName) {
+                setUsername(response.data.username);
+                setProfilePicture(response.data.profilePicture);
+                setFullName(response.data.fullName);
+                return response.data.username && response.data.profilePicture && response.data.fullName;
+            }
+
             if (setUsername && setProfilePicture && setBio && setTwoFactor) {
                 setUsername(response.data.username);
                 setProfilePicture(response.data.profilePicture);

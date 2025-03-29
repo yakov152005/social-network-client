@@ -63,13 +63,17 @@ const PATH = "/";
 const MAILTO = "mailto:"
 
 const TIME_LOADING = 1000;
-const TIME_LIKE = 150;
-const TIME_NOTI = 150;
+const TIME_REGISTER = 5000;
+const TIME_LIKE = 50;
+const TIME_NOTI = 50;
+const TIME_SEND = 50;
 const TIME_COMMENT = 150;
 const TIME_PROFILE = 150;
-const TIME_FOLLOW = 500;
+const TIME_FOLLOW = 250;
 const TIME_SUGGESTION = 500;
-const TIME_HOME_FEED = 500;
+const TIME_HOME_FEED = 250;
+const TIME_SETTINGS = 150;
+const TIME_STORIES = 5000;
 const TIME_LOADING_FAST = 50;
 const MAX_SCROLL = 5;
 
@@ -142,6 +146,10 @@ export {
     TIME_PROFILE,
     TIME_FOLLOW,
     TIME_SUGGESTION,
-    TIME_HOME_FEED
+    TIME_HOME_FEED,
+    TIME_SETTINGS,
+    TIME_SEND,
+    TIME_STORIES,
+    TIME_REGISTER
 
 };

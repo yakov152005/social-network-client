@@ -11,7 +11,7 @@ import {
     NAV_LOGIN,
     URL_CREATE_USER,
     URL_SERVER_SIDE,
-    TIME_LOADING,
+    TIME_LOADING, TIME_REGISTER,
 } from "../../utils/Constants";
 import {UserIcon} from "@heroicons/react/24/outline";
 import {LockClosedIcon} from "@heroicons/react/16/solid";
@@ -19,6 +19,7 @@ import {AlertTriangleIcon, CheckIcon, EyeIcon, EyeOffIcon, MailIcon, PhoneIcon} 
 import {IconLockCheck} from "@tabler/icons-react";
 import {FaBirthdayCake} from "react-icons/fa";
 import WelcomeScreen from "../../components/home/WelcomeScreen";
+import LoadingHome from "../../components/loaders/LoadingHome";
 
 const steps = [
     { title: "Account" },
@@ -60,6 +61,39 @@ export default function CreateAccount() {
         age: false,
     });
 
+    const [passwordCriteria, setPasswordCriteria] = useState({
+        length: false,
+        uppercase: false,
+        lowercase: false,
+        number: false,
+        special: false,
+    });
+
+    const criteriaValues = Object.values(passwordCriteria);
+    const passedCount = criteriaValues.filter(Boolean).length;
+
+
+    let strength = "";
+    let strengthColor = "";
+    let labelColor = "";
+
+    if (formData.password.length > 0) {
+        if (passedCount >= 4) {
+            strength = "Strong";
+            strengthColor = "bg-green-500";
+            labelColor = "bg-green-500 text-white";
+        } else if (passedCount >= 2) {
+            strength = "Medium";
+            strengthColor = "bg-yellow-400";
+            labelColor = "bg-yellow-400 text-white";
+        } else {
+            strength = "Weak";
+            strengthColor = "bg-red-500";
+            labelColor = "bg-red-500 text-white";
+        }
+    }
+
+
     useEffect(() => {
         if (errorMessage) {
             setShowAlert(true);
@@ -78,21 +112,27 @@ export default function CreateAccount() {
                 break;
             }
             case "password": {
-                const hasSpecialChar = /[!@#$%^&*()-+=_]/.test(value);
-                const letterUpper = /[A-Z]/.test(value);
-                const letterLower = /[a-z]/.test(value);
-                const numbers = /[0-9]/.test(value);
+                const isLengthValid = value.length >= 8;
+                const hasUppercase = /[A-Z]/.test(value);
+                const hasLowercase = /[a-z]/.test(value);
+                const hasNumber = /[0-9]/.test(value);
+                const hasSpecial = /[!@#$%^&*()-+=_]/.test(value);
+
+                setPasswordCriteria({
+                    length: isLengthValid,
+                    uppercase: hasUppercase,
+                    lowercase: hasLowercase,
+                    number: hasNumber,
+                    special: hasSpecial
+                });
 
                 setValidation((prev) => ({
                     ...prev,
-                    password:
-                        value.length >= 8 &&
-                        (letterLower || letterUpper) &&
-                        hasSpecialChar &&
-                        numbers,
+                    password: isLengthValid && (hasUppercase || hasLowercase) && hasNumber && hasSpecial
                 }));
                 break;
             }
+
             case "passwordConfirm":{
                 setValidation((prev) => ({
                     ...prev,
@@ -264,7 +304,7 @@ export default function CreateAccount() {
                     });
                     setLoading(false);
                     navigate(NAV_LOGIN);
-                }, TIME_LOADING);
+                }, TIME_REGISTER);
             } else {
                 const errorCode = response.data.errorCode;
                 const fieldToClear = switchError(errorCode);
@@ -291,6 +331,14 @@ export default function CreateAccount() {
                 setShowAlert(true);
             }, 50);
 
+        }finally {
+            setPasswordCriteria({
+                length: false,
+                uppercase: false,
+                lowercase: false,
+                number: false,
+                special: false
+            });
         }
     };
 
@@ -306,7 +354,7 @@ export default function CreateAccount() {
 
     return (
         <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-white to-blue-50 p-6">
-            {loading && <LoadingOverlay text="Creating your account, please wait..." />}
+            {loading && <LoadingHome/>}
 
             {!loading && showIntro && (
                 <WelcomeScreen setShowIntro={setShowIntro} />
@@ -463,14 +511,14 @@ export default function CreateAccount() {
                                 <>
                                     <div className="relative">
                                         <LockClosedIcon
-                                            className="w-5 h-5 absolute left-3 top-1/3 transform -translate-y-1/2 text-gray-400"/>
+                                            className="w-5 h-5 absolute left-3 top-7 transform -translate-y-1/2 text-gray-400"/>
                                         <input
                                             type={showPassword ? "text" : "password"}
                                             id="password"
                                             value={formData.password}
                                             onChange={handleChange}
                                             placeholder="Password"
-                                            className="w-full py-3 pl-12 pr-4 border rounded focus:outline-none"
+                                            className="w-full py-3 pl-12 pr-10 border rounded focus:outline-none"
                                         />
                                         {formData.password && (
                                             <div
@@ -491,6 +539,49 @@ export default function CreateAccount() {
                                                     Min 8 chars, uppercase, number & special char.
                                                 </div>
                                             )}
+                                        </div>
+
+                                        <div className="h-2 w-full bg-gray-200 rounded-full overflow-hidden mt-2">
+                                            <div
+                                                className={`h-full transition-all duration-300 ${strengthColor}`}
+                                                style={{width: `${(passedCount / 5) * 100}%`}}
+                                            />
+                                        </div>
+
+
+                                        {formData.password && (
+                                            <div className="flex justify-end mt-1">
+                                            <span className={`px-2 py-0.5 text-xs font-semibold rounded ${labelColor}`}>
+                                                {strength}
+                                            </span>
+                                            </div>
+                                        )}
+
+
+                                        <div
+                                            className="mt-2 border-l-4 border-green-500 bg-gray-50 px-4 py-3 rounded-md">
+                                            <h4 className="text-sm font-semibold text-green-600 mb-2">Password
+                                                Requirements:</h4>
+                                            <ul className="text-sm max-md:text-xs space-y-1 max-md:space-y-0.5 text-gray-600 max-md:pl-2">
+                                                <li className={passwordCriteria?.length ? "text-green-600 font-medium" : ""}>
+                                                    {passwordCriteria.length && "✅ "}At least 8 characters
+                                                </li>
+                                                <li className={passwordCriteria.uppercase ? "text-green-600 font-medium" : ""}>
+                                                    {passwordCriteria.uppercase && "✅ "}At least one uppercase letter
+                                                    (A-Z)
+                                                </li>
+                                                <li className={passwordCriteria.lowercase ? "text-green-600 font-medium" : ""}>
+                                                    {passwordCriteria.lowercase && "✅ "}At least one lowercase letter
+                                                    (a-z)
+                                                </li>
+                                                <li className={passwordCriteria.number ? "text-green-600 font-medium" : ""}>
+                                                    {passwordCriteria.number && "✅ "}At least one number (0-9)
+                                                </li>
+                                                <li className={passwordCriteria.special ? "text-green-600 font-medium" : ""}>
+                                                    {passwordCriteria.special && "✅ "}At least one special character
+                                                    (!@#$%^&*)
+                                                </li>
+                                            </ul>
                                         </div>
                                     </div>
 
@@ -527,10 +618,25 @@ export default function CreateAccount() {
                                         </div>
                                     </div>
 
-                                    <div className="flex items-center">
-                                        <Checkbox checked={checked} onClick={handleCheck}/>
-                                        <span className="text-sm">Enable Two-Factor Authentication</span>
+                                    <div
+                                        className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mt-4 px-1">
+
+
+                                        <div className="flex items-center gap-2 flex-shrink-0">
+                                            <Checkbox checked={checked} onClick={handleCheck}/>
+                                            <span className="text-sm font-medium whitespace-nowrap">
+                                                Enable Two-Factor Authentication
+                                            </span>
+                                        </div>
+
+
+                                        <p className="text-sm text-gray-500 italic sm:text-right text-center sm:ml-4 leading-snug sm:max-w-[60%]">
+                                            ❕Note: When enabled, you'll need to enter a verification code sent to your
+                                            phone.
+                                        </p>
                                     </div>
+
+
                                 </>
                             )}
 

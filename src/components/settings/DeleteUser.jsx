@@ -154,6 +154,7 @@ export default function DeleteUser(){
             }
     };
 
+
     return (
         <>
             <Card className="border-red-100">
@@ -170,7 +171,7 @@ export default function DeleteUser(){
                                     <label htmlFor="username" className="text-sm font-medium">Username</label>
                                     <Input
                                         type="text"
-                                        className={`${formData.username.length > 0 ? "form-control" : "bg-gray-100 rounded-lg text-sm"} ${formData.username === "" ? "" : validation.username ? 'is-valid' : 'is-invalid'}`}
+                                        className={`${formData.username && formData.username.length  > 0 ? "form-control" : "bg-gray-100 rounded-lg text-sm"} ${formData.username === "" ? "" : validation.username ? 'is-valid' : 'is-invalid'}`}
                                         id="username"
                                         placeholder="Username"
                                         value={formData.username}
@@ -184,7 +185,7 @@ export default function DeleteUser(){
                                     <label htmlFor="password" className="text-sm font-medium">Password</label>
                                     <Input
                                         type="password"
-                                        className={`${formData.password.length > 0 ? "form-control" : "bg-gray-100 rounded-lg text-sm"} ${formData.password === "" ? "" : validation.password ? 'is-valid' : 'is-invalid'}`}
+                                        className={`${formData.password && formData.password.length > 0 ? "form-control" : "bg-gray-100 rounded-lg text-sm"} ${formData.password === "" ? "" : validation.password ? 'is-valid' : 'is-invalid'}`}
                                         id="password"
                                         placeholder="••••••••"
                                         value={formData.password}
@@ -201,7 +202,7 @@ export default function DeleteUser(){
                                         Password</label>
                                     <Input
                                         type="password"
-                                        className={`${formData.confirmPassword.length > 0 ? "form-control" : "bg-gray-100 rounded-lg text-sm"} ${formData.confirmPassword === "" ? "" : validation.confirmPassword ? 'is-valid' : 'is-invalid'}`}
+                                        className={`${formData.confirmPassword && formData.confirmPassword.length > 0 ? "form-control" : "bg-gray-100 rounded-lg text-sm"} ${formData.confirmPassword === "" ? "" : validation.confirmPassword ? 'is-valid' : 'is-invalid'}`}
                                         id="confirmPassword"
                                         placeholder="••••••••"
                                         value={formData.confirmPassword}

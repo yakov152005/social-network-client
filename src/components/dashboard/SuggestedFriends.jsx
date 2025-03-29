@@ -3,9 +3,17 @@ import { Avatar } from "../ui/Avatar";
 import { Button } from "../ui/Button";
 import { RefreshCw } from "lucide-react";
 import axios from "axios";
-import {TIME_FOLLOW, TIME_SUGGESTION, URL_FOLLOW, URL_GET_SUGGESTED, URL_SERVER_SIDE} from "../../utils/Constants";
+import {
+    NAV_PROFILE_SEARCH_BASE,
+    TIME_FOLLOW,
+    TIME_SUGGESTION,
+    URL_FOLLOW,
+    URL_GET_SUGGESTED,
+    URL_SERVER_SIDE
+} from "../../utils/Constants";
 import { CircularProgress } from "@mui/material";
 import img_null from "../../assets/navbar/User_Profile_null.png"
+import {useNavigate} from "react-router-dom";
 
 export default function SuggestedFriends({ currentUsername }) {
     const [suggestions, setSuggestions] = useState([]);
@@ -13,6 +21,7 @@ export default function SuggestedFriends({ currentUsername }) {
     const [loadingFollow, setLoadingFollow] = useState({});
     const [refreshing, setRefreshing] = useState(false);
     const [removingId, setRemovingId] = useState(null);
+    const navigate = useNavigate();
 
     function shuffleArray(array) {
         return array
@@ -64,6 +73,9 @@ export default function SuggestedFriends({ currentUsername }) {
         }
     };
 
+    const handleUserClick = (usernameSearch) => {
+        navigate(NAV_PROFILE_SEARCH_BASE + `/${usernameSearch}`);
+    };
 
     return (
         <div className="bg-white rounded-xl shadow-sm p-4 mb-4">
@@ -99,7 +111,7 @@ export default function SuggestedFriends({ currentUsername }) {
                                 removingId === user.id ? 'opacity-0' : 'opacity-100'
                             }`}
                         >
-                            <div className="flex items-center space-x-3">
+                            <div className="flex items-center space-x-3 cursor-pointer" onClick={() => handleUserClick(user.name)}>
                                 <Avatar src={user.profilePicture || img_null} alt={user.name} className="object-cover" />
                                 <div className="flex flex-col">
                                     <span className="text-sm font-medium">{user.name}</span>
@@ -111,7 +123,7 @@ export default function SuggestedFriends({ currentUsername }) {
                             <Button
                                 size="sm"
                                 variant="outline"
-                                className="bg-blue-50 text-blue-600 border-blue-200 hover:bg-blue-100 hover:text-blue-700 flex items-center justify-center"
+                                className="bg-gray-400 text-black border-r-8 hover:bg-gray-600 hover:text-gray-700 flex items-center justify-center"
                                 onClick={() => handleFollowToggle(user.name, user.id)}
                                 disabled={loadingFollow[user.name]}
                             >
