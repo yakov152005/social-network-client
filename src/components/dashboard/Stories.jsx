@@ -259,8 +259,7 @@ export default function Stories({ username }) {
                         >
                             <div className="relative w-full max-w-sm sm:max-w-3xl h-[85dvh] bg-black flex flex-col justify-between rounded-none sm:rounded-xl overflow-hidden">
 
-                                {/* 🟦 Progress Bar */}
-                                {/* 🟦 Colorful Progress Bar */}
+
                                 <div className="absolute top-0 left-0 w-full h-1 bg-gray-700 z-20">
                                     <motion.div
                                         key={selectedIndex}
@@ -272,7 +271,6 @@ export default function Stories({ username }) {
                                 </div>
 
 
-                                {/* 🧑‍ Top Bar */}
                                 <div className="flex items-center justify-between px-4 py-2 bg-black bg-opacity-70 z-10">
                                     <div className="flex items-center gap-2 overflow-hidden">
                                         <Avatar
@@ -290,7 +288,6 @@ export default function Stories({ username }) {
                                     </button>
                                 </div>
 
-                                {/* 🖼️ Image */}
                                 <div className="flex-grow flex items-center justify-center overflow-hidden px-1 py-1">
                                     <img
                                         src={selectedImage.imageStories}
@@ -299,7 +296,7 @@ export default function Stories({ username }) {
                                     />
                                 </div>
 
-                                {/* ❤️💬 Bottom Bar */}
+
                                 <div className="px-4 pt-3 pb-4 bg-black bg-opacity-70 border-t border-gray-800">
                                     <div className="flex items-center gap-4 mb-3">
                                         <button className="text-white hover:scale-110 transition">
@@ -320,7 +317,7 @@ export default function Stories({ username }) {
                                     </div>
                                 </div>
 
-                                {/* 🔁 Navigation Arrows */}
+                           
                                 {stories.length > 1 && (
                                     <>
                                         <button
