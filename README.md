@@ -29,6 +29,7 @@ From secure authentication to dynamic dashboards, stories, chat, and notificatio
 |----------------------|----------------------|
 | ![PC Login](https://i.imgur.com/izwFZsx.png) | ![Mobile Login](https://i.imgur.com/TFqUIWU.png)|
 
+
 ### 📝 Signup Demo (GIF Previews)
 
 | **PC Signup**                                             | **Mobile Signup**                                        |
@@ -36,6 +37,7 @@ From secure authentication to dynamic dashboards, stories, chat, and notificatio
 | <img src="src/assets/gif/signUpDesktop.gif" width="800"/> | <img src="src/assets/gif/signUpMobile.gif" width="150"/> |
 
 > ⚠️ *Note: The GIF previews may appear with reduced resolution due to GIF compression.*
+
 
 ### 🖥️ Dashboard & Chat Demo
 
