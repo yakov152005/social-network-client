@@ -31,9 +31,9 @@ From secure authentication to dynamic dashboards, stories, chat, and notificatio
 
 ### 📝 Signup Demo (GIF Previews)
 
-| **PC Signup** | **Mobile Signup**                                    |
-|----------------|------------------------------------------------------|
-| ![Signup PC](src/assets/gif/signUpDesktop.gif) | ![Signup Mobile](src/assets/gif/signUpMobile.gif) |
+| **PC Signup**                                             | **Mobile Signup**                                        |
+|-----------------------------------------------------------|----------------------------------------------------------|
+| <img src="src/assets/gif/signUpDesktop.gif" width="900"/> | <img src="src/assets/gif/signUpMobile.gif" width="150"/> |
 
 > ⚠️ *Note: The GIF previews may appear with reduced resolution due to GIF compression.*
 
