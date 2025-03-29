@@ -33,7 +33,7 @@ From secure authentication to dynamic dashboards, stories, chat, and notificatio
 
 | **PC Signup**                                             | **Mobile Signup**                                        |
 |-----------------------------------------------------------|----------------------------------------------------------|
-| <img src="src/assets/gif/signUpDesktop.gif" width="900"/> | <img src="src/assets/gif/signUpMobile.gif" width="150"/> |
+| <img src="src/assets/gif/signUpDesktop.gif" width="800"/> | <img src="src/assets/gif/signUpMobile.gif" width="150"/> |
 
 > ⚠️ *Note: The GIF previews may appear with reduced resolution due to GIF compression.*
 
